@@ -36,7 +36,7 @@ class ImportTransactions extends Component
     {
         Validator::make(
             ['upload' => $value],
-            ['upload' => 'required|mimetypes:txt,csv'],
+            ['upload' => 'mimes:txt,csv'],
         )->validate();
     }
 
