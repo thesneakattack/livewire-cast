@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $_oldid
  * @property string $storyid
  * @property string $value
- * @property string $created_at
- * @property string $updated_at
  * @property LflbStory $lflbStory
  */
 class LflbTag extends Model
@@ -19,7 +17,7 @@ class LflbTag extends Model
     /**
      * @var array
      */
-    protected $fillable = ['story_id', '_oldid', 'storyid', 'value', 'created_at', 'updated_at'];
+    protected $fillable = ['story_id', '_oldid', 'storyid', 'value'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

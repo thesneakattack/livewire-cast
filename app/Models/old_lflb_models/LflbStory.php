@@ -24,8 +24,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $location_lat
  * @property string $location_lng
  * @property string $metaData
- * @property string $created_at
- * @property string $updated_at
  * @property LflbApp $lflbApp
  * @property LflbStoryPart[] $lflbStoryParts
  * @property LflbTag[] $lflbTags
@@ -35,7 +33,7 @@ class LflbStory extends Model
     /**
      * @var array
      */
-    protected $fillable = ['app_id', '_oldid', 'title', 'description', 'image', 'imageUrl', 'categories_old', 'categories', 'startDay', 'startMonth', 'startYear', 'endDay', 'endMonth', 'endYear', 'locationName', 'location_lat', 'location_lng', 'metaData', 'created_at', 'updated_at'];
+    protected $fillable = ['app_id', '_oldid', 'title', 'description', 'image', 'imageUrl', 'categories_old', 'categories', 'startDay', 'startMonth', 'startYear', 'endDay', 'endMonth', 'endYear', 'locationName', 'location_lat', 'location_lng', 'metaData'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

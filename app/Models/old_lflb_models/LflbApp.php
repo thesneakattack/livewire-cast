@@ -18,8 +18,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $mapCenterAddressCoords_lng
  * @property string $mainColor
  * @property string $secondaryColor
- * @property string $created_at
- * @property string $updated_at
  * @property LflbStory[] $lflbStories
  */
 class LflbApp extends Model
@@ -27,7 +25,7 @@ class LflbApp extends Model
     /**
      * @var array
      */
-    protected $fillable = ['_oldid', 'name', 'orgId', 'description', 'image', 'categories', 'categories_old', 'mapCenterAddress', 'mapCenterAddressCoords_lat', 'mapCenterAddressCoords_lng', 'mainColor', 'secondaryColor', 'created_at', 'updated_at'];
+    protected $fillable = ['_oldid', 'name', 'orgId', 'description', 'image', 'categories', 'categories_old', 'mapCenterAddress', 'mapCenterAddressCoords_lat', 'mapCenterAddressCoords_lng', 'mainColor', 'secondaryColor'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

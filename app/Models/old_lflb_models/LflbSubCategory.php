@@ -14,8 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $subTitle
  * @property string $mainImage
  * @property boolean $position
- * @property string $created_at
- * @property string $updated_at
  * @property LflbCategory $lflbCategory
  */
 class LflbSubCategory extends Model
@@ -23,7 +21,7 @@ class LflbSubCategory extends Model
     /**
      * @var array
      */
-    protected $fillable = ['category_id', '_oldid', 'title', 'stories', 'stories_old', 'subTitle', 'mainImage', 'position', 'created_at', 'updated_at'];
+    protected $fillable = ['category_id', '_oldid', 'title', 'stories', 'stories_old', 'subTitle', 'mainImage', 'position'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -37,5 +35,5 @@ class LflbSubCategory extends Model
     public function storyIds()
     {
         return explode(',', $this->stories);
-    }
+    }      
 }

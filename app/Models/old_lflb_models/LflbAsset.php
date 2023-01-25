@@ -17,8 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $caption
  * @property string $tags
  * @property string $thumbnail
- * @property string $created_at
- * @property string $updated_at
  * @property LflbStoryPart[] $lflbStoryParts
  */
 class LflbAsset extends Model
@@ -26,7 +24,7 @@ class LflbAsset extends Model
     /**
      * @var array
      */
-    protected $fillable = ['_oldid', 'orgId', 'link', 'originalImage', 'type', 'text', 'cleanText', 'name', 'caption', 'tags', 'thumbnail', 'created_at', 'updated_at'];
+    protected $fillable = ['_oldid', 'orgId', 'link', 'originalImage', 'type', 'text', 'cleanText', 'name', 'caption', 'tags', 'thumbnail'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

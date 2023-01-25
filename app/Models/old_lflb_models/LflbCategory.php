@@ -16,16 +16,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $introText
  * @property string $bodyText
  * @property string $mainImage
- * @property string $created_at
- * @property string $updated_at
  * @property LflbSubCategory[] $lflbSubCategories
  */
 class LflbCategory extends Model
 {
+    public $timestamps = false;
+
     /**
      * @var array
      */
-    protected $fillable = ['_oldid', 'title', 'description', 'coverPhoto', 'sub_categories_old', 'sub_categories', 'featured', 'introText', 'bodyText', 'mainImage', 'created_at', 'updated_at'];
+    protected $fillable = ['_oldid', 'title', 'description', 'coverPhoto', 'sub_categories_old', 'sub_categories', 'featured', 'introText', 'bodyText', 'mainImage'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
