@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Transaction;
+use App\Models\LflbCategory;
 use Illuminate\Support\Carbon;
 use App\Http\Livewire\DataTable\WithSorting;
 use App\Http\Livewire\DataTable\WithCachedRows;
@@ -25,27 +25,27 @@ class Categories extends Component
         'date-min' => null,
         'date-max' => null,
     ];
-    public Transaction $editing;
+    public LflbCategory $editing;
 
     protected $queryString = ['sorts'];
 
-    protected $listeners = ['refreshTransactions' => '$refresh'];
+    protected $listeners = ['refreshCategories' => '$refresh'];
 
     public function rules() { return [
         'editing.title' => 'required|min:3',
         'editing.amount' => 'required',
-        'editing.status' => 'required|in:'.collect(Transaction::STATUSES)->keys()->implode(','),
+        'editing.status' => 'required|in:'.collect(LflbCategory::STATUSES)->keys()->implode(','),
         'editing.date_for_editing' => 'required',
     ]; }
 
-    public function mount() { $this->editing = $this->makeBlankTransaction(); }
+    public function mount() { $this->editing = $this->makeBlankCategory(); }
     public function updatedFilters() { $this->resetPage(); }
 
     public function exportSelected()
     {
         return response()->streamDownload(function () {
             echo $this->selectedRowsQuery->toCsv();
-        }, 'transactions.csv');
+        }, 'categories.csv');
     }
 
     public function deleteSelected()
@@ -56,12 +56,12 @@ class Categories extends Component
 
         $this->showDeleteModal = false;
 
-        $this->notify('You\'ve deleted '.$deleteCount.' transactions');
+        $this->notify('You\'ve deleted '.$deleteCount.' categories');
     }
 
-    public function makeBlankTransaction()
+    public function makeBlankCategory()
     {
-        return Transaction::make(['date' => now(), 'status' => 'success']);
+        return LflbCategory::make(['date' => now(), 'status' => 'success']);
     }
 
     public function toggleShowFilters()
@@ -75,16 +75,16 @@ class Categories extends Component
     {
         $this->useCachedRows();
 
-        if ($this->editing->getKey()) $this->editing = $this->makeBlankTransaction();
+        if ($this->editing->getKey()) $this->editing = $this->makeBlankCategory();
 
         $this->showEditModal = true;
     }
 
-    public function edit(Transaction $transaction)
+    public function edit(LflbCategory $lflb_category)
     {
         $this->useCachedRows();
 
-        if ($this->editing->isNot($transaction)) $this->editing = $transaction;
+        if ($this->editing->isNot($lflb_category)) $this->editing = $lflb_category;
 
         $this->showEditModal = true;
     }
@@ -102,7 +102,7 @@ class Categories extends Component
 
     public function getRowsQueryProperty()
     {
-        $query = Transaction::query()
+        $query = LflbCategory::query()
             ->when($this->filters['status'], fn($query, $status) => $query->where('status', $status))
             ->when($this->filters['amount-min'], fn($query, $amount) => $query->where('amount', '>=', $amount))
             ->when($this->filters['amount-max'], fn($query, $amount) => $query->where('amount', '<=', $amount))
@@ -123,7 +123,7 @@ class Categories extends Component
     public function render()
     {
         return view('livewire.categories', [
-            'transactions' => $this->rows,
+            'categories' => $this->rows,
         ]);
     }
 }
