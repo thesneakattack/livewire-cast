@@ -37,7 +37,7 @@ Route::middleware([
     Route::get('/transactions', Transactions::class)->name('transactions');
     Route::get('/categories', Categories::class)->name('categories');
     Route::get('/sub-categories', SubCategories::class)->name('sub-categories');
-    // Route::get('/profile', Profile::class);
+    Route::get('/profile', Profile::class)->name('profile');
 });
 
 /**
