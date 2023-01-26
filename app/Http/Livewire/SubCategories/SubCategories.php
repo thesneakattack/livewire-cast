@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\SubCategories;
 
 use Livewire\Component;
 use App\Models\LflbSubCategory;
@@ -120,7 +120,7 @@ class SubCategories extends Component
 
     public function render()
     {
-        return view('livewire.sub-categories', [
+        return view('livewire.sub-categories.view', [
             'sub-categories' => $this->rows,
         ]);
     }

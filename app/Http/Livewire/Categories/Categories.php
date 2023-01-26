@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Categories;
 
 use Livewire\Component;
 use App\Models\LflbCategory;
@@ -132,7 +132,7 @@ class Categories extends Component
 
     public function render()
     {
-        return view('livewire.categories', [
+        return view('livewire.categories.view', [
             'categories' => $this->rows,
         ]);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Transactions;
 
 use Livewire\Component;
 use App\Models\Transaction;
@@ -10,7 +10,7 @@ use App\Http\Livewire\DataTable\WithCachedRows;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
 
-class Dashboard extends Component
+class Transactions extends Component
 {
     use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows;
 
@@ -125,7 +125,7 @@ class Dashboard extends Component
 
     public function render()
     {
-        return view('livewire.dashboard', [
+        return view('livewire.transactions.view', [
             'transactions' => $this->rows,
         ]);
     }

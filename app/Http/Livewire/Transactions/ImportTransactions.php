@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Transactions;
 
 use App\Csv;
 use Validator;
 use Livewire\Component;
-use App\Models\LflbCategory;
+use App\Models\Transaction;
 use Livewire\WithFileUploads;
 
-class ImportCategories extends Component
+class ImportTransactions extends Component
 {
     use WithFileUploads;
 
@@ -17,7 +17,8 @@ class ImportCategories extends Component
     public $columns;
     public $fieldColumnMap = [
         'title' => '',
-        'featured' => '',
+        'amount' => '',
+        'status' => '',
         'date_for_editing' => '',
     ];
 
@@ -28,6 +29,7 @@ class ImportCategories extends Component
 
     protected $customAttributes = [
         'fieldColumnMap.title' => 'title',
+        'fieldColumnMap.amount' => 'amount',
     ];
 
     public function updatingUpload($value)
@@ -53,7 +55,7 @@ class ImportCategories extends Component
 
         Csv::from($this->upload)
             ->eachRow(function ($row) use (&$importCount) {
-                LflbCategory::create(
+                Transaction::create(
                     $this->extractFieldsFromRow($row)
                 );
 
@@ -62,9 +64,9 @@ class ImportCategories extends Component
 
         $this->reset();
 
-        $this->emit('refreshCategories');
+        $this->emit('refreshTransactions');
 
-        $this->notify('Imported '.$importCount.' categories!');
+        $this->notify('Imported '.$importCount.' transactions!');
     }
 
     public function extractFieldsFromRow($row)
@@ -76,7 +78,7 @@ class ImportCategories extends Component
             })
             ->toArray();
 
-        return $attributes + ['featured' => 'TRUE', 'date_for_editing' => now()];
+        return $attributes + ['status' => 'success', 'date_for_editing' => now()];
     }
 
     public function guessWhichColumnsMapToWhichFields()
@@ -84,7 +86,7 @@ class ImportCategories extends Component
         $guesses = [
             'title' => ['title', 'label'],
             'amount' => ['amount', 'price'],
-            'featured' => ['featured', 'state'],
+            'status' => ['status', 'state'],
             'date_for_editing' => ['date_for_editing', 'date', 'time'],
         ];
 
