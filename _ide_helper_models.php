@@ -112,6 +112,8 @@ namespace App\Models{
  * @property string $created_at
  * @property string $updated_at
  * @property LflbSubCategory[] $lflbSubCategories
+ * @property-read mixed $date_for_humans
+ * @property-read mixed $status_color
  * @property-read int|null $lflb_sub_categories_count
  * @method static \Illuminate\Database\Eloquent\Builder|LflbCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LflbCategory newQuery()

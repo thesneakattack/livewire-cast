@@ -19172,19 +19172,45 @@
      
 }
 
-    namespace App\Http\Livewire { 
+    namespace App\Http\Livewire\Transactions { 
             /**
      * 
      *
      */ 
-        class Dashboard {
+        class Transactions {
          
     }
+     
+}
+
+    namespace App\Http\Livewire\Categories { 
             /**
      * 
      *
      */ 
         class Categories {
+         
+    }
+     
+}
+
+    namespace App\Http\Livewire\SubCategories { 
+            /**
+     * 
+     *
+     */ 
+        class SubCategories {
+         
+    }
+     
+}
+
+    namespace App\Http\Livewire { 
+            /**
+     * 
+     *
+     */ 
+        class Profile {
          
     }
      
