@@ -75,6 +75,9 @@
                     </x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('title')" :direction="$sorts['title'] ?? null" class="w-full">Title</x-table.heading>
                     <x-table.heading>Description</x-table.heading>
+                    <x-table.heading>Introduction</x-table.heading>
+                    <x-table.heading>Body</x-table.heading>
+                    <x-table.heading>Main Image</x-table.heading>
                     <x-table.heading>Sub-Categories</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('featured')" :direction="$sorts['featured'] ?? null">Featured</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')" :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
@@ -114,7 +117,19 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span class="font-medium text-cool-gray-900">{{ $category->description }} </span>
+                            <span class="font-medium truncate text-cool-gray-900">{{ $category->description }} </span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <span class="font-medium truncate text-cool-gray-900">{{ $category->introText }} </span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <span class="font-medium truncate text-cool-gray-900">{{ $category->bodyText }} </span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <span class="font-medium truncate text-cool-gray-900">{{ $category->mainImage }} </span>
                         </x-table.cell>
 
                         <x-table.cell>
@@ -189,6 +204,18 @@
 
                 <x-input.group for="description" label="Description" :error="$errors->first('editing.description')">
                     <x-input.text wire:model="editing.description" id="description" />
+                </x-input.group>
+
+                <x-input.group for="introText" label="Introduction" :error="$errors->first('editing.introText')">
+                    <x-input.text wire:model="editing.introText" id="introText" />
+                </x-input.group>
+
+                <x-input.group for="bodyText" label="Body" :error="$errors->first('editing.bodyText')">
+                    <x-input.text wire:model="editing.bodyText" id="bodyText" />
+                </x-input.group>
+
+                <x-input.group for="mainImage" label="mainImage" :error="$errors->first('editing.mainImage')">
+                    <x-input.text wire:model="editing.mainImage" id="mainImage" />
                 </x-input.group>
 
                 <x-input.group for="featured" label="Featured" :error="$errors->first('editing.featured')">
