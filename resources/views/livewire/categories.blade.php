@@ -73,10 +73,10 @@
                     <x-table.heading class="w-8 pr-0">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('title')" :direction="$sorts['title'] ?? null" class="w-full">Title</x-table.heading>
-                    <x-table.heading>Description</x-table.heading>
-                    <x-table.heading>Introduction</x-table.heading>
-                    <x-table.heading>Body</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('title')" :direction="$sorts['title'] ?? null">Title</x-table.heading>
+                    {{-- <x-table.heading>Description</x-table.heading> --}}
+                    {{-- <x-table.heading>Introduction</x-table.heading>
+                    <x-table.heading>Body</x-table.heading> --}}
                     <x-table.heading>Main Image</x-table.heading>
                     <x-table.heading>Sub-Categories</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('featured')" :direction="$sorts['featured'] ?? null">Featured</x-table.heading>
@@ -107,7 +107,7 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span href="#" class="inline-flex space-x-2 text-sm leading-5 truncate">
+                            <span href="#" class="inline-flex space-x-2 text-sm leading-5">
                                 <x-icon.cash class="text-cool-gray-400"/>
 
                                 <p class="truncate text-cool-gray-600">
@@ -116,23 +116,23 @@
                             </span>
                         </x-table.cell>
 
-                        <x-table.cell>
-                            <span class="font-medium truncate text-cool-gray-900">{{ $category->description }} </span>
+                        {{-- <x-table.cell>
+                            <span class="font-medium text-cool-gray-900">{{ $category->description }} </span>
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span class="font-medium truncate text-cool-gray-900">{{ $category->introText }} </span>
+                            <span class="font-medium text-cool-gray-900">{{ $category->introText }} </span>
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span class="font-medium truncate text-cool-gray-900">{{ $category->bodyText }} </span>
-                        </x-table.cell>
+                            <span class="font-medium text-cool-gray-900">{{ $category->bodyText }} </span>
+                        </x-table.cell> --}}
 
                         <x-table.cell>
-                            <span class="font-medium truncate text-cool-gray-900">{{ $category->mainImage }} </span>
+                            <span class="font-medium text-cool-gray-900">{{ $category->mainImage }} </span>
                         </x-table.cell>
 
-                        <x-table.cell>
+                        <x-table.cell class="max-w-[150px]">
                             <ol>
                                 @foreach ( $category->lflbSubCategories->sortBy('position')->sortBy('title') as $sub_category)
                                     <li>
