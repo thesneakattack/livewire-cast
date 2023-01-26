@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -33,5 +34,38 @@ class LflbCategory extends Model
     public function lflbSubCategories()
     {
         return $this->hasMany('App\Models\LflbSubCategory', 'category_id');
+    }
+
+    // custom code David F.
+    const STATUSES = [
+        'TRUE' => 'Yes',
+        'FALSE' => 'No',
+    ];
+
+    protected $guarded = [];
+    // protected $casts = ['date' => 'date'];
+    protected $appends = ['date_for_editing'];
+
+    public function getStatusColorAttribute()
+    {
+        return [
+            'TRUE' => 'green',
+            'FALSE' => 'red',
+        ][$this->featured] ?? 'cool-gray';
+    }
+
+    public function getDateForHumansAttribute()
+    {
+        // return $this->date->format('M, d Y');
+    }
+
+    public function getDateForEditingAttribute()
+    {
+        // return $this->date->format('m/d/Y');
+    }
+
+    public function setDateForEditingAttribute($value)
+    {
+        // $this->date = Carbon::parse($value);
     }
 }

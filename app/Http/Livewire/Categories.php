@@ -19,11 +19,7 @@ class Categories extends Component
     public $showFilters = false;
     public $filters = [
         'search' => '',
-        'status' => '',
-        'amount-min' => null,
-        'amount-max' => null,
-        'date-min' => null,
-        'date-max' => null,
+        'featured' => '',
     ];
     public LflbCategory $editing;
 
@@ -33,9 +29,7 @@ class Categories extends Component
 
     public function rules() { return [
         'editing.title' => 'required|min:3',
-        'editing.amount' => 'required',
-        'editing.status' => 'required|in:'.collect(LflbCategory::STATUSES)->keys()->implode(','),
-        'editing.date_for_editing' => 'required',
+        'editing.featured' => 'required|in:'.collect(LflbCategory::STATUSES)->keys()->implode(','),
     ]; }
 
     public function mount() { $this->editing = $this->makeBlankCategory(); }
@@ -61,7 +55,7 @@ class Categories extends Component
 
     public function makeBlankCategory()
     {
-        return LflbCategory::make(['date' => now(), 'status' => 'success']);
+        return LflbCategory::make(['date' => now(), 'featured' => 'TRUE']);
     }
 
     public function toggleShowFilters()
@@ -103,11 +97,7 @@ class Categories extends Component
     public function getRowsQueryProperty()
     {
         $query = LflbCategory::query()
-            ->when($this->filters['status'], fn($query, $status) => $query->where('status', $status))
-            ->when($this->filters['amount-min'], fn($query, $amount) => $query->where('amount', '>=', $amount))
-            ->when($this->filters['amount-max'], fn($query, $amount) => $query->where('amount', '<=', $amount))
-            ->when($this->filters['date-min'], fn($query, $date) => $query->where('date', '>=', Carbon::parse($date)))
-            ->when($this->filters['date-max'], fn($query, $date) => $query->where('date', '<=', Carbon::parse($date)))
+            ->when($this->filters['featured'], fn($query, $featured) => $query->where('featured', $featured))
             ->when($this->filters['search'], fn($query, $search) => $query->where('title', 'like', '%'.$search.'%'));
 
         return $this->applySorting($query);

@@ -4,13 +4,13 @@
     <div class="py-4 space-y-4">
         <!-- Top Bar -->
         <div class="flex justify-between">
-            <div class="w-2/4 flex space-x-4">
+            <div class="flex w-2/4 space-x-4">
                 <x-input.text wire:model="filters.search" placeholder="Search Transactions..." />
 
                 <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...</x-button.link>
             </div>
 
-            <div class="space-x-2 flex items-center">
+            <div class="flex items-center space-x-2">
                 <x-input.group borderless paddingless for="perPage" label="Per Page">
                     <x-input.select wire:model="perPage" id="perPage">
                         <option value="10">10</option>
@@ -38,7 +38,7 @@
         <!-- Advanced Search -->
         <div>
             @if ($showFilters)
-            <div class="bg-cool-gray-200 p-4 rounded shadow-inner flex relative">
+            <div class="relative flex p-4 rounded shadow-inner bg-cool-gray-200">
                 <div class="w-1/2 pr-2 space-y-4">
                     <x-input.group inline for="filter-status" label="Status">
                         <x-input.select wire:model="filters.status" id="filter-status">
@@ -68,7 +68,7 @@
                         <x-input.date wire:model="filters.date-max" id="filter-date-max" placeholder="MM/DD/YYYY" />
                     </x-input.group>
 
-                    <x-button.link wire:click="resetFilters" class="absolute right-0 bottom-0 p-4">Reset Filters</x-button.link>
+                    <x-button.link wire:click="resetFilters" class="absolute bottom-0 right-0 p-4">Reset Filters</x-button.link>
                 </div>
             </div>
             @endif
@@ -78,7 +78,7 @@
         <div class="flex-col space-y-4">
             <x-table>
                 <x-slot name="head">
-                    <x-table.heading class="pr-0 w-8">
+                    <x-table.heading class="w-8 pr-0">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('title')" :direction="$sorts['title'] ?? null" class="w-full">Title</x-table.heading>
@@ -111,17 +111,17 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span href="#" class="inline-flex space-x-2 truncate text-sm leading-5">
+                            <span href="#" class="inline-flex space-x-2 text-sm leading-5 truncate">
                                 <x-icon.cash class="text-cool-gray-400"/>
 
-                                <p class="text-cool-gray-600 truncate">
+                                <p class="truncate text-cool-gray-600">
                                     {{ $transaction->title }}
                                 </p>
                             </span>
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span class="text-cool-gray-900 font-medium">${{ $transaction->amount }} </span> USD
+                            <span class="font-medium text-cool-gray-900">${{ $transaction->amount }} </span> USD
                         </x-table.cell>
 
                         <x-table.cell>
@@ -141,9 +141,9 @@
                     @empty
                     <x-table.row>
                         <x-table.cell colspan="6">
-                            <div class="flex justify-center items-center space-x-2">
-                                <x-icon.inbox class="h-8 w-8 text-cool-gray-400" />
-                                <span class="font-medium py-8 text-cool-gray-400 text-xl">No transactions found...</span>
+                            <div class="flex items-center justify-center space-x-2">
+                                <x-icon.inbox class="w-8 h-8 text-cool-gray-400" />
+                                <span class="py-8 text-xl font-medium text-cool-gray-400">No transactions found...</span>
                             </div>
                         </x-table.cell>
                     </x-table.row>

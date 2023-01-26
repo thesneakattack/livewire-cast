@@ -4,13 +4,13 @@
     <div class="py-4 space-y-4">
         <!-- Top Bar -->
         <div class="flex justify-between">
-            <div class="w-2/4 flex space-x-4">
-                <x-input.text wire:model="filters.search" placeholder="Search Transactions..." />
+            <div class="flex w-2/4 space-x-4">
+                <x-input.text wire:model="filters.search" placeholder="Search Categories..." />
 
                 <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...</x-button.link>
             </div>
 
-            <div class="space-x-2 flex items-center">
+            <div class="flex items-center space-x-2">
                 <x-input.group borderless paddingless for="perPage" label="Per Page">
                     <x-input.select wire:model="perPage" id="perPage">
                         <option value="10">10</option>
@@ -29,7 +29,7 @@
                     </x-dropdown.item>
                 </x-dropdown>
 
-                <livewire:import-transactions />
+                <livewire:import-categories />
 
                 <x-button.primary wire:click="create"><x-icon.plus/> New</x-button.primary>
             </div>
@@ -38,13 +38,13 @@
         <!-- Advanced Search -->
         <div>
             @if ($showFilters)
-            <div class="bg-cool-gray-200 p-4 rounded shadow-inner flex relative">
+            <div class="relative flex p-4 rounded shadow-inner bg-cool-gray-200">
                 <div class="w-1/2 pr-2 space-y-4">
-                    <x-input.group inline for="filter-status" label="Status">
-                        <x-input.select wire:model="filters.status" id="filter-status">
-                            <option value="" disabled>Select Status...</option>
+                    <x-input.group inline for="filter-featured" label="Featured">
+                        <x-input.select wire:model="filters.featured" id="filter-featured">
+                            <option value="" disabled>Select Featured...</option>
 
-                            @foreach (App\Models\Transaction::STATUSES as $value => $label)
+                            @foreach (App\Models\LflbCategory::STATUSES as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
                         </x-input.select>
@@ -68,23 +68,23 @@
                         <x-input.date wire:model="filters.date-max" id="filter-date-max" placeholder="MM/DD/YYYY" />
                     </x-input.group>
 
-                    <x-button.link wire:click="resetFilters" class="absolute right-0 bottom-0 p-4">Reset Filters</x-button.link>
+                    <x-button.link wire:click="resetFilters" class="absolute bottom-0 right-0 p-4">Reset Filters</x-button.link>
                 </div>
             </div>
             @endif
         </div>
 
-        <!-- Transactions Table -->
+        <!-- Categories Table -->
         <div class="flex-col space-y-4">
             <x-table>
                 <x-slot name="head">
-                    <x-table.heading class="pr-0 w-8">
+                    <x-table.heading class="w-8 pr-0">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('title')" :direction="$sorts['title'] ?? null" class="w-full">Title</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('amount')" :direction="$sorts['amount'] ?? null">Amount</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('status')" :direction="$sorts['status'] ?? null">Status</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('date')" :direction="$sorts['date'] ?? null">Date</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('featured')" :direction="$sorts['featured'] ?? null">Featured</x-table.heading>
+                    {{-- <x-table.heading sortable multi-column wire:click="sortBy('date')" :direction="$sorts['date'] ?? null">Date</x-table.heading> --}}
                     <x-table.heading />
                 </x-slot>
 
@@ -94,56 +94,56 @@
                         <x-table.cell colspan="6">
                             @unless ($selectAll)
                             <div>
-                                <span>You have selected <strong>{{ $transactions->count() }}</strong> transactions, do you want to select all <strong>{{ $transactions->total() }}</strong>?</span>
+                                <span>You have selected <strong>{{ $categories->count() }}</strong> categories, do you want to select all <strong>{{ $categories->total() }}</strong>?</span>
                                 <x-button.link wire:click="selectAll" class="ml-1 text-blue-600">Select All</x-button.link>
                             </div>
                             @else
-                            <span>You are currently selecting all <strong>{{ $transactions->total() }}</strong> transactions.</span>
+                            <span>You are currently selecting all <strong>{{ $categories->total() }}</strong> categories.</span>
                             @endif
                         </x-table.cell>
                     </x-table.row>
                     @endif
 
-                    @forelse ($transactions as $transaction)
-                    <x-table.row wire:loading.class.delay="opacity-50" wire:key="row-{{ $transaction->id }}">
+                    @forelse ($categories as $category)
+                    <x-table.row wire:loading.class.delay="opacity-50" wire:key="row-{{ $category->id }}">
                         <x-table.cell class="pr-0">
-                            <x-input.checkbox wire:model="selected" value="{{ $transaction->id }}" />
+                            <x-input.checkbox wire:model="selected" value="{{ $category->id }}" />
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span href="#" class="inline-flex space-x-2 truncate text-sm leading-5">
+                            <span href="#" class="inline-flex space-x-2 text-sm leading-5 truncate">
                                 <x-icon.cash class="text-cool-gray-400"/>
 
-                                <p class="text-cool-gray-600 truncate">
-                                    {{ $transaction->title }}
+                                <p class="truncate text-cool-gray-600">
+                                    {{ $category->title }}
                                 </p>
                             </span>
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span class="text-cool-gray-900 font-medium">${{ $transaction->amount }} </span> USD
+                            <span class="font-medium text-cool-gray-900">${{ $category->amount }} </span> USD
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-{{ $transaction->status_color }}-100 text-{{ $transaction->status_color }}-800 capitalize">
-                                {{ $transaction->status }}
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-{{ $category->status_color }}-100 text-{{ $category->status_color }}-800 capitalize">
+                                {{ $category->featured }}
                             </span>
                         </x-table.cell>
 
                         <x-table.cell>
-                            {{ $transaction->date_for_humans }}
+                            {{ $category->date_for_humans }}
                         </x-table.cell>
 
                         <x-table.cell>
-                            <x-button.link wire:click="edit({{ $transaction->id }})">Edit</x-button.link>
+                            <x-button.link wire:click="edit({{ $category->id }})">Edit</x-button.link>
                         </x-table.cell>
                     </x-table.row>
                     @empty
                     <x-table.row>
                         <x-table.cell colspan="6">
-                            <div class="flex justify-center items-center space-x-2">
-                                <x-icon.inbox class="h-8 w-8 text-cool-gray-400" />
-                                <span class="font-medium py-8 text-cool-gray-400 text-xl">No transactions found...</span>
+                            <div class="flex items-center justify-center space-x-2">
+                                <x-icon.inbox class="w-8 h-8 text-cool-gray-400" />
+                                <span class="py-8 text-xl font-medium text-cool-gray-400">No categories found...</span>
                             </div>
                         </x-table.cell>
                     </x-table.row>
@@ -152,15 +152,15 @@
             </x-table>
 
             <div>
-                {{ $transactions->links() }}
+                {{ $categories->links() }}
             </div>
         </div>
     </div>
 
-    <!-- Delete Transactions Modal -->
+    <!-- Delete Categories Modal -->
     <form wire:submit.prevent="deleteSelected">
         <x-modal.confirmation wire:model.defer="showDeleteModal">
-            <x-slot name="title">Delete Transaction</x-slot>
+            <x-slot name="title">Delete Category</x-slot>
 
             <x-slot name="content">
                 <div class="py-8 text-cool-gray-700">Are you sure you? This action is irreversible.</div>
@@ -174,10 +174,10 @@
         </x-modal.confirmation>
     </form>
 
-    <!-- Save Transaction Modal -->
+    <!-- Save Category Modal -->
     <form wire:submit.prevent="save">
         <x-modal.dialog wire:model.defer="showEditModal">
-            <x-slot name="title">Edit Transaction</x-slot>
+            <x-slot name="title">Edit Category</x-slot>
 
             <x-slot name="content">
                 <x-input.group for="title" label="Title" :error="$errors->first('editing.title')">
@@ -188,9 +188,9 @@
                     <x-input.money wire:model="editing.amount" id="amount" />
                 </x-input.group>
 
-                <x-input.group for="status" label="Status" :error="$errors->first('editing.status')">
-                    <x-input.select wire:model="editing.status" id="status">
-                        @foreach (App\Models\Transaction::STATUSES as $value => $label)
+                <x-input.group for="featured" label="Featured" :error="$errors->first('editing.featured')">
+                    <x-input.select wire:model="editing.featured" id="featured">
+                        @foreach (App\Models\LflbCategory::STATUSES as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
                     </x-input.select>
