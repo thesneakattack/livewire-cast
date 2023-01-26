@@ -1,5 +1,5 @@
 <div>
-    <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
+    <h1 class="text-2xl font-semibold text-gray-900">Categories</h1>
 
     <div class="py-4 space-y-4">
         <!-- Top Bar -->
@@ -50,24 +50,16 @@
                         </x-input.select>
                     </x-input.group>
 
-                    <x-input.group inline for="filter-amount-min" label="Minimum Amount">
-                        <x-input.money wire:model.lazy="filters.amount-min" id="filter-amount-min" />
+                    <x-input.group inline for="filter-title" label="Title">
+                        <x-input.text wire:model.lazy="filters.title" id="filter-title" placeholder="Title" />
                     </x-input.group>
 
-                    <x-input.group inline for="filter-amount-max" label="Maximum Amount">
-                        <x-input.money wire:model.lazy="filters.amount-max" id="filter-amount-max" />
+                    <x-input.group inline for="filter-description" label="Description">
+                        <x-input.text wire:model.lazy="filters.description" id="filter-description" placeholder="Description" />
                     </x-input.group>
                 </div>
 
                 <div class="w-1/2 pl-2 space-y-4">
-                    <x-input.group inline for="filter-date-min" label="Minimum Date">
-                        <x-input.date wire:model="filters.date-min" id="filter-date-min" placeholder="MM/DD/YYYY" />
-                    </x-input.group>
-
-                    <x-input.group inline for="filter-date-max" label="Maximum Date">
-                        <x-input.date wire:model="filters.date-max" id="filter-date-max" placeholder="MM/DD/YYYY" />
-                    </x-input.group>
-
                     <x-button.link wire:click="resetFilters" class="absolute bottom-0 right-0 p-4">Reset Filters</x-button.link>
                 </div>
             </div>
@@ -82,9 +74,10 @@
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('title')" :direction="$sorts['title'] ?? null" class="w-full">Title</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('amount')" :direction="$sorts['amount'] ?? null">Amount</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('description')" :direction="$sorts['description'] ?? null">Description</x-table.heading>
+                    <x-table.heading>Sub-Categories</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('featured')" :direction="$sorts['featured'] ?? null">Featured</x-table.heading>
-                    {{-- <x-table.heading sortable multi-column wire:click="sortBy('date')" :direction="$sorts['date'] ?? null">Date</x-table.heading> --}}
+                    <x-table.heading sortable multi-column wire:click="sortBy('created_at')" :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
                     <x-table.heading />
                 </x-slot>
 
@@ -121,7 +114,17 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span class="font-medium text-cool-gray-900">${{ $category->amount }} </span> USD
+                            <span class="font-medium text-cool-gray-900">{{ $category->description }} </span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <ol>
+                                @foreach ( $category->lflbSubCategories->sortBy('position')->sortBy('title') as $sub_category)
+                                    <li>
+                                        <span class="font-medium text-cool-gray-900">{{ $sub_category->title }} </span>
+                                    </li>
+                                @endforeach
+                            </ol>
                         </x-table.cell>
 
                         <x-table.cell>
@@ -169,7 +172,7 @@
             <x-slot name="footer">
                 <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button.secondary>
 
-                <x-button.primary type="submit">Delete</x-button.primary>
+                <x-button.primary type="submit" wire:click="resetFilters">Delete</x-button.primary>
             </x-slot>
         </x-modal.confirmation>
     </form>
@@ -184,8 +187,8 @@
                     <x-input.text wire:model="editing.title" id="title" placeholder="Title" />
                 </x-input.group>
 
-                <x-input.group for="amount" label="Amount" :error="$errors->first('editing.amount')">
-                    <x-input.money wire:model="editing.amount" id="amount" />
+                <x-input.group for="description" label="Description" :error="$errors->first('editing.description')">
+                    <x-input.text wire:model="editing.description" id="description" />
                 </x-input.group>
 
                 <x-input.group for="featured" label="Featured" :error="$errors->first('editing.featured')">
@@ -195,10 +198,15 @@
                         @endforeach
                     </x-input.select>
                 </x-input.group>
-
-                <x-input.group for="date_for_editing" label="Date" :error="$errors->first('editing.date_for_editing')">
-                    <x-input.date wire:model="editing.date_for_editing" id="date_for_editing" />
-                </x-input.group>
+                @if(count($editing->lflbSubCategories) > 0)
+                    <x-input.group for="sub_categories" label="Sub-Categories" :error="$errors->first('editing.sub_categories')">
+                            <ol>
+                                @foreach ( $editing->lflbSubCategories->sortBy('position')->sortBy('title') as $sub_category)
+                                    <li class="font-medium text-cool-gray-900">{{ $sub_category->title }} </li>
+                                @endforeach
+                            </ol>
+                    </x-input.group>
+                @endif
             </x-slot>
 
             <x-slot name="footer">

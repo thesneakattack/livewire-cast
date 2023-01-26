@@ -96,6 +96,9 @@ class Dashboard extends Component
         $this->editing->save();
 
         $this->showEditModal = false;
+
+        $this->notify('You\'ve added a transaction');
+
     }
 
     public function resetFilters() { $this->reset('filters'); }

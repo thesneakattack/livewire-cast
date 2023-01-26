@@ -169,7 +169,7 @@
             <x-slot name="footer">
                 <x-button.secondary wire:click="$set('showDeleteModal', false)">Cancel</x-button.secondary>
 
-                <x-button.primary type="submit">Delete</x-button.primary>
+                <x-button.primary type="submit" wire:click="resetFilters">Delete</x-button.primary>
             </x-slot>
         </x-modal.confirmation>
     </form>

@@ -19,6 +19,9 @@ class Categories extends Component
     public $showFilters = false;
     public $filters = [
         'search' => '',
+        'title' => '',
+        'description' => '',
+        'sub_categories' => '',
         'featured' => '',
     ];
     public LflbCategory $editing;
@@ -29,6 +32,7 @@ class Categories extends Component
 
     public function rules() { return [
         'editing.title' => 'required|min:3',
+        'editing.description' => 'required|min:3',
         'editing.featured' => 'required|in:'.collect(LflbCategory::STATUSES)->keys()->implode(','),
     ]; }
 
@@ -55,7 +59,7 @@ class Categories extends Component
 
     public function makeBlankCategory()
     {
-        return LflbCategory::make(['date' => now(), 'featured' => 'TRUE']);
+        return LflbCategory::make(['date' => now(), 'featured' => 'FALSE']);
     }
 
     public function toggleShowFilters()
@@ -90,6 +94,8 @@ class Categories extends Component
         $this->editing->save();
 
         $this->showEditModal = false;
+
+        $this->notify('You\'ve added a category');
     }
 
     public function resetFilters() { $this->reset('filters'); }
@@ -97,6 +103,9 @@ class Categories extends Component
     public function getRowsQueryProperty()
     {
         $query = LflbCategory::query()
+            ->when($this->filters['title'], fn($query, $title) => $query->where('title', 'like', '%'.$title.'%'))
+            ->when($this->filters['description'], fn($query, $description) => $query->where('description', 'like', '%'.$description.'%'))
+            ->when($this->filters['sub_categories'], fn($query, $sub_categories) => $query->where('sub_categories', 'like', '%'.$sub_categories.'%'))
             ->when($this->filters['featured'], fn($query, $featured) => $query->where('featured', $featured))
             ->when($this->filters['search'], fn($query, $search) => $query->where('title', 'like', '%'.$search.'%'));
 

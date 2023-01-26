@@ -43,8 +43,8 @@ class LflbCategory extends Model
     ];
 
     protected $guarded = [];
-    // protected $casts = ['date' => 'date'];
-    protected $appends = ['date_for_editing'];
+    protected $casts = ['created_at' => 'datetime'];
+    // protected $appends = ['date_for_editing'];
 
     public function getStatusColorAttribute()
     {
@@ -56,16 +56,16 @@ class LflbCategory extends Model
 
     public function getDateForHumansAttribute()
     {
-        // return $this->date->format('M, d Y');
+        return Carbon::parse($this->created_at)->diffForHumans();
     }
 
-    public function getDateForEditingAttribute()
-    {
-        // return $this->date->format('m/d/Y');
-    }
+    // public function getDateForEditingAttribute()
+    // {
+    //     return Carbon::parse($this->created_at);
+    // }
 
-    public function setDateForEditingAttribute($value)
-    {
-        // $this->date = Carbon::parse($value);
-    }
+    // public function setDateForEditingAttribute($value)
+    // {
+    //     $this->created_at = Carbon::parse($value);
+    // }
 }
