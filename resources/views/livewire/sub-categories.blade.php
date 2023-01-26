@@ -29,7 +29,7 @@
                     </x-dropdown.item>
                 </x-dropdown>
 
-                {{-- <livewire:import-categories /> --}}
+                {{-- <livewire:import-sub-categories /> --}}
 
                 <x-button.primary wire:click="create"><x-icon.plus/> New</x-button.primary>
             </div>

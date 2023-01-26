@@ -6,6 +6,7 @@ use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Categories;
+use App\Http\Livewire\SubCategories;
 use App\Http\Livewire\Profile;
 
 /*
@@ -35,7 +36,8 @@ Route::middleware([
     // })->name('dashboard');
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/categories', Categories::class)->name('categories');
-    // Route::get('/profile', Profile::class);    
+    Route::get('/sub-categories', SubCategories::class)->name('sub-categories');
+    // Route::get('/profile', Profile::class);
 });
 
 /**
