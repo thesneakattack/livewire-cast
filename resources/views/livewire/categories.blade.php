@@ -214,7 +214,7 @@
                     <x-input.text wire:model="editing.bodyText" id="bodyText" />
                 </x-input.group>
 
-                <x-input.group for="mainImage" label="mainImage" :error="$errors->first('editing.mainImage')">
+                <x-input.group for="mainImage" label="Header Image" :error="$errors->first('editing.mainImage')">
                     <x-input.text wire:model="editing.mainImage" id="mainImage" />
                 </x-input.group>
 
