@@ -23,8 +23,8 @@ return new class extends Migration
             $table->text('sub_categories_old')->nullable();
             $table->text('sub_categories')->nullable();
             $table->string('featured', 10)->default('FALSE');
-            $table->string('introText')->nullable()->default('');
-            $table->string('bodyText')->nullable()->default('');
+            $table->text('introText')->nullable()->default('');
+            $table->text('bodyText')->nullable()->default('');
             $table->string('mainImage', 80)->nullable();
         });
     }

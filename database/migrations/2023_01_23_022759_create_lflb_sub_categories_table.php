@@ -17,7 +17,7 @@ return new class extends Migration
             $table->comment('');
             $table->integer('id', true);
             $table->string('_oldid', 30)->nullable();
-            $table->integer('category_id')->nullable()->index('FK_lflb_sub_collections_lflb_collections');
+            $table->integer('category_id')->nullable()->index('FK_lflb_sub_categories_lflb_categories');
             $table->string('title', 40);
             $table->text('stories')->nullable();
             $table->text('stories_old')->nullable();

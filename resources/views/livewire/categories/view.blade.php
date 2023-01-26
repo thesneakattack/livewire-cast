@@ -207,11 +207,11 @@
                 </x-input.group>
 
                 <x-input.group for="introText" label="Introduction" :error="$errors->first('editing.introText')">
-                    <x-input.text wire:model="editing.introText" id="introText" />
+                    <x-input.rich-text wire:model.defer="editing.introText" id="introText" />
                 </x-input.group>
 
                 <x-input.group for="bodyText" label="Body" :error="$errors->first('editing.bodyText')">
-                    <x-input.text wire:model="editing.bodyText" id="bodyText" />
+                    <x-input.rich-text wire:model.defer="editing.bodyText" id="bodyText" />
                 </x-input.group>
 
                 <x-input.group for="mainImage" label="Header Image" :error="$errors->first('editing.mainImage')">
