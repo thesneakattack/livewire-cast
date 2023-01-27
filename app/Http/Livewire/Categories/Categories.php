@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Categories;
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use App\Models\LflbCategory;
 use Illuminate\Support\Carbon;
 use App\Http\Livewire\DataTable\WithSorting;
@@ -12,7 +13,7 @@ use App\Http\Livewire\DataTable\WithPerPagePagination;
 
 class Categories extends Component
 {
-    use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows;
+    use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows, WithFileUploads;
 
     public $showDeleteModal = false;
     public $showEditModal = false;
@@ -28,6 +29,7 @@ class Categories extends Component
         'featured' => '',
     ];
     public LflbCategory $editing;
+    public $upload;
 
     protected $queryString = ['sorts'];
 
@@ -38,6 +40,7 @@ class Categories extends Component
         'editing.description' => 'required|min:3',
         'editing.introText' => 'sometimes|nullable',
         'editing.bodyText' => 'sometimes|nullable',
+        // 'editing.mainImage' => 'nullable|image|max:1024',
         'editing.mainImage' => 'sometimes|nullable',
         'editing.featured' => 'required|in:'.collect(LflbCategory::STATUSES)->keys()->implode(','),
     ]; }
@@ -100,6 +103,10 @@ class Categories extends Component
         $this->validate();
 
         $this->editing->save();
+dd($this->upload);
+        $this->upload && $this->editing->update([
+            'mainImage' => $this->upload->store('/', 'storage'),
+        ]);
 
         $this->showEditModal = false;
 

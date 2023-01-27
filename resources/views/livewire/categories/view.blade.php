@@ -206,18 +206,30 @@
                     <x-input.text wire:model="editing.description" id="description" />
                 </x-input.group>
 
-                <x-input.group for="introText" label="Introduction" :error="$errors->first('editing.introText')">
+                {{-- <x-input.group for="introText" label="Introduction" :error="$errors->first('editing.introText')">
                     <x-input.rich-text wire:model.defer="editing.introText" id="introText" />
                 </x-input.group>
 
                 <x-input.group for="bodyText" label="Body" :error="$errors->first('editing.bodyText')">
                     <x-input.rich-text wire:model.defer="editing.bodyText" id="bodyText" />
-                </x-input.group>
+                </x-input.group> --}}
 
-                <x-input.group for="mainImage" label="Header Image" :error="$errors->first('editing.mainImage')">
+                {{-- <x-input.group for="mainImage" label="Header Image" :error="$errors->first('editing.mainImage')">
                     <x-input.text wire:model="editing.mainImage" id="mainImage" />
-                </x-input.group>
+                </x-input.group> --}}
 
+                <x-input.group label="Header Image" for="mainImage" :error="$errors->first('editing.mainImage')">
+                    <x-input.file-upload wire:model="editing.mainImage" id="mainImage">
+                        <span class="w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
+                            @if ($upload)
+                                <img src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
+                            @else
+                                {{-- <img src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo"> --}}
+                                ACK ACK ACK
+                            @endif
+                        </span>
+                    </x-input.file-upload>
+                </x-input.group>
                 <x-input.group for="featured" label="Featured" :error="$errors->first('editing.featured')">
                     <x-input.select wire:model="editing.featured" id="featured">
                         @foreach (App\Models\LflbCategory::STATUSES as $value => $label)
