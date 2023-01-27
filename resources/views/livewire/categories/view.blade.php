@@ -224,8 +224,8 @@
                             @if ($upload)
                                 <img src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
                             @else
-                                {{-- <img src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo"> --}}
-                                ACK ACK ACK
+                                {{-- <img src="{{ asset('/storage/'.$editing->mainImage) }}" alt="Profile Photo"> --}}
+                                <img src="{{ $editing->avatarUrl() }}" alt="Profile Photo">
                             @endif
                         </span>
                     </x-input.file-upload>

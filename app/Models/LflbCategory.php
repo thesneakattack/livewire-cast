@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-
+use Storage;
 /**
  * @property integer $id
  * @property string $_oldid
@@ -68,4 +68,11 @@ class LflbCategory extends Model
     // {
     //     $this->created_at = Carbon::parse($value);
     // }
+
+    public function avatarUrl()
+    {
+        return $this->mainImage
+            ? Storage::disk('public')->url($this->mainImage)
+            : 'https://www.gravatar.com/avatar/'.md5(strtolower(trim($this->email)));
+    }
 }

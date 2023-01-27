@@ -92,6 +92,7 @@ class Categories extends Component
         $this->useCachedRows();
 
         if ($this->editing->isNot($lflb_category)) $this->editing = $lflb_category;
+        // $this->editing->mainImage = $this->editing->avatarUrl();
 
         $this->showEditModal = true;
 
