@@ -120,7 +120,7 @@ class SubCategories extends Component
 
     public function render()
     {
-        return view('livewire.sub-categories.view', [
+        return view('livewire.sub-categories.sub-categories', [
             'sub-categories' => $this->rows,
         ]);
     }

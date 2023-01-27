@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-trix-toolbar .trix-button-group.trix-button-group--file-tools, .trix-button-group.trix-button-group--text-tools .trix-button--icon-link {
+trix-toolbar .trix-button-group.trix-button-group--file-tools,
+trix-toolbar .trix-button-group.trix-button-group--text-tools .trix-button--icon-link,
+trix-toolbar .trix-button-group.trix-button-group--text-tools .trix-button--icon-strike
+{
     display: none;
 }

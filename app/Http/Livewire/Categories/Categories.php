@@ -143,7 +143,7 @@ class Categories extends Component
 
     public function render()
     {
-        return view('livewire.categories.view', [
+        return view('livewire.categories.categories', [
             'categories' => $this->rows,
         ]);
     }

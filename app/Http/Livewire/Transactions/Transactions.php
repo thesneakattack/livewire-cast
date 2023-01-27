@@ -125,7 +125,7 @@ class Transactions extends Component
 
     public function render()
     {
-        return view('livewire.transactions.view', [
+        return view('livewire.transactions.transactions', [
             'transactions' => $this->rows,
         ]);
     }
