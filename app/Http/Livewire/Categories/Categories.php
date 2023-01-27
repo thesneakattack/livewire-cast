@@ -102,10 +102,12 @@ class Categories extends Component
     {
         $this->validate();
 
+        // dd($this->upload);
+
         $this->editing->save();
-dd($this->upload);
+
         $this->upload && $this->editing->update([
-            'mainImage' => $this->upload->store('/', 'storage'),
+            'mainImage' => $this->upload->store('/', 'public'),
         ]);
 
         $this->showEditModal = false;

@@ -219,7 +219,7 @@
                 </x-input.group> --}}
 
                 <x-input.group label="Header Image" for="mainImage" :error="$errors->first('editing.mainImage')">
-                    <x-input.file-upload wire:model="editing.mainImage" id="mainImage">
+                    <x-input.file-upload wire:model="upload" id="mainImage">
                         <span class="w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
                             @if ($upload)
                                 <img src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
