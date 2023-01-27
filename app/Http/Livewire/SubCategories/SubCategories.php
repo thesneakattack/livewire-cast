@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\SubCategories;
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use App\Models\LflbSubCategory;
 use Illuminate\Support\Carbon;
 use App\Http\Livewire\DataTable\WithSorting;
@@ -12,7 +13,7 @@ use App\Http\Livewire\DataTable\WithPerPagePagination;
 
 class SubCategories extends Component
 {
-    use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows;
+    use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows, WithFileUploads;
 
     public $showDeleteModal = false;
     public $showEditModal = false;
@@ -25,6 +26,7 @@ class SubCategories extends Component
         'featured' => '',
     ];
     public LflbSubCategory $editing;
+    public $upload;
 
     protected $queryString = ['sorts'];
 
@@ -33,6 +35,7 @@ class SubCategories extends Component
     public function rules() { return [
         'editing.title' => 'required|min:3',
         'editing.subTitle' => 'required|min:3',
+        'editing.mainImage' => 'sometimes|nullable',
     ]; }
 
     public function mount() { $this->editing = $this->makeBlankCategory(); }
@@ -77,11 +80,11 @@ class SubCategories extends Component
         $this->showEditModal = true;
     }
 
-    public function edit(LflbSubCategory $lflb_category)
+    public function edit(LflbSubCategory $lflb_sub_category)
     {
         $this->useCachedRows();
 
-        if ($this->editing->isNot($lflb_category)) $this->editing = $lflb_category;
+        if ($this->editing->isNot($lflb_sub_category)) $this->editing = $lflb_sub_category;
 
         $this->showEditModal = true;
     }
@@ -121,7 +124,7 @@ class SubCategories extends Component
     public function render()
     {
         return view('livewire.sub-categories.sub-categories', [
-            'sub-categories' => $this->rows,
+            'sub_categories' => $this->rows,
         ]);
     }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-
+use Storage;
 /**
  * @property integer $id
  * @property integer $category_id
@@ -37,5 +38,12 @@ class LflbSubCategory extends Model
     public function storyIds()
     {
         return explode(',', $this->stories);
+    }
+
+    public function mainImageUrl()
+    {
+        return $this->mainImage
+            ? Storage::disk('public')->url($this->mainImage)
+            : 'https://www.gravatar.com/avatar/'.md5(strtolower(trim($this->email)));
     }
 }

@@ -1,11 +1,11 @@
 <div>
-    <h1 class="text-2xl font-semibold text-gray-900">Categories</h1>
+    <h1 class="text-2xl font-semibold text-gray-900">Sub-Categories</h1>
 
     <div class="py-4 space-y-4">
         <!-- Top Bar -->
         <div class="flex justify-between">
             <div class="flex w-2/4 space-x-4">
-                <x-input.text wire:model="filters.search" placeholder="Search Categories..." />
+                <x-input.text wire:model="filters.search" placeholder="Search Sub-Categories..." />
 
                 <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...</x-button.link>
             </div>
@@ -29,7 +29,7 @@
                     </x-dropdown.item>
                 </x-dropdown>
 
-                {{-- <livewire:import-sub-categories /> --}}
+                {{-- <livewire:categories.import-categories /> --}}
 
                 <x-button.primary wire:click="create"><x-icon.plus/> New</x-button.primary>
             </div>
@@ -66,15 +66,18 @@
             @endif
         </div>
 
-        <!-- Categories Table -->
+        <!-- Sub-Categories Table -->
         <div class="flex-col space-y-4">
             <x-table>
                 <x-slot name="head">
                     <x-table.heading class="w-8 pr-0">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('title')" :direction="$sorts['title'] ?? null" class="w-full">Title</x-table.heading>
-                    <x-table.heading>Description</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('title')" :direction="$sorts['title'] ?? null">Title</x-table.heading>
+                    {{-- <x-table.heading>Description</x-table.heading> --}}
+                    {{-- <x-table.heading>Introduction</x-table.heading>
+                    <x-table.heading>Body</x-table.heading> --}}
+                    <x-table.heading>Main Image</x-table.heading>
                     <x-table.heading>Sub-Categories</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('featured')" :direction="$sorts['featured'] ?? null">Featured</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')" :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
@@ -87,58 +90,68 @@
                         <x-table.cell colspan="6">
                             @unless ($selectAll)
                             <div>
-                                <span>You have selected <strong>{{ $categories->count() }}</strong> categories, do you want to select all <strong>{{ $categories->total() }}</strong>?</span>
+                                <span>You have selected <strong>{{ $sub_categories->count() }}</strong> categories, do you want to select all <strong>{{ $sub_categories->total() }}</strong>?</span>
                                 <x-button.link wire:click="selectAll" class="ml-1 text-blue-600">Select All</x-button.link>
                             </div>
                             @else
-                            <span>You are currently selecting all <strong>{{ $categories->total() }}</strong> categories.</span>
+                            <span>You are currently selecting all <strong>{{ $sub_categories->total() }}</strong> categories.</span>
                             @endif
                         </x-table.cell>
                     </x-table.row>
                     @endif
 
-                    @forelse ($categories as $category)
-                    <x-table.row wire:loading.class.delay="opacity-50" wire:key="row-{{ $category->id }}">
+                    @forelse ($sub_categories as $sub_category)
+                    <x-table.row wire:loading.class.delay="opacity-50" wire:key="row-{{ $sub_category->id }}">
                         <x-table.cell class="pr-0">
-                            <x-input.checkbox wire:model="selected" value="{{ $category->id }}" />
+                            <x-input.checkbox wire:model="selected" value="{{ $sub_category->id }}" />
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span href="#" class="inline-flex space-x-2 text-sm leading-5 truncate">
+                            <span href="#" class="inline-flex space-x-2 text-sm leading-5">
                                 <x-icon.cash class="text-cool-gray-400"/>
 
                                 <p class="truncate text-cool-gray-600">
-                                    {{ $category->title }}
+                                    {{ $sub_category->title }}
                                 </p>
                             </span>
                         </x-table.cell>
 
-                        <x-table.cell>
-                            <span class="font-medium text-cool-gray-900">{{ $category->description }} </span>
+                        {{-- <x-table.cell>
+                            <span class="font-medium text-cool-gray-900">{{ $sub_category->description }} </span>
                         </x-table.cell>
 
                         <x-table.cell>
+                            <span class="font-medium text-cool-gray-900">{{ $sub_category->introText }} </span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <span class="font-medium text-cool-gray-900">{{ $sub_category->bodyText }} </span>
+                        </x-table.cell> --}}
+
+                        <x-table.cell>
+                            <span class="font-medium text-cool-gray-900">{{ $sub_category->mainImage }} </span>
+                        </x-table.cell>
+
+                        <x-table.cell class="max-w-[150px]">
                             <ol>
-                                @foreach ( $category->lflbSubCategories->sortBy('position')->sortBy('title') as $sub_category)
                                     <li>
-                                        <span class="font-medium text-cool-gray-900">{{ $sub_category->title }} </span>
+                                        <span class="font-medium text-cool-gray-900">{{ $sub_category->LflbCategory }} </span>
                                     </li>
-                                @endforeach
                             </ol>
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-{{ $category->status_color }}-100 text-{{ $category->status_color }}-800 capitalize">
-                                {{ $category->featured }}
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-{{ $sub_category->status_color }}-100 text-{{ $sub_category->status_color }}-800 capitalize">
+                                {{ $sub_category->featured }}
                             </span>
                         </x-table.cell>
 
                         <x-table.cell>
-                            {{ $category->date_for_humans }}
+                            {{ $sub_category->date_for_humans }}
                         </x-table.cell>
 
                         <x-table.cell>
-                            <x-button.link wire:click="edit({{ $category->id }})">Edit</x-button.link>
+                            <x-button.link wire:click="edit({{ $sub_category->id }})">Edit</x-button.link>
                         </x-table.cell>
                     </x-table.row>
                     @empty
@@ -155,12 +168,12 @@
             </x-table>
 
             <div>
-                {{ $categories->links() }}
+                {{ $sub_categories->links() }}
             </div>
         </div>
     </div>
 
-    <!-- Delete Categories Modal -->
+    <!-- Delete Sub-Categories Modal -->
     <form wire:submit.prevent="deleteSelected">
         <x-modal.confirmation wire:model.defer="showDeleteModal">
             <x-slot name="title">Delete Category</x-slot>
@@ -191,6 +204,26 @@
                     <x-input.text wire:model="editing.description" id="description" />
                 </x-input.group>
 
+                <x-input.group for="introText" label="Introduction" :error="$errors->first('editing.introText')">
+                    <x-input.rich-text wire:model.defer="editing.introText" id="introText" />
+                </x-input.group>
+
+                <x-input.group for="bodyText" label="Body" :error="$errors->first('editing.bodyText')">
+                    <x-input.rich-text wire:model.defer="editing.bodyText" id="bodyText" />
+                </x-input.group>
+
+                <x-input.group label="Header Image" for="mainImage" :error="$errors->first('editing.mainImage')">
+                    <x-input.file-upload wire:model="upload" id="mainImage">
+                        <span class="w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
+                            @if ($upload)
+                                <img src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
+                            @else
+                                {{-- <img src="{{ asset('/storage/'.$editing->mainImage) }}" alt="Profile Photo"> --}}
+                                <img src="{{ $editing->mainImageUrl() }}" alt="Profile Photo">
+                            @endif
+                        </span>
+                    </x-input.file-upload>
+                </x-input.group>
                 <x-input.group for="featured" label="Featured" :error="$errors->first('editing.featured')">
                     <x-input.select wire:model="editing.featured" id="featured">
                         @foreach (App\Models\LflbCategory::STATUSES as $value => $label)
@@ -198,15 +231,11 @@
                         @endforeach
                     </x-input.select>
                 </x-input.group>
-                @if(count($editing->lflbSubCategories) > 0)
-                    <x-input.group for="sub_categories" label="Sub-Categories" :error="$errors->first('editing.sub_categories')">
+                    <x-input.group for="parent_category" label="Sub-Categories" :error="$errors->first('editing.parent_category')">
                             <ol>
-                                @foreach ( $editing->lflbSubCategories->sortBy('position')->sortBy('title') as $sub_category)
-                                    <li class="font-medium text-cool-gray-900">{{ $sub_category->title }} </li>
-                                @endforeach
+                                    <li class="font-medium text-cool-gray-900">{{ $editing->lflbCategory->title }} </li>
                             </ol>
                     </x-input.group>
-                @endif
             </x-slot>
 
             <x-slot name="footer">

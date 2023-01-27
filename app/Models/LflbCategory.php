@@ -69,7 +69,7 @@ class LflbCategory extends Model
     //     $this->created_at = Carbon::parse($value);
     // }
 
-    public function avatarUrl()
+    public function mainImageUrl()
     {
         return $this->mainImage
             ? Storage::disk('public')->url($this->mainImage)
