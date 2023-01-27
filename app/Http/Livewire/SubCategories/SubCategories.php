@@ -85,6 +85,7 @@ class SubCategories extends Component
         $this->useCachedRows();
 
         if ($this->editing->isNot($lflb_sub_category)) $this->editing = $lflb_sub_category;
+        $this->editing->parent_category = $lflb_sub_category->lflbCategory->title;
 
         $this->showEditModal = true;
     }

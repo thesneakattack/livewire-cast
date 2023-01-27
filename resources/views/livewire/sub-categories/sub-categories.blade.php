@@ -135,7 +135,7 @@
                         <x-table.cell class="max-w-[150px]">
                             <ol>
                                     <li>
-                                        <span class="font-medium text-cool-gray-900">{{ $sub_category->LflbCategory }} </span>
+                                        <span class="font-medium text-cool-gray-900">{{ $sub_category->LflbCategory->title }} </span>
                                     </li>
                             </ol>
                         </x-table.cell>
@@ -224,17 +224,12 @@
                         </span>
                     </x-input.file-upload>
                 </x-input.group>
-                <x-input.group for="featured" label="Featured" :error="$errors->first('editing.featured')">
-                    <x-input.select wire:model="editing.featured" id="featured">
-                        @foreach (App\Models\LflbCategory::STATUSES as $value => $label)
-                            <option value="{{ $value }}">{{ $label }}</option>
-                        @endforeach
-                    </x-input.select>
-                </x-input.group>
-                    <x-input.group for="parent_category" label="Sub-Categories" :error="$errors->first('editing.parent_category')">
-                            <ol>
-                                    <li class="font-medium text-cool-gray-900">{{ $editing->lflbCategory->title }} </li>
-                            </ol>
+                    <x-input.group for="parent_category" label="Parent Category" :error="$errors->first('editing.parent_category')">
+                        <x-input.select wire:model="editing.parent_category" id="parent_category">
+                            @foreach (App\Models\LflbCategory::all() as $parent_category)
+                                <option value="{{ $parent_category->id }}">{{ $parent_category->title }}</option>
+                            @endforeach
+                        </x-input.select>
                     </x-input.group>
             </x-slot>
 
