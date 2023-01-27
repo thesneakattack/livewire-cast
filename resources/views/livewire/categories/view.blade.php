@@ -206,17 +206,13 @@
                     <x-input.text wire:model="editing.description" id="description" />
                 </x-input.group>
 
-                {{-- <x-input.group for="introText" label="Introduction" :error="$errors->first('editing.introText')">
+                <x-input.group for="introText" label="Introduction" :error="$errors->first('editing.introText')">
                     <x-input.rich-text wire:model.defer="editing.introText" id="introText" />
                 </x-input.group>
 
                 <x-input.group for="bodyText" label="Body" :error="$errors->first('editing.bodyText')">
                     <x-input.rich-text wire:model.defer="editing.bodyText" id="bodyText" />
-                </x-input.group> --}}
-
-                {{-- <x-input.group for="mainImage" label="Header Image" :error="$errors->first('editing.mainImage')">
-                    <x-input.text wire:model="editing.mainImage" id="mainImage" />
-                </x-input.group> --}}
+                </x-input.group>
 
                 <x-input.group label="Header Image" for="mainImage" :error="$errors->first('editing.mainImage')">
                     <x-input.file-upload wire:model="upload" id="mainImage">

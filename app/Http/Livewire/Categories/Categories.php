@@ -68,7 +68,8 @@ class Categories extends Component
 
     public function makeBlankCategory()
     {
-        return LflbCategory::make(['date' => now(), 'featured' => 'FALSE']);
+        //set default values
+        return LflbCategory::make(['featured' => 'FALSE']);
     }
 
     public function toggleShowFilters()
@@ -113,7 +114,7 @@ class Categories extends Component
 
         $this->showEditModal = false;
 
-        $this->notify('You\'ve added a category');
+        $this->notify('You\'ve updated a category');
     }
 
     public function resetFilters() { $this->reset('filters'); }
