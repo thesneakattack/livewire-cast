@@ -32,14 +32,24 @@ class SubCategories extends Component
 
     protected $listeners = ['refreshSubCategories' => '$refresh'];
 
-    public function rules() { return [
-        'editing.title' => 'required|min:3',
-        'editing.subTitle' => 'required|min:3',
-        'editing.mainImage' => 'sometimes|nullable',
-    ]; }
+    public function rules()
+    {
+        return [
+            'editing.title' => 'required|min:3',
+            'editing.subTitle' => 'required|min:3',
+            'editing.mainImage' => 'sometimes|nullable',
+            'editing.category_id' => 'sometimes|nullable',
+        ];
+    }
 
-    public function mount() { $this->editing = $this->makeBlankCategory(); }
-    public function updatedFilters() { $this->resetPage(); }
+    public function mount()
+    {
+        $this->editing = $this->makeBlankCategory();
+    }
+    public function updatedFilters()
+    {
+        $this->resetPage();
+    }
 
     public function exportSelected()
     {
@@ -56,7 +66,7 @@ class SubCategories extends Component
 
         $this->showDeleteModal = false;
 
-        $this->notify('You\'ve deleted '.$deleteCount.' sub-categories');
+        $this->notify('You\'ve deleted ' . $deleteCount . ' sub-categories');
     }
 
     public function makeBlankCategory()
@@ -68,7 +78,7 @@ class SubCategories extends Component
     {
         $this->useCachedRows();
 
-        $this->showFilters = ! $this->showFilters;
+        $this->showFilters = !$this->showFilters;
     }
 
     public function create()
@@ -85,9 +95,10 @@ class SubCategories extends Component
         $this->useCachedRows();
 
         if ($this->editing->isNot($lflb_sub_category)) $this->editing = $lflb_sub_category;
-        $this->editing->parent_category = $lflb_sub_category->lflbCategory->title;
+        // $this->editing->category_id = $lflb_sub_category->lflbCategory->id;
 
         $this->showEditModal = true;
+        // dd($lflb_sub_category);
     }
 
     public function save()
@@ -96,21 +107,28 @@ class SubCategories extends Component
 
         $this->editing->save();
 
+        $this->upload && $this->editing->update([
+            'mainImage' => $this->upload->store('/', 'public'),
+        ]);
+
         $this->showEditModal = false;
 
-        $this->notify('You\'ve added a sub-category');
+        $this->notify('You\'ve updated a sub-category');
     }
 
-    public function resetFilters() { $this->reset('filters'); }
+    public function resetFilters()
+    {
+        $this->reset('filters');
+    }
 
     public function getRowsQueryProperty()
     {
         $query = LflbSubCategory::query()
-            ->when($this->filters['title'], fn($query, $title) => $query->where('title', 'like', '%'.$title.'%'))
-            ->when($this->filters['subTitle'], fn($query, $subTitle) => $query->where('subTitle', 'like', '%'.$subTitle.'%'))
+            ->when($this->filters['title'], fn ($query, $title) => $query->where('title', 'like', '%' . $title . '%'))
+            ->when($this->filters['subTitle'], fn ($query, $subTitle) => $query->where('subTitle', 'like', '%' . $subTitle . '%'))
             // ->when($this->filters['sub_categories'], fn($query, $sub_categories) => $query->where('sub_categories', 'like', '%'.$sub_categories.'%'))
-            ->when($this->filters['featured'], fn($query, $featured) => $query->where('featured', $featured))
-            ->when($this->filters['search'], fn($query, $search) => $query->where('title', 'like', '%'.$search.'%'));
+            ->when($this->filters['featured'], fn ($query, $featured) => $query->where('featured', $featured))
+            ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'));
 
         return $this->applySorting($query);
     }

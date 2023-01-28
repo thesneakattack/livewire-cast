@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Storage;
+
 /**
  * @property integer $id
  * @property integer $category_id
@@ -34,6 +35,13 @@ class LflbSubCategory extends Model
         return $this->belongsTo('App\Models\LflbCategory', 'category_id');
     }
 
+    protected $guarded = [];
+    protected $casts = ['created_at' => 'datetime'];
+
+    public function getDateForHumansAttribute()
+    {
+        return Carbon::parse($this->created_at)->diffForHumans();
+    }
     // Custom code David F.
     public function storyIds()
     {
@@ -44,6 +52,6 @@ class LflbSubCategory extends Model
     {
         return $this->mainImage
             ? Storage::disk('public')->url($this->mainImage)
-            : 'https://www.gravatar.com/avatar/'.md5(strtolower(trim($this->email)));
+            : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
     }
 }
