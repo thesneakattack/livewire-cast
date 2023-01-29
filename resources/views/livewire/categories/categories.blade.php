@@ -147,12 +147,12 @@
 
                         <x-table.cell class="max-w-[150px]">
                             <ol>
-                                @foreach ( $category->lflbSubCategories->sortBy('position')->sortBy('title') as
-                                $sub_category)
+                                @foreach ( $category->lflbSubCategories->sortBy('position')->sortBy('title') as $sub_category)
                                 <li>
                                     <span class="font-medium text-cool-gray-900">{{ $sub_category->title }} </span>
                                 </li>
                                 @endforeach
+
                             </ol>
                         </x-table.cell>
 
