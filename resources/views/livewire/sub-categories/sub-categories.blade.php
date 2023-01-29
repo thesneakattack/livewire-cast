@@ -86,7 +86,8 @@
                     {{-- <x-table.heading>Introduction</x-table.heading>
                     <x-table.heading>Body</x-table.heading> --}}
                     <x-table.heading>Main Image</x-table.heading>
-                    <x-table.heading>Sub-Categories</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('category_id')"
+                        :direction="$sorts['parent_category'] ?? null">Parent Category</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('featured')"
                         :direction="$sorts['featured'] ?? null">Featured</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
@@ -149,7 +150,7 @@
                             <ol>
                                 <li>
                                     <span class="font-medium text-cool-gray-900">{{
-                                        $sub_category->LflbCategory::findor($sub_category->category_id)->title
+                                        $sub_category->LflbCategory->title
                                         }} </span>
                                 </li>
                             </ol>
@@ -175,7 +176,8 @@
                         <x-table.cell colspan="6">
                             <div class="flex items-center justify-center space-x-2">
                                 <x-icon.inbox class="w-8 h-8 text-cool-gray-400" />
-                                <span class="py-8 text-xl font-medium text-cool-gray-400">No categories found...</span>
+                                <span class="py-8 text-xl font-medium text-cool-gray-400">No sub-categories
+                                    found...</span>
                             </div>
                         </x-table.cell>
                     </x-table.row>

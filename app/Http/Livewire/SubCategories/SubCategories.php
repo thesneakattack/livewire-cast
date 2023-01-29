@@ -10,6 +10,7 @@ use App\Http\Livewire\DataTable\WithSorting;
 use App\Http\Livewire\DataTable\WithCachedRows;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
+use App\Models\LflbCategory;
 
 class SubCategories extends Component
 {
@@ -22,10 +23,12 @@ class SubCategories extends Component
         'search' => '',
         'title' => '',
         'subTitle' => '',
-        // 'sub_categories' => '',
+        'category_id' => '',
+        'parent_category' => '',
         'featured' => '',
     ];
     public LflbSubCategory $editing;
+    public $collection;
     public $upload;
 
     protected $queryString = ['sorts'];
@@ -45,6 +48,7 @@ class SubCategories extends Component
     public function mount()
     {
         $this->editing = $this->makeBlankCategory();
+        $this->collection = LflbSubCategory::all();
     }
     public function updatedFilters()
     {
@@ -126,7 +130,15 @@ class SubCategories extends Component
         $query = LflbSubCategory::query()
             ->when($this->filters['title'], fn ($query, $title) => $query->where('title', 'like', '%' . $title . '%'))
             ->when($this->filters['subTitle'], fn ($query, $subTitle) => $query->where('subTitle', 'like', '%' . $subTitle . '%'))
-            // ->when($this->filters['sub_categories'], fn($query, $sub_categories) => $query->where('sub_categories', 'like', '%'.$sub_categories.'%'))
+            ->when($this->filters['category_id'], fn ($query, $category_id) => $query->where('category_id', 'like', '%' . $category_id . '%'))
+            ->when(
+                $this->filters['category_id'],
+                function ($query, $category_id) {
+                    // return dd(LflbCategory::query());
+                    return $query->where('category_id', 'like', '%' . $category_id . '%');
+                }
+            )
+            ->when($this->filters['parent_category'], fn ($query, $parent_category) => $query->where('category.title', 'like', '%' . $parent_category . '%'))
             ->when($this->filters['featured'], fn ($query, $featured) => $query->where('featured', $featured))
             ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'));
 

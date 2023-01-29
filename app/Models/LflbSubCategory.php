@@ -37,6 +37,7 @@ class LflbSubCategory extends Model
 
     protected $guarded = [];
     protected $casts = ['created_at' => 'datetime'];
+    protected $with = ['lflbCategory'];
 
     public function getDateForHumansAttribute()
     {
