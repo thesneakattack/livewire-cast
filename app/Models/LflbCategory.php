@@ -5,6 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Storage;
+use Kirschbaum\PowerJoins\PowerJoins;
+
 /**
  * @property integer $id
  * @property string $_oldid
@@ -23,6 +25,7 @@ use Storage;
  */
 class LflbCategory extends Model
 {
+    use PowerJoins;
     /**
      * @var array
      */
@@ -73,6 +76,6 @@ class LflbCategory extends Model
     {
         return $this->mainImage
             ? Storage::disk('public')->url($this->mainImage)
-            : 'https://www.gravatar.com/avatar/'.md5(strtolower(trim($this->email)));
+            : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
     }
 }

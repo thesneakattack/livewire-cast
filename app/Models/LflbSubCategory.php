@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Storage;
+use Kirschbaum\PowerJoins\PowerJoins;
 
 /**
  * @property integer $id
@@ -22,6 +23,7 @@ use Storage;
  */
 class LflbSubCategory extends Model
 {
+    use PowerJoins;
     /**
      * @var array
      */

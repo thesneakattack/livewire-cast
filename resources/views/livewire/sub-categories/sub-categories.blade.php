@@ -88,8 +88,8 @@
                     <x-table.heading>Main Image</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('category_id')"
                         :direction="$sorts['parent_category'] ?? null">Parent Category</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('featured')"
-                        :direction="$sorts['featured'] ?? null">Featured</x-table.heading>
+                    {{-- <x-table.heading sortable multi-column wire:click="sortBy('featured')"
+                        :direction="$sorts['featured'] ?? null">Featured</x-table.heading> --}}
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
                         :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
                     <x-table.heading />
@@ -150,18 +150,18 @@
                             <ol>
                                 <li>
                                     <span class="font-medium text-cool-gray-900">{{
-                                        $sub_category->LflbCategory->title
+                                        $sub_category->LflbCategory->id.':'.$sub_category->LflbCategory->title
                                         }} </span>
                                 </li>
                             </ol>
                         </x-table.cell>
 
-                        <x-table.cell>
+                        {{-- <x-table.cell>
                             <span
                                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-{{ $sub_category->status_color }}-100 text-{{ $sub_category->status_color }}-800 capitalize">
                                 {{ $sub_category->featured }}
                             </span>
-                        </x-table.cell>
+                        </x-table.cell> --}}
 
                         <x-table.cell>
                             {{ $sub_category->date_for_humans }}
