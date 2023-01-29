@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\DataTable;
 
+use Illuminate\Support\Facades\Log;
+
 trait WithSorting
 {
     public $sorts = [];
@@ -17,7 +19,8 @@ trait WithSorting
 
     public function applySorting($query)
     {
-        // dd($query->toSql());
+        Log::info($query->toSql());
+        // dd($query);
         foreach ($this->sorts as $field => $direction) {
             $query->orderBy($field, $direction);
         }

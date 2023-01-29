@@ -86,8 +86,8 @@
                     {{-- <x-table.heading>Introduction</x-table.heading>
                     <x-table.heading>Body</x-table.heading> --}}
                     <x-table.heading>Main Image</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('category_id')"
-                        :direction="$sorts['parent_category'] ?? null">Parent Category</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('lflb_categories.title')"
+                        :direction="$sorts['lflb_categories.title'] ?? null">Parent Category</x-table.heading>
                     {{-- <x-table.heading sortable multi-column wire:click="sortBy('featured')"
                         :direction="$sorts['featured'] ?? null">Featured</x-table.heading> --}}
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
@@ -113,7 +113,7 @@
                         </x-table.cell>
                     </x-table.row>
                     @endif
-
+                    {{-- {{dd($sub_categories)}} --}}
                     @forelse ($sub_categories as $sub_category)
                     <x-table.row wire:loading.class.delay="opacity-50" wire:key="row-{{ $sub_category->id }}">
                         <x-table.cell class="pr-0">

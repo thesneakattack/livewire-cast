@@ -130,7 +130,7 @@ class SubCategories extends Component
         $query = LflbSubCategory::query()
             ->when($this->filters['title'], fn ($query, $title) => $query->where('title', 'like', '%' . $title . '%'))
             ->when($this->filters['subTitle'], fn ($query, $subTitle) => $query->where('subTitle', 'like', '%' . $subTitle . '%'))
-            ->when($this->filters['category_id'], fn ($query, $category_id) => $query->where('category_id', 'like', '%' . $category_id . '%'))
+            // ->when($this->filters['parent_category'], fn ($query, $parent_category) => $query->where('`lflb_categories`.`title`', 'like', '%' . $parent_category . '%'))
             ->when(
                 $this->filters['category_id'],
                 function ($query, $category_id) {
@@ -138,15 +138,24 @@ class SubCategories extends Component
                     return $query->where('category_id', 'like', '%' . $category_id . '%');
                 }
             )
-            ->when($this->filters['parent_category'], fn ($query, $parent_category) => $query->where('category.title', 'like', '%' . $parent_category . '%'))
+            // ->when($this->filters['parent_category'], fn ($query, $parent_category) => $query->where('category.title', 'like', '%' . $parent_category . '%'))
             ->when($this->filters['featured'], fn ($query, $featured) => $query->where('featured', $featured))
-            ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'));
+            ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'))
+            // ->with('lflbCategory')->get();
+            ->join('lflb_categories', 'lflb_sub_categories.category_id', '=', 'lflb_categories.id')
+            ->select(
+                'lflb_sub_categories.*',
+                'lflb_categories.title as category_title',
+                'lflb_categories.mainImage as category_mainImage',
+            )
+            ->distinct();
 
         return $this->applySorting($query);
     }
 
     public function getRowsProperty()
     {
+        // dd($this->rowsQuery);
         return $this->cache(function () {
             return $this->applyPagination($this->rowsQuery);
         });
