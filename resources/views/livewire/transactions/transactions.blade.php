@@ -7,7 +7,8 @@
             <div class="flex w-2/4 space-x-4">
                 <x-input.text wire:model="filters.search" placeholder="Search Transactions..." />
 
-                <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...</x-button.link>
+                <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...
+                </x-button.link>
             </div>
 
             <div class="flex items-center space-x-2">
@@ -21,17 +22,20 @@
 
                 <x-dropdown label="Bulk Actions">
                     <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
-                        <x-icon.download class="text-cool-gray-400"/> <span>Export</span>
+                        <x-icon.download class="text-cool-gray-400" /> <span>Export</span>
                     </x-dropdown.item>
 
-                    <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')" class="flex items-center space-x-2">
-                        <x-icon.trash class="text-cool-gray-400"/> <span>Delete</span>
+                    <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')"
+                        class="flex items-center space-x-2">
+                        <x-icon.trash class="text-cool-gray-400" /> <span>Delete</span>
                     </x-dropdown.item>
                 </x-dropdown>
 
                 <livewire:transactions.import-transactions />
 
-                <x-button.primary wire:click="create"><x-icon.plus/> New</x-button.primary>
+                <x-button.primary wire:click="create">
+                    <x-icon.plus /> New
+                </x-button.primary>
             </div>
         </div>
 
@@ -68,7 +72,8 @@
                         <x-input.date wire:model="filters.date-max" id="filter-date-max" placeholder="MM/DD/YYYY" />
                     </x-input.group>
 
-                    <x-button.link wire:click="resetFilters" class="absolute bottom-0 right-0 p-4">Reset Filters</x-button.link>
+                    <x-button.link wire:click="resetFilters" class="absolute bottom-0 right-0 p-4">Reset Filters
+                    </x-button.link>
                 </div>
             </div>
             @endif
@@ -81,10 +86,14 @@
                     <x-table.heading class="w-8 pr-0">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('title')" :direction="$sorts['title'] ?? null" class="w-full">Title</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('amount')" :direction="$sorts['amount'] ?? null">Amount</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('status')" :direction="$sorts['status'] ?? null">Status</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('date')" :direction="$sorts['date'] ?? null">Date</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('title')"
+                        :direction="$sorts['title'] ?? null" class="w-full">Title</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('amount')"
+                        :direction="$sorts['amount'] ?? null">Amount</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('status')"
+                        :direction="$sorts['status'] ?? null">Status</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('date')"
+                        :direction="$sorts['date'] ?? null">Date</x-table.heading>
                     <x-table.heading />
                 </x-slot>
 
@@ -94,11 +103,14 @@
                         <x-table.cell colspan="6">
                             @unless ($selectAll)
                             <div>
-                                <span>You have selected <strong>{{ $transactions->count() }}</strong> transactions, do you want to select all <strong>{{ $transactions->total() }}</strong>?</span>
-                                <x-button.link wire:click="selectAll" class="ml-1 text-blue-600">Select All</x-button.link>
+                                <span>You have selected <strong>{{ $transactions->count() }}</strong> transactions, do
+                                    you want to select all <strong>{{ $transactions->total() }}</strong>?</span>
+                                <x-button.link wire:click="selectAll" class="ml-1 text-blue-600">Select All
+                                </x-button.link>
                             </div>
                             @else
-                            <span>You are currently selecting all <strong>{{ $transactions->total() }}</strong> transactions.</span>
+                            <span>You are currently selecting all <strong>{{ $transactions->total() }}</strong>
+                                transactions.</span>
                             @endif
                         </x-table.cell>
                     </x-table.row>
@@ -112,7 +124,7 @@
 
                         <x-table.cell>
                             <span href="#" class="inline-flex space-x-2 text-sm leading-5 truncate">
-                                <x-icon.cash class="text-cool-gray-400"/>
+                                <x-icon.cash class="text-cool-gray-400" />
 
                                 <p class="truncate text-cool-gray-600">
                                     {{ $transaction->title }}
@@ -125,7 +137,8 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-{{ $transaction->status_color }}-100 text-{{ $transaction->status_color }}-800 capitalize">
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-{{ $transaction->status_color }}-100 text-{{ $transaction->status_color }}-800 capitalize">
                                 {{ $transaction->status }}
                             </span>
                         </x-table.cell>
@@ -143,7 +156,8 @@
                         <x-table.cell colspan="6">
                             <div class="flex items-center justify-center space-x-2">
                                 <x-icon.inbox class="w-8 h-8 text-cool-gray-400" />
-                                <span class="py-8 text-xl font-medium text-cool-gray-400">No transactions found...</span>
+                                <span class="py-8 text-xl font-medium text-cool-gray-400">No transactions
+                                    found...</span>
                             </div>
                         </x-table.cell>
                     </x-table.row>
@@ -163,7 +177,7 @@
             <x-slot name="title">Delete Transaction</x-slot>
 
             <x-slot name="content">
-                <div class="py-8 text-cool-gray-700">Are you sure you? This action is irreversible.</div>
+                <div class="py-8 text-cool-gray-700">Are you sure? This action is irreversible.</div>
             </x-slot>
 
             <x-slot name="footer">
@@ -191,7 +205,7 @@
                 <x-input.group for="status" label="Status" :error="$errors->first('editing.status')">
                     <x-input.select wire:model="editing.status" id="status">
                         @foreach (App\Models\Transaction::STATUSES as $value => $label)
-                            <option value="{{ $value }}">{{ $label }}</option>
+                        <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
                     </x-input.select>
                 </x-input.group>

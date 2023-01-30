@@ -1,11 +1,11 @@
 <div>
-    <h1 class="text-2xl font-semibold text-gray-900">Sub-Categories</h1>
+    <h1 class="text-2xl font-semibold text-gray-900">Stories</h1>
 
     <div class="py-4 space-y-4">
         <!-- Top Bar -->
         <div class="flex justify-between">
             <div class="flex w-2/4 space-x-4">
-                <x-input.text wire:model="filters.search" placeholder="Search Sub-Categories..." />
+                <x-input.text wire:model="filters.search" placeholder="Search Stories..." />
 
                 <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...
                 </x-button.link>
@@ -73,7 +73,7 @@
             @endif
         </div>
 
-        <!-- Sub-Categories Table -->
+        <!-- Stories Table -->
         <div class="flex-col space-y-4">
             <x-table>
                 <x-slot name="head">
@@ -82,14 +82,9 @@
                     </x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('title')"
                         :direction="$sorts['title'] ?? null">Title</x-table.heading>
-                    {{-- <x-table.heading>Description</x-table.heading> --}}
-                    {{-- <x-table.heading>Introduction</x-table.heading>
-                    <x-table.heading>Body</x-table.heading> --}}
                     <x-table.heading>Main Image</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('lflb_categories.title')"
                         :direction="$sorts['lflb_categories.title'] ?? null">Parent Category</x-table.heading>
-                    {{-- <x-table.heading sortable multi-column wire:click="sortBy('featured')"
-                        :direction="$sorts['featured'] ?? null">Featured</x-table.heading> --}}
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
                         :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
                     <x-table.heading />
@@ -101,24 +96,23 @@
                         <x-table.cell colspan="6">
                             @unless ($selectAll)
                             <div>
-                                <span>You have selected <strong>{{ $sub_categories->count() }}</strong> sub-categories,
-                                    do
-                                    you want to select all <strong>{{ $sub_categories->total() }}</strong>?</span>
+                                <span>You have selected <strong>{{ $stories->count() }}</strong> stories, do
+                                    you want to select all <strong>{{ $stories->total() }}</strong>?</span>
                                 <x-button.link wire:click="selectAll" class="ml-1 text-blue-600">Select All
                                 </x-button.link>
                             </div>
                             @else
-                            <span>You are currently selecting all <strong>{{ $sub_categories->total() }}</strong>
-                                sub-categories.</span>
+                            <span>You are currently selecting all <strong>{{ $stories->total() }}</strong>
+                                stories.</span>
                             @endif
                         </x-table.cell>
                     </x-table.row>
                     @endif
-                    {{-- {{dd($sub_categories)}} --}}
-                    @forelse ($sub_categories as $sub_category)
-                    <x-table.row wire:loading.class.delay="opacity-50" wire:key="row-{{ $sub_category->id }}">
+
+                    @forelse ($stories as $story)
+                    <x-table.row wire:loading.class.delay="opacity-50" wire:key="row-{{ $story->id }}">
                         <x-table.cell class="pr-0">
-                            <x-input.checkbox wire:model="selected" value="{{ $sub_category->id }}" />
+                            <x-input.checkbox wire:model="selected" value="{{ $story->id }}" />
                         </x-table.cell>
 
                         <x-table.cell>
@@ -126,50 +120,31 @@
                                 <x-icon.cash class="text-cool-gray-400" />
 
                                 <p class="truncate text-cool-gray-600">
-                                    {{ $sub_category->title }}
+                                    {{ $story->title }}
                                 </p>
                             </span>
                         </x-table.cell>
 
-                        {{-- <x-table.cell>
-                            <span class="font-medium text-cool-gray-900">{{ $sub_category->description }} </span>
-                        </x-table.cell>
-
                         <x-table.cell>
-                            <span class="font-medium text-cool-gray-900">{{ $sub_category->introText }} </span>
-                        </x-table.cell>
-
-                        <x-table.cell>
-                            <span class="font-medium text-cool-gray-900">{{ $sub_category->bodyText }} </span>
-                        </x-table.cell> --}}
-
-                        <x-table.cell>
-                            <span class="font-medium text-cool-gray-900">{{ $sub_category->mainImage }} </span>
+                            <span class="font-medium text-cool-gray-900">{{ $story->image }} </span>
                         </x-table.cell>
 
                         <x-table.cell class="max-w-[150px]">
                             <ol>
                                 <li>
                                     <span class="font-medium text-cool-gray-900">{{
-                                        $sub_category->LflbCategory->id.':'.$sub_category->LflbCategory->title
+                                        $story->LflbApp->id.':'.$story->LflbApp->name
                                         }} </span>
                                 </li>
                             </ol>
                         </x-table.cell>
 
-                        {{-- <x-table.cell>
-                            <span
-                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-{{ $sub_category->status_color }}-100 text-{{ $sub_category->status_color }}-800 capitalize">
-                                {{ $sub_category->featured }}
-                            </span>
-                        </x-table.cell> --}}
-
                         <x-table.cell>
-                            {{ $sub_category->date_for_humans }}
+                            {{ $story->date_for_humans }}
                         </x-table.cell>
 
                         <x-table.cell>
-                            <x-button.link wire:click="edit({{ $sub_category->id }})">Edit</x-button.link>
+                            <x-button.link wire:click="edit({{ $story->id }})">Edit</x-button.link>
                         </x-table.cell>
                     </x-table.row>
                     @empty
@@ -177,7 +152,7 @@
                         <x-table.cell colspan="6">
                             <div class="flex items-center justify-center space-x-2">
                                 <x-icon.inbox class="w-8 h-8 text-cool-gray-400" />
-                                <span class="py-8 text-xl font-medium text-cool-gray-400">No sub-categories
+                                <span class="py-8 text-xl font-medium text-cool-gray-400">No stories
                                     found...</span>
                             </div>
                         </x-table.cell>
@@ -187,15 +162,15 @@
             </x-table>
 
             <div>
-                {{ $sub_categories->links() }}
+                {{ $stories->links() }}
             </div>
         </div>
     </div>
 
-    <!-- Delete Sub-Categories Modal -->
+    <!-- Delete Stories Modal -->
     <form wire:submit.prevent="deleteSelected">
         <x-modal.confirmation wire:model.defer="showDeleteModal">
-            <x-slot name="title">Delete Category</x-slot>
+            <x-slot name="title">Delete Story</x-slot>
 
             <x-slot name="content">
                 <div class="py-8 text-cool-gray-700">Are you sure? This action is irreversible.</div>
@@ -209,10 +184,10 @@
         </x-modal.confirmation>
     </form>
 
-    <!-- Save Category Modal -->
+    <!-- Save Story Modal -->
     <form wire:submit.prevent="save">
         <x-modal.dialog wire:model.defer="showEditModal">
-            <x-slot name="title">Edit Category</x-slot>
+            <x-slot name="title">Edit Story</x-slot>
 
             <x-slot name="content">
                 <x-input.group for="title" label="Title" :error="$errors->first('editing.title')">
@@ -223,22 +198,22 @@
                     <x-input.text wire:model="editing.subTitle" id="subTitle" placeholder="Sub-Title" />
                 </x-input.group>
 
-                <x-input.group label="Main Image" for="mainImage" :error="$errors->first('editing.mainImage')">
-                    <x-input.file-upload wire:model="upload" id="mainImage">
+                <x-input.group label="Main Image" for="image" :error="$errors->first('editing.image')">
+                    <x-input.file-upload wire:model="upload" id="image">
                         <span class="w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
                             @if ($upload)
                             <img src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
                             @else
-                            {{-- <img src="{{ asset('/storage/'.$editing->mainImage) }}" alt="Profile Photo"> --}}
+                            {{-- <img src="{{ asset('/storage/'.$editing->image) }}" alt="Profile Photo"> --}}
                             <img src="{{ $editing->mainImageUrl() }}" alt="Profile Photo">
                             @endif
                         </span>
                     </x-input.file-upload>
                 </x-input.group>
-                <x-input.group for="category_id" label="Parent Category" :error="$errors->first('editing.category_id')">
-                    <x-input.select wire:model="editing.category_id" id="category_id">
-                        @foreach (App\Models\LflbCategory::all() as $parent_category)
-                        <option value="{{ $parent_category->id }}">{{ $parent_category->title }}</option>
+                <x-input.group for="app_id" label="Parent App" :error="$errors->first('editing.app_id')">
+                    <x-input.select wire:model="editing.app_id" id="app_id">
+                        @foreach (App\Models\LflbApp::all() as $parent_app)
+                        <option value="{{ $parent_app->id }}">{{ $parent_app->title }}</option>
                         @endforeach
                     </x-input.select>
                 </x-input.group>

@@ -7,6 +7,7 @@ use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Transactions\Transactions;
 use App\Http\Livewire\Categories\Categories;
 use App\Http\Livewire\SubCategories\SubCategories;
+use App\Http\Livewire\Stories\Stories;
 use App\Http\Livewire\Profile;
 
 /*
@@ -37,6 +38,7 @@ Route::middleware([
     Route::get('/transactions', Transactions::class)->name('transactions');
     Route::get('/categories', Categories::class)->name('categories');
     Route::get('/sub-categories', SubCategories::class)->name('sub-categories');
+    Route::get('/stories', Stories::class)->name('stories');
     Route::get('/profile', Profile::class)->name('profile');
 });
 

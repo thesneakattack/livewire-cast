@@ -198,7 +198,7 @@
             <x-slot name="title">Delete Category</x-slot>
 
             <x-slot name="content">
-                <div class="py-8 text-cool-gray-700">Are you sure you? This action is irreversible.</div>
+                <div class="py-8 text-cool-gray-700">Are you sure? This action is irreversible.</div>
             </x-slot>
 
             <x-slot name="footer">
