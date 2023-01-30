@@ -45,7 +45,7 @@ class Stories extends Component
             'editing.description' => 'required|min:3',
             'editing.image' => 'sometimes|nullable',
             // 'editing.category_id' => 'sometimes|nullable',
-            // 'editing.app_id' => 'required',
+            'editing.app_id' => 'required',
         ];
     }
 
@@ -79,7 +79,7 @@ class Stories extends Component
 
     public function makeBlankCategory()
     {
-        return LflbStory::make(['app_id' => 1, 'date' => now(), 'featured' => 'FALSE']);
+        return LflbStory::make(['app_id' => '1', 'description' => 'NEW STORY DESCRIPTION', 'featured' => 'FALSE']);
     }
 
     public function toggleShowFilters()

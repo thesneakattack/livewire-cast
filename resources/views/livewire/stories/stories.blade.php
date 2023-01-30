@@ -210,14 +210,8 @@
                         </span>
                     </x-input.file-upload>
                 </x-input.group>
-                {{-- <x-input.group type="hidden" for="app_id" label="Parent App"
-                    :error="$errors->first('editing.app_id')">
-                    <x-input.select wire:model="editing.app_id" id="app_id">
-                        @foreach (App\Models\LflbApp::all() as $parent_app)
-                        <option value="{{ $parent_app->id }}">{{ $parent_app->name }}</option>
-                        @endforeach
-                    </x-input.select>
-                </x-input.group> --}}
+                <input type="hidden" wire:model="editing.app_id" id="app_id"
+                    :error="$errors->first('editing.app_id')" />
             </x-slot>
 
             <x-slot name="footer">
