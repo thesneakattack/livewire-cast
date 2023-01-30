@@ -83,8 +83,8 @@
                     <x-table.heading sortable multi-column wire:click="sortBy('title')"
                         :direction="$sorts['title'] ?? null">Title</x-table.heading>
                     <x-table.heading>Main Image</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('lflb_categories.title')"
-                        :direction="$sorts['lflb_categories.title'] ?? null">Parent Category</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('lflb_apps.name')"
+                        :direction="$sorts['lflb_apps.name'] ?? null">Parent App</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
                         :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
                     <x-table.heading />
@@ -133,7 +133,7 @@
                             <ol>
                                 <li>
                                     <span class="font-medium text-cool-gray-900">{{
-                                        $story->LflbApp->id.':'.$story->LflbApp->name
+                                        $story->LflbApp->name
                                         }} </span>
                                 </li>
                             </ol>
@@ -194,8 +194,8 @@
                     <x-input.text wire:model="editing.title" id="title" placeholder="Title" />
                 </x-input.group>
 
-                <x-input.group for="subTitle" label="Sub-Title" :error="$errors->first('editing.subTitle')">
-                    <x-input.text wire:model="editing.subTitle" id="subTitle" placeholder="Sub-Title" />
+                <x-input.group for="description" label="Description" :error="$errors->first('editing.description')">
+                    <x-input.text wire:model="editing.description" id="description" placeholder="Description" />
                 </x-input.group>
 
                 <x-input.group label="Main Image" for="image" :error="$errors->first('editing.image')">
@@ -210,13 +210,14 @@
                         </span>
                     </x-input.file-upload>
                 </x-input.group>
-                <x-input.group for="app_id" label="Parent App" :error="$errors->first('editing.app_id')">
+                {{-- <x-input.group type="hidden" for="app_id" label="Parent App"
+                    :error="$errors->first('editing.app_id')">
                     <x-input.select wire:model="editing.app_id" id="app_id">
                         @foreach (App\Models\LflbApp::all() as $parent_app)
-                        <option value="{{ $parent_app->id }}">{{ $parent_app->title }}</option>
+                        <option value="{{ $parent_app->id }}">{{ $parent_app->name }}</option>
                         @endforeach
                     </x-input.select>
-                </x-input.group>
+                </x-input.group> --}}
             </x-slot>
 
             <x-slot name="footer">

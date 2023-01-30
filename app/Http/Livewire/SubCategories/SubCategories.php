@@ -75,7 +75,7 @@ class SubCategories extends Component
 
     public function makeBlankCategory()
     {
-        return LflbSubCategory::make(['date' => now(), 'featured' => 'FALSE']);
+        return LflbSubCategory::make(['app_id' => 1, 'date' => now(), 'featured' => 'FALSE']);
     }
 
     public function toggleShowFilters()

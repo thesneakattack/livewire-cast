@@ -25,6 +25,7 @@ class Stories extends Component
         'search' => '',
         'title' => '',
         'image' => '',
+        'app_id' => '',
         'parent_category' => '',
         'sub_category' => '',
         // 'featured' => '',
@@ -41,9 +42,10 @@ class Stories extends Component
     {
         return [
             'editing.title' => 'required|min:3',
-            'editing.subTitle' => 'required|min:3',
-            'editing.mainImage' => 'sometimes|nullable',
-            'editing.category_id' => 'sometimes|nullable',
+            'editing.description' => 'required|min:3',
+            'editing.image' => 'sometimes|nullable',
+            // 'editing.category_id' => 'sometimes|nullable',
+            // 'editing.app_id' => 'required',
         ];
     }
 
@@ -77,7 +79,7 @@ class Stories extends Component
 
     public function makeBlankCategory()
     {
-        return LflbStory::make(['date' => now(), 'featured' => 'FALSE']);
+        return LflbStory::make(['app_id' => 1, 'date' => now(), 'featured' => 'FALSE']);
     }
 
     public function toggleShowFilters()
@@ -131,7 +133,14 @@ class Stories extends Component
     {
         $query = LflbStory::query()
             ->when($this->filters['title'], fn ($query, $title) => $query->where('title', 'like', '%' . $title . '%'))
-            ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'));
+            ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'))
+            ->join('lflb_apps', 'lflb_stories.app_id', '=', 'lflb_apps.id')
+            ->select(
+                'lflb_stories.*',
+                'lflb_apps.name as app_name',
+            )
+            ->where('app_id', 1)
+            ->distinct();
 
         return $this->applySorting($query);
     }
