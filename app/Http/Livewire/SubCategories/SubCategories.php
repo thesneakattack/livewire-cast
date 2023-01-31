@@ -48,7 +48,7 @@ class SubCategories extends Component
     public function mount()
     {
         $this->editing = $this->makeBlankCategory();
-        $this->collection = LflbSubCategory::all();
+        // $this->collection = LflbSubCategory::all();
     }
     public function updatedFilters()
     {

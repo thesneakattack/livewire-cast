@@ -83,8 +83,8 @@
                     <x-table.heading sortable multi-column wire:click="sortBy('title')"
                         :direction="$sorts['title'] ?? null">Title</x-table.heading>
                     <x-table.heading>Main Image</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('lflb_apps.name')"
-                        :direction="$sorts['lflb_apps.name'] ?? null">Parent App</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('lflb_categories.title')"
+                        :direction="$sorts['lflb_categories.title'] ?? null">Parent Category</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
                         :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
                     <x-table.heading />
@@ -133,7 +133,7 @@
                             <ol>
                                 <li>
                                     <span class="font-medium text-cool-gray-900">{{
-                                        $story->LflbApp->name
+                                        $story->category_title
                                         }} </span>
                                 </li>
                             </ol>
@@ -212,6 +212,7 @@
                 </x-input.group>
                 <input type="hidden" wire:model="editing.app_id" id="app_id"
                     :error="$errors->first('editing.app_id')" />
+                <input type="text" wire:model="editingApp.name" id="name" :error="$errors->first('editingApp.name')" />
             </x-slot>
 
             <x-slot name="footer">
