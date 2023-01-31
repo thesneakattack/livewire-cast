@@ -49,7 +49,7 @@ class Stories extends Component
             'editing.description' => 'sometimes',
             'editing.image' => 'sometimes|nullable',
             // 'editing.category_id' => 'sometimes|nullable',
-            'editingApp.name' => 'sometimes',
+            'editingApp.name' => 'required|min:3',
             // 'editing.featured' => 'sometimes',
             'editing.app_id' => 'required',
             'editing.imageUrl' => 'required',
@@ -110,7 +110,11 @@ class Stories extends Component
     {
         $this->useCachedRows();
 
-        if ($this->editing->getKey()) $this->editing = $this->makeBlankCategory();
+        if ($this->editing->getKey()) {
+            $this->editing = $this->makeBlankCategory();
+            $this->editingApp = $this->makeBlankApp();
+        }
+
 
         $this->showEditModal = true;
         // dd($this->editing);
@@ -119,10 +123,17 @@ class Stories extends Component
     public function edit(LflbStory $lflb_story)
     {
         $this->useCachedRows();
+        // dd($this->editing);
+        if ($this->editing->isNot($lflb_story)) {
+            $this->editing = $lflb_story;
+            $this->editingApp = $lflb_story->lflbApp;
+        }
 
-        if ($this->editing->isNot($lflb_story)) $this->editing = $lflb_story;
+        // dd($this->editingApp);
+
+        // dd($this->editing);
+        // dd($this->editing);
         // $this->editing->category_id = $lflb_story->lflbCategory->id;
-        // $this->editingApp = $lflb_story->lflbApp;
         // dd($lflb_story->lflbApp);
         $this->showEditModal = true;
         // dd($lflb_story);

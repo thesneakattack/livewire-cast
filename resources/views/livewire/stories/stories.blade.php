@@ -212,7 +212,11 @@
                 </x-input.group>
                 <input type="hidden" wire:model="editing.app_id" id="app_id"
                     :error="$errors->first('editing.app_id')" />
-                <input type="text" wire:model="editingApp.name" id="name" :error="$errors->first('editingApp.name')" />
+                {{-- <input type="text" wire:model="editingApp.name" id="name"
+                    :error="$errors->first('editingApp.name')" /> --}}
+                <x-input.group for="app_name" label="App Name" :error="$errors->first('editingApp.name')">
+                    <x-input.text wire:model="editingApp.name" id="name" placeholder="App Name" />
+                </x-input.group>
             </x-slot>
 
             <x-slot name="footer">
