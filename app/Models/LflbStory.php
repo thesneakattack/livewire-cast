@@ -65,6 +65,14 @@ class LflbStory extends Model
         return $this->hasMany('App\Models\LflbTag', 'story_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function lflbAssets()
+    {
+        return $this->belongsToMany(LflbAsset::class, 'lflb_story_parts', 'story_id', 'asset_id')->withPivot(['position', 'caption'])->withTimestamps();
+    }
+
     protected $guarded = [];
     protected $casts = ['created_at' => 'datetime'];
     protected $with = ['lflbApp', 'lflbStoryParts'];

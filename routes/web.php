@@ -8,6 +8,7 @@ use App\Http\Livewire\Transactions\Transactions;
 use App\Http\Livewire\Categories\Categories;
 use App\Http\Livewire\SubCategories\SubCategories;
 use App\Http\Livewire\Stories\Stories;
+use App\Http\Livewire\Editor\Editor;
 use App\Http\Livewire\Profile;
 
 /*
@@ -40,6 +41,7 @@ Route::middleware([
     Route::get('/sub-categories', SubCategories::class)->name('sub-categories');
     Route::get('/stories', Stories::class)->name('stories');
     Route::get('/profile', Profile::class)->name('profile');
+    Route::get('/editor/{story}', Editor::class)->name('editor');
 });
 
 /**

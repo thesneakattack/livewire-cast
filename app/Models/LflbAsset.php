@@ -35,4 +35,12 @@ class LflbAsset extends Model
     {
         return $this->hasMany('App\Models\LflbStoryPart', 'asset_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function lflbStories()
+    {
+        return $this->belongsToMany(LflbStory::class, 'lflb_story_parts', 'asset_id', 'story_id')->withPivot(['position', 'caption'])->withTimestamps();
+    }
 }
