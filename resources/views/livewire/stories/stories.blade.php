@@ -162,6 +162,7 @@
             </x-table>
 
             <div>
+                {{dd($stories)}}
                 {{ $stories->links() }}
             </div>
         </div>

@@ -32,6 +32,7 @@ use Kirschbaum\PowerJoins\PowerJoins;
  * @property LflbApp $lflbApp
  * @property LflbStoryPart[] $lflbStoryParts
  * @property LflbTag[] $lflbTags
+ * @property LflbAsset[] $lflbAssets
  */
 class LflbStory extends Model
 {
@@ -75,7 +76,7 @@ class LflbStory extends Model
 
     protected $guarded = [];
     protected $casts = ['created_at' => 'datetime'];
-    protected $with = ['lflbApp', 'lflbStoryParts'];
+    // protected $with = ['lflbApp', 'lflbStoryParts'];
 
     public function getDateForHumansAttribute()
     {

@@ -19,7 +19,7 @@ trait WithSorting
 
     public function applySorting($query)
     {
-        Log::info($query->toSql());
+        // Log::info($query->toSql());
         // dd($query);
         foreach ($this->sorts as $field => $direction) {
             $query->orderBy($field, $direction);
