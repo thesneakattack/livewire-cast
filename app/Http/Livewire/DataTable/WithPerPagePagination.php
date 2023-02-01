@@ -20,8 +20,9 @@ trait WithPerPagePagination
         session()->put('perPage', $value);
     }
 
-    public function applyPagination($query)
+    public function applyPagination($query, $distinct = false)
     {
+        // dd($query);
         return $query->paginate($this->perPage);
     }
 }

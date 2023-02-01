@@ -37,6 +37,14 @@ class LflbSubCategory extends Model
         return $this->belongsTo('App\Models\LflbCategory', 'category_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function lflbStories()
+    {
+        return $this->belongsToMany(LflbStory::class, 'lflb_story_lflb_sub_category', 'lflb_sub_category_id', 'lflb_story_id')->withTimestamps();
+    }
+
     protected $guarded = [];
     protected $casts = ['created_at' => 'datetime'];
     protected $with = ['lflbCategory'];

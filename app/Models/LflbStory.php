@@ -74,6 +74,14 @@ class LflbStory extends Model
         return $this->belongsToMany(LflbAsset::class, 'lflb_story_parts', 'story_id', 'asset_id')->withPivot(['position', 'caption'])->withTimestamps();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function lflbSubCategories()
+    {
+        return $this->belongsToMany(LflbSubCategory::class, 'lflb_story_lflb_sub_category', 'lflb_story_id', 'lflb_sub_category_id')->withTimestamps();
+    }
+
     protected $guarded = [];
     protected $casts = ['created_at' => 'datetime'];
     // protected $with = ['lflbApp', 'lflbStoryParts'];

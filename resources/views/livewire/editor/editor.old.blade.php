@@ -1,6 +1,5 @@
 @php
 // $assets = $story->lflbAssets->sortBy('pivot.position');
-dd($assets);
 @endphp
 <div>
     <h1 class="text-2xl font-semibold text-gray-900">Story Editor</h1>
@@ -43,7 +42,7 @@ dd($assets);
                 </x-button.primary>
             </div>
         </div>
-        {{-- {{dd($assets)}} --}}
+
         <!-- Stories Table -->
         <div class="flex-col space-y-4">
             <x-table>
@@ -51,12 +50,9 @@ dd($assets);
                     <x-table.heading class="w-8 pr-0">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('pivot_story_id')"
-                        :direction="$sorts['pivot_story_id'] ?? null">Story ID</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('pivot_story_part_id')"
-                        :direction="$sorts['pivot_story_part_id'] ?? null">StoryPart ID</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('lflb_assets.id')"
-                        :direction="$sorts['id'] ?? null">Asset ID</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('title')"
+                        :direction="$sorts['title'] ?? null">Title</x-table.heading>
+                    <x-table.heading>Main Image</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('lflb_categories.title')"
                         :direction="$sorts['lflb_categories.title'] ?? null">Sub-Category</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
@@ -162,12 +158,8 @@ dd($assets);
     <form wire:submit.prevent="save">
         <x-modal.dialog wire:model.defer="showEditModal">
             <x-slot name="title">Edit Item</x-slot>
+
             <x-slot name="content">
-                <p>{{$story->title}}</p>
-                @foreach ($story->lflbSubCategories as $subCategory)
-                <p>{{$subCategory->lflbCategory->title.'-'.$subCategory->title}}</p>
-                @endforeach
-                @foreach ( $storyAssets->sortBy('pivot.position') as $storyAsset)
                 <x-input.group for="type" label="Type" :error="$errors->first('editing.type')">
                     <x-input.text wire:model="editing.type" id="type" placeholder="Type" />
                 </x-input.group>
@@ -175,10 +167,6 @@ dd($assets);
                 <x-input.group for="caption" label="Caption" :error="$errors->first('editing.caption')">
                     <x-input.text wire:model="editing.caption" id="caption" placeholder="Caption" />
                 </x-input.group>
-                @endforeach
-                {{-- @foreach ( as )
-
-                @endforeach --}}
 
                 {{-- <x-input.group label="Main Image" for="image" :error="$errors->first('editing.image')">
                     <x-input.file-upload wire:model="upload" id="image">

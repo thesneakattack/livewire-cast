@@ -162,7 +162,7 @@
             </x-table>
 
             <div>
-                {{dd($stories)}}
+                {{-- {{dd($stories)}} --}}
                 {{ $stories->links() }}
             </div>
         </div>

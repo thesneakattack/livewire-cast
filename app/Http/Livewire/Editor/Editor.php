@@ -26,8 +26,10 @@ class Editor extends Component
     public $showFilters = false;
     public $filters = [];
     public LflbStory $story;
-    public LflbStory $editing;
+    public LflbAsset $editing;
     public LflbAsset $asset;
+    public $storyAssets;
+    public $allAssets = [];
     public $collection;
     public $upload;
 
@@ -35,11 +37,13 @@ class Editor extends Component
     {
         $this->editing = $this->makeBlankAsset();
         $this->asset = new LflbAsset;
+        // $this->allAssets = LflbAsset::all();
+        $this->storyAssets = $this->story->lflbAssets;
     }
 
     public function makeBlankAsset()
     {
-        return LflbStory::make(['title' => 'DEFAULT TITLE']);
+        return LflbAsset::make(['type' => 'TEXT', 'cleanText' => 'TESTING', 'caption' => 'DEFAULT CAPTION']);
     }
 
     public function create()
@@ -54,14 +58,49 @@ class Editor extends Component
         $this->showEditModal = true;
     }
 
-    public function edit(LflbStory $lflb_story)
+    public function edit(LflbAsset $lflb_asset)
     {
         $this->useCachedRows();
-        if ($this->editing->isNot($lflb_story)) {
-            $this->editing = $lflb_story;
+        if ($this->editing->isNot($lflb_asset)) {
+            $this->editing = $lflb_asset;
             // $this->editingApp = $lflb_story->lflbApp;
         }
         $this->showEditModal = true;
+    }
+
+    public function rules()
+    {
+        return [
+            'editing.type' => 'sometimes|nullable',
+            'editing.caption' => 'required|min:3',
+            // 'editing.image' => 'sometimes|nullable',
+            // 'editing.category_id' => 'sometimes|nullable',
+            // 'editingApp.name' => 'required|min:3',
+            // 'editing.featured' => 'sometimes',
+            // 'editing.app_id' => 'required',
+            // 'editing.imageUrl' => 'required',
+        ];
+    }
+
+    public function save()
+    {
+        $this->validate();
+
+        if ($this->editing->save()) {
+            // if ($this->editing->fill($this->editing->only($this->editing->fillable))->save()) {
+            // $this->upload && $this->editing->update([
+            //     'image' => $this->upload->store('/', 'public'),
+            // ]);
+
+            // $parent_app = $this->editing->lflbApp;
+            // $parent_app->update(['name' => $this->editingApp->name]);
+
+            $this->showEditModal = false;
+
+            $this->notify('You\'ve updated a story');
+        } else {
+            dd($this->editing);
+        }
     }
 
     public function toggleShowFilters()
@@ -78,14 +117,56 @@ class Editor extends Component
 
     public function getRowsQueryProperty()
     {
-        $query = $this->asset::with([
-            'lflbStories' => function ($query) {
-                $query->where('lflb_stories.id', $this->story->id)->get();
-            }
-        ]);
-        // ->when($this->filters['title'], fn ($query, $title) => $query->where('title', 'like', '%' . $title . '%'))
-        // ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'));
-        // ->distinct();
+        // $query = $this->asset::with([
+        //     'lflbStories' => function ($query) {
+        //         $query->where('lflb_stories.id', $this->story->id)->get();
+        //     }
+        // ]);
+        $query = LflbAsset::query()
+            ->join(
+                'lflb_story_parts',
+                'lflb_story_parts.asset_id',
+                '=',
+                'lflb_assets.id'
+            )
+            ->join(
+                'lflb_stories',
+                'lflb_stories.id',
+                '=',
+                'lflb_story_parts.story_id'
+            )
+            ->join(
+                'lflb_story_lflb_sub_category',
+                'lflb_story_lflb_sub_category.lflb_sub_category_id',
+                '=',
+                'lflb_stories.id'
+            )
+            ->join(
+                'lflb_sub_categories',
+                'lflb_sub_categories.id',
+                '=',
+                'lflb_story_lflb_sub_category.lflb_sub_category_id'
+            )
+            ->join(
+                'lflb_categories',
+                'lflb_categories.id',
+                '=',
+                'lflb_sub_categories.category_id'
+            )
+            ->select(
+                'lflb_assets.*',
+                'lflb_story_parts.position as pivot_position',
+                'lflb_story_parts.story_id as pivot_story_id',
+                'lflb_story_parts.asset_id as pivot_asset_id',
+                'lflb_stories.id as story_id',
+                'lflb_stories.title as story_title',
+                'lflb_sub_categories.id as sub_category_id',
+                'lflb_sub_categories.title as sub_category_title',
+                'lflb_categories.id as category_id',
+                'lflb_categories.title as category_title',
+            )
+            ->where('lflb_story_parts.story_id', $this->story->id)->distinct('lflb_assets.id');
+        // ->distinct('lflb_assets.id', 'lflb_categories.id');
 
         return $this->applySorting($query);
     }
@@ -93,7 +174,8 @@ class Editor extends Component
     public function getRowsProperty()
     {
         return $this->cache(function () {
-            return $this->rowsQuery->paginate(5);
+            return $this->applyPagination($this->rowsQuery);
+            // return $this->rowsQuery->paginate(10);
         });
     }
 

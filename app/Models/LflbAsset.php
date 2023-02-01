@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Storage;
 
 /**
  * @property integer $id
@@ -42,5 +44,21 @@ class LflbAsset extends Model
     public function lflbStories()
     {
         return $this->belongsToMany(LflbStory::class, 'lflb_story_parts', 'asset_id', 'story_id')->withPivot(['position', 'caption'])->withTimestamps();
+    }
+
+    protected $guarded = [];
+    protected $casts = ['created_at' => 'datetime'];
+    // protected $with = ['lflbApp', 'lflbStoryParts'];
+
+    public function getDateForHumansAttribute()
+    {
+        return Carbon::parse($this->created_at)->diffForHumans();
+    }
+
+    public function mainImageUrl()
+    {
+        return $this->image
+            ? Storage::disk('public')->url($this->image)
+            : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
     }
 }

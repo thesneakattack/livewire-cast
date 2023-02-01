@@ -170,37 +170,37 @@ class Stories extends Component
         $query = LflbStory::query()
             ->when($this->filters['title'], fn ($query, $title) => $query->where('title', 'like', '%' . $title . '%'))
             ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'))
-            ->join(
-                'lflb_sub_categories',
-                \DB::raw('FIND_IN_SET(`lflb_stories`.`id`, `lflb_sub_categories`.`stories`)'),
-                '>',
-                \DB::raw('0')
-            )
-            ->join(
-                'lflb_categories',
-                'lflb_sub_categories.category_id',
-                '=',
-                'lflb_categories.id'
-            )
-            ->join(
-                'lflb_apps',
-                'lflb_stories.app_id',
-                '=',
-                'lflb_apps.id'
-            )
-            ->select(
-                'lflb_stories.*',
-                'lflb_sub_categories.id as sub_category_id',
-                'lflb_sub_categories.title as sub_category_title',
-                'lflb_categories.title as category_title',
-                'lflb_categories.id as category_id',
-                'lflb_categories.featured as category_featured',
-                'lflb_apps.id as app_id',
-                'lflb_apps.name as app_name',
-            )
-            ->where('app_id', 16)
-            ->where('lflb_categories.id', '!=', '2');
-        // ->distinct();
+            // ->first()
+            // ->join(
+            //     'lflb_sub_categories',
+            //     \DB::raw('FIND_IN_SET(`lflb_stories`.`id`, `lflb_sub_categories`.`stories`)'),
+            //     '>',
+            //     \DB::raw('0')
+            // )
+            // ->join(
+            //     'lflb_categories',
+            //     'lflb_sub_categories.category_id',
+            //     '=',
+            //     'lflb_categories.id'
+            // )
+            // ->join(
+            //     'lflb_apps',
+            //     'lflb_stories.app_id',
+            //     '=',
+            //     'lflb_apps.id'
+            // )
+            // ->select(
+            //     'lflb_stories.*',
+            //     'lflb_sub_categories.id as sub_category_id',
+            //     'lflb_sub_categories.title as sub_category_title',
+            //     'lflb_categories.title as category_title',
+            //     'lflb_categories.id as category_id',
+            //     'lflb_categories.featured as category_featured',
+            //     'lflb_apps.id as app_id',
+            //     'lflb_apps.name as app_name',
+            // )
+            ->where('app_id', 1);
+        // ->where('category_id', '!=', '2');
 
         return $this->applySorting($query);
     }
