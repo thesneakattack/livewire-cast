@@ -41,13 +41,13 @@ class SubCategories extends Component
             'editing.title' => 'required|min:3',
             'editing.subTitle' => 'required|min:3',
             'editing.mainImage' => 'sometimes|nullable',
-            'editing.category_id' => 'sometimes|nullable',
+            'editing.category_id' => 'required|int',
         ];
     }
 
     public function mount()
     {
-        $this->editing = $this->makeBlankCategory();
+        $this->editing = $this->makeBlankSubCategory();
         // $this->collection = LflbSubCategory::all();
     }
     public function updatedFilters()
@@ -71,9 +71,11 @@ class SubCategories extends Component
         $this->showDeleteModal = false;
 
         $this->notify('You\'ve deleted ' . $deleteCount . ' sub-categories');
+        $this->selected = [];
+        $this->editing = $this->makeBlankSubCategory();
     }
 
-    public function makeBlankCategory()
+    public function makeBlankSubCategory()
     {
         return LflbSubCategory::make(['date' => now(), 'featured' => 'FALSE']);
     }
@@ -89,7 +91,7 @@ class SubCategories extends Component
     {
         $this->useCachedRows();
 
-        if ($this->editing->getKey()) $this->editing = $this->makeBlankCategory();
+        if ($this->editing->getKey()) $this->editing = $this->makeBlankSubCategory();
 
         $this->showEditModal = true;
     }

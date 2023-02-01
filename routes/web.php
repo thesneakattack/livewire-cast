@@ -41,7 +41,7 @@ Route::middleware([
     Route::get('/sub-categories', SubCategories::class)->name('sub-categories');
     Route::get('/stories', Stories::class)->name('stories');
     Route::get('/profile', Profile::class)->name('profile');
-    Route::get('/editor/{story}', Editor::class)->name('editor');
+    Route::get('/editor/{story}/{sub_category}', Editor::class)->name('editor');
     Route::get('/test', function () {
         return view('test');
     })->name('test');

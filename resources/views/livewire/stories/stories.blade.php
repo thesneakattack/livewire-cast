@@ -162,7 +162,6 @@
             </x-table>
 
             <div>
-                {{-- {{dd($stories)}} --}}
                 {{ $stories->links() }}
             </div>
         </div>
@@ -211,10 +210,10 @@
                         </span>
                     </x-input.file-upload>
                 </x-input.group>
-                <input type="hidden" wire:model="editing.app_id" id="app_id"
-                    :error="$errors->first('editing.app_id')" />
-                {{-- <input type="text" wire:model="editingApp.name" id="name"
-                    :error="$errors->first('editingApp.name')" /> --}}
+                {{-- <x-input.group for="app_id" label="" :error="$errors->first('editing.app_id')"> --}}
+                    <input type="hidden" wire:model="editing.app_id" id="app_id">
+                    {{--
+                </x-input.group> --}}
                 <x-input.group for="app_name" label="App Name" :error="$errors->first('editingApp.name')">
                     <x-input.text wire:model="editingApp.name" id="name" placeholder="App Name" />
                 </x-input.group>

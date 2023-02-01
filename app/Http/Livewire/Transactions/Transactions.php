@@ -31,15 +31,24 @@ class Transactions extends Component
 
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
-    public function rules() { return [
-        'editing.title' => 'required|min:3',
-        'editing.amount' => 'required',
-        'editing.status' => 'required|in:'.collect(Transaction::STATUSES)->keys()->implode(','),
-        'editing.date_for_editing' => 'required',
-    ]; }
+    public function rules()
+    {
+        return [
+            'editing.title' => 'required|min:3',
+            'editing.amount' => 'required',
+            'editing.status' => 'required|in:' . collect(Transaction::STATUSES)->keys()->implode(','),
+            'editing.date_for_editing' => 'required',
+        ];
+    }
 
-    public function mount() { $this->editing = $this->makeBlankTransaction(); }
-    public function updatedFilters() { $this->resetPage(); }
+    public function mount()
+    {
+        $this->editing = $this->makeBlankTransaction();
+    }
+    public function updatedFilters()
+    {
+        $this->resetPage();
+    }
 
     public function exportSelected()
     {
@@ -56,7 +65,9 @@ class Transactions extends Component
 
         $this->showDeleteModal = false;
 
-        $this->notify('You\'ve deleted '.$deleteCount.' transactions');
+        $this->notify('You\'ve deleted ' . $deleteCount . ' transactions');
+        $this->selected = [];
+        $this->editing = Transaction::makeBlankTransaction();
     }
 
     public function makeBlankTransaction()
@@ -68,7 +79,7 @@ class Transactions extends Component
     {
         $this->useCachedRows();
 
-        $this->showFilters = ! $this->showFilters;
+        $this->showFilters = !$this->showFilters;
     }
 
     public function create()
@@ -98,20 +109,22 @@ class Transactions extends Component
         $this->showEditModal = false;
 
         $this->notify('You\'ve added a transaction');
-
     }
 
-    public function resetFilters() { $this->reset('filters'); }
+    public function resetFilters()
+    {
+        $this->reset('filters');
+    }
 
     public function getRowsQueryProperty()
     {
         $query = Transaction::query()
-            ->when($this->filters['status'], fn($query, $status) => $query->where('status', $status))
-            ->when($this->filters['amount-min'], fn($query, $amount) => $query->where('amount', '>=', $amount))
-            ->when($this->filters['amount-max'], fn($query, $amount) => $query->where('amount', '<=', $amount))
-            ->when($this->filters['date-min'], fn($query, $date) => $query->where('date', '>=', Carbon::parse($date)))
-            ->when($this->filters['date-max'], fn($query, $date) => $query->where('date', '<=', Carbon::parse($date)))
-            ->when($this->filters['search'], fn($query, $search) => $query->where('title', 'like', '%'.$search.'%'));
+            ->when($this->filters['status'], fn ($query, $status) => $query->where('status', $status))
+            ->when($this->filters['amount-min'], fn ($query, $amount) => $query->where('amount', '>=', $amount))
+            ->when($this->filters['amount-max'], fn ($query, $amount) => $query->where('amount', '<=', $amount))
+            ->when($this->filters['date-min'], fn ($query, $date) => $query->where('date', '>=', Carbon::parse($date)))
+            ->when($this->filters['date-max'], fn ($query, $date) => $query->where('date', '<=', Carbon::parse($date)))
+            ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'));
 
         return $this->applySorting($query);
     }

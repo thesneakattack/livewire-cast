@@ -52,13 +52,13 @@ class Stories extends Component
             'editingApp.name' => 'required|min:3',
             // 'editing.featured' => 'sometimes',
             'editing.app_id' => 'required',
-            'editing.imageUrl' => 'required',
+            // 'editing.imageUrl' => 'required',
         ];
     }
 
     public function mount()
     {
-        $this->editing = $this->makeBlankCategory();
+        $this->editing = $this->makeBlankStory();
         // dd($this->editing);
         $this->editingApp = $this->makeBlankApp();
         // $this->collection = LflbSubCategory::all();
@@ -84,18 +84,21 @@ class Stories extends Component
         $this->showDeleteModal = false;
 
         $this->notify('You\'ve deleted ' . $deleteCount . ' stories');
+        $this->selected = [];
+        $this->editing = $this->makeBlankStory();
+        $this->editingApp = $this->makeBlankApp();
     }
 
-    public function makeBlankCategory()
+    public function makeBlankStory()
     {
         // EditPost::where('original_post_id', 4)->update(array('post_approval_rating'=>$some_value))->editor()->associate($user)->save();
-        return LflbStory::make(['app_id' => '1', 'description' => 'NEW STORY DESCRIPTION', 'featured' => 'FALSE', 'app_name' => 'THE YO APP', 'imageUrl' => 'nothing']);
+        return LflbStory::make(['app_id' => 1, 'description' => 'NEW STORY DESCRIPTION', 'featured' => 'FALSE', 'app_name' => 'THE YO APP', 'imageUrl' => 'nothing']);
         // return LflbApp::make(['app_name' => 'THE YO APP']);
     }
     public function makeBlankApp()
     {
         // EditPost::where('original_post_id', 4)->update(array('post_approval_rating'=>$some_value))->editor()->associate($user)->save();
-        return LflbApp::make(['name' => 'THE TESTING APP']);
+        return LflbApp::make(['name' => 'History Center of Lake Forest-Lake Bluff']);
         // return LflbApp::make(['app_name' => 'THE YO APP']);
     }
 
@@ -111,7 +114,7 @@ class Stories extends Component
         $this->useCachedRows();
 
         if ($this->editing->getKey()) {
-            $this->editing = $this->makeBlankCategory();
+            $this->editing = $this->makeBlankStory();
             $this->editingApp = $this->makeBlankApp();
         }
 

@@ -1,6 +1,6 @@
 @php
 // $assets = $story->lflbAssets->sortBy('pivot.position');
-dd($assets);
+// dd($assets);
 @endphp
 <div>
     <h1 class="text-2xl font-semibold text-gray-900">Story Editor</h1>
@@ -94,7 +94,37 @@ dd($assets);
                                 <x-icon.cash class="text-cool-gray-400" />
 
                                 <p class="truncate text-cool-gray-600">
-                                    {{ $asset->id . ' ' . $asset->category_id . ' ' . $asset->sub_category_id }}
+                                    {{ $asset->id}}
+                                </p>
+                            </span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <span href="#" class="inline-flex space-x-2 text-sm leading-5">
+                                <x-icon.cash class="text-cool-gray-400" />
+
+                                <p class="truncate text-cool-gray-600">
+                                    {{ $asset->story_part_id}}
+                                </p>
+                            </span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <span href="#" class="inline-flex space-x-2 text-sm leading-5">
+                                <x-icon.cash class="text-cool-gray-400" />
+
+                                <p class="truncate text-cool-gray-600">
+                                    {{ $asset->story_id}}
+                                </p>
+                            </span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <span href="#" class="inline-flex space-x-2 text-sm leading-5">
+                                <x-icon.cash class="text-cool-gray-400" />
+
+                                <p class="truncate text-cool-gray-600">
+                                    {{ $asset->sub_category_title}}
                                 </p>
                             </span>
                         </x-table.cell>

@@ -73,6 +73,8 @@ class Categories extends Component
         $this->showDeleteModal = false;
 
         $this->notify('You\'ve deleted ' . $deleteCount . ' categories');
+        $this->selected = [];
+        $this->editing = $this->makeBlankCategory();
     }
 
     public function makeBlankCategory()

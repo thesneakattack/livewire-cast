@@ -25,6 +25,7 @@ class Editor extends Component
     public $showEditModal = false;
     public $showFilters = false;
     public $filters = [];
+    public $sub_category;
     public LflbStory $story;
     public LflbAsset $editing;
     public LflbAsset $asset;
@@ -99,8 +100,21 @@ class Editor extends Component
 
             $this->notify('You\'ve updated a story');
         } else {
-            dd($this->editing);
+            // dd($this->editing);
         }
+    }
+
+    public function deleteSelected()
+    {
+        $deleteCount = $this->selectedRowsQuery->count();
+
+        $this->selectedRowsQuery->delete();
+
+        $this->showDeleteModal = false;
+
+        $this->notify('You\'ve deleted ' . $deleteCount . ' items');
+        $this->selected = [];
+        $this->editing = $this->makeBlankAsset();
     }
 
     public function toggleShowFilters()
@@ -137,7 +151,7 @@ class Editor extends Component
             )
             ->join(
                 'lflb_story_lflb_sub_category',
-                'lflb_story_lflb_sub_category.lflb_sub_category_id',
+                'lflb_story_lflb_sub_category.lflb_story_id',
                 '=',
                 'lflb_stories.id'
             )
@@ -155,6 +169,7 @@ class Editor extends Component
             )
             ->select(
                 'lflb_assets.*',
+                'lflb_story_parts.id as story_part_id',
                 'lflb_story_parts.position as pivot_position',
                 'lflb_story_parts.story_id as pivot_story_id',
                 'lflb_story_parts.asset_id as pivot_asset_id',
@@ -165,12 +180,12 @@ class Editor extends Component
                 'lflb_categories.id as category_id',
                 'lflb_categories.title as category_title',
             )
-            ->where('lflb_story_parts.story_id', $this->story->id)->distinct('lflb_assets.id');
+            ->where('lflb_story_parts.story_id', $this->story->id)->distinct(['lflb_assets.id', 'lflb_categories.id'])
+            ->where('lflb_sub_categories.id', '=', $this->sub_category);
         // ->distinct('lflb_assets.id', 'lflb_categories.id');
 
         return $this->applySorting($query);
     }
-
     public function getRowsProperty()
     {
         return $this->cache(function () {

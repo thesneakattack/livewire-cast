@@ -237,6 +237,7 @@
                 </x-input.group>
                 <x-input.group for="category_id" label="Parent Category" :error="$errors->first('editing.category_id')">
                     <x-input.select wire:model="editing.category_id" id="category_id">
+                        <option value=""></option>
                         @foreach (App\Models\LflbCategory::all() as $parent_category)
                         <option value="{{ $parent_category->id }}">{{ $parent_category->title }}</option>
                         @endforeach
