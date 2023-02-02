@@ -19,10 +19,10 @@ CREATE TABLE IF NOT EXISTS `lflb_sub_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `_oldid` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
-  `title` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
   `stories` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `stories_old` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `subTitle` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `subTitle` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mainImage` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `position` tinyint(4) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -30,9 +30,9 @@ CREATE TABLE IF NOT EXISTS `lflb_sub_categories` (
   PRIMARY KEY (`id`),
   KEY `FK_lflb_sub_categories_lflb_categories` (`category_id`),
   CONSTRAINT `FK_lflb_sub_categories_lflb_categories` FOREIGN KEY (`category_id`) REFERENCES `lflb_categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table laravel_crud_test.lflb_sub_categories: ~0 rows (approximately)
+-- Dumping data for table laravel_crud_test.lflb_sub_categories: ~48 rows (approximately)
 INSERT INTO `lflb_sub_categories` (`id`, `_oldid`, `category_id`, `title`, `stories`, `stories_old`, `subTitle`, `mainImage`, `position`, `created_at`, `updated_at`) VALUES
 	(1, '5d95253ce8c73901d5b3a741', 1, 'Creating A Vision', '2,1,6,5d979a42a7c4693372dd9bab,32,31,5,7,8,10,9,12,11,13,15,14,16,18,17,20,19,22,21,24,23,25,47,27,29,26,28,31,30,33,32,5f8e00aea36a8673e7cc1d6a,282', '5d72c7c547ac1629261ec4b8,5d729fe821a36a1f9bfc750b,5d966744a7c4693372dd9b69,5d979a42a7c4693372dd9bab,5d9f8d23a7c4693372dd9dbd,5d9bc026a7c4693372dd9da7,5d950f8dcd996b05b5e99d75,5d97b634a7c4693372dd9be0,5d97bb7ea7c4693372dd9bec,5d97bcd6a7c4693372dd9c0a,5d97bc21a7c4693372dd9c02,5d97cae6a7c4693372dd9c36,5d97c6c5a7c4693372dd9c20,5d97cef4a7c4693372dd9c4a,5d97d895a7c4693372dd9c79,5d97d2dfa7c4693372dd9c64,5d97d9c2a7c4693372dd9c88,5d9bac3aa7c4693372dd9ca0,5d9bab53a7c4693372dd9c90,5d9bafd0a7c4693372dd9cc1,5d9baf67a7c4693372dd9cb6,5d9bb0c5a7c4693372dd9cd9,5d9bb070a7c4693372dd9ccd,5d9bb27ba7c4693372dd9cff,5d9bb1b2a7c4693372dd9ce7,5d9bb63fa7c4693372dd9d34,5da4de99a7c4693372dd9f9d,5d9bbdc9a7c4693372dd9d6e,5d9bbecca7c4693372dd9d89,5d9bb85fa7c4693372dd9d5b,5d9bbe38a7c4693372dd9d7d,5d9bc026a7c4693372dd9da7,5d9bbf5ba7c4693372dd9d98,5d9f8e32a7c4693372dd9de8,5d9f8d23a7c4693372dd9dbd,5f8e00aea36a8673e7cc1d6a,5e19002cddaf5705be11feda', 'Architects, Arts & Culture', 'CHANGING-CREATING-A-VISION.png', 1, '2023-01-26 21:07:44', '2023-01-26 21:07:44'),
 	(2, '5d95253ce8c73901d5b3a742', 1, 'Driving Business Forward', '5d979a42a7c4693372dd9bab,52,35,50,44,43,42,36,34,37,38,39,40,41,46,5f8dd902a36a8673e7cc1c50,799,836', '5d979a42a7c4693372dd9bab,5da50114a7c4693372dd9fe5,5d9f91eea7c4693372dd9e31,5da4ff7da7c4693372dd9fd2,5da4dd04a7c4693372dd9f6a,5da4db52a7c4693372dd9f52,5da16c92a7c4693372dd9f2b,5d9f988ea7c4693372dd9e4e,5d9f9095a7c4693372dd9e14,5d9fa7c7a7c4693372dd9e5d,5d9fa872a7c4693372dd9e70,5d9fac0ca7c4693372dd9ea8,5da169d2a7c4693372dd9f00,5da16bd9a7c4693372dd9f1b,5da4de15a7c4693372dd9f8c,5f8dd902a36a8673e7cc1c50,60393107c7242f0017889bb0,61311121176dc600182e3eed', 'Business, Finance & Industry Leaders', 'CHANGING-DRIVING-BUSINESS.jpg', 2, '2023-01-26 21:07:44', '2023-01-26 21:07:44'),

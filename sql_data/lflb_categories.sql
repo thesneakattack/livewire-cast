@@ -24,13 +24,13 @@ CREATE TABLE IF NOT EXISTS `lflb_categories` (
   `sub_categories_old` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sub_categories` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `featured` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'FALSE',
-  `introText` text COLLATE utf8mb4_unicode_ci DEFAULT '',
-  `bodyText` text COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `introText` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bodyText` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mainImage` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table laravel_crud_test.lflb_categories: ~32 rows (approximately)
 INSERT INTO `lflb_categories` (`id`, `_oldid`, `title`, `description`, `coverPhoto`, `sub_categories_old`, `sub_categories`, `featured`, `introText`, `bodyText`, `mainImage`, `created_at`, `updated_at`) VALUES

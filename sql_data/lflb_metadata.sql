@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `lflb_metadata` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table laravel_crud_test.lflb_metadata: ~0 rows (approximately)
+-- Dumping data for table laravel_crud_test.lflb_metadata: ~21 rows (approximately)
 INSERT INTO `lflb_metadata` (`id`, `_oldid`, `contributor`, `creator`, `description`, `format`, `identifier`, `language`, `publisher`, `relation`, `rights`, `source`, `subject`, `type`, `created_at`, `updated_at`) VALUES
 	(1, '5e88daac27c9bd3223eafa7f', '', 'Wendy Giangiorgi', '', '', '', '', '', '', '', '', '', '', '2023-01-26 21:07:44', '2023-01-26 21:07:44'),
 	(2, '5e88ddbc27c9bd3223eafaa6', '', 'Amy Wagliardo', '', '', '', '', '', '', '', '', '', '', '2023-01-26 21:07:44', '2023-01-26 21:07:44'),

@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `lflb_tags` (
   CONSTRAINT `FK_lflb_tags_lflb_stories` FOREIGN KEY (`story_id`) REFERENCES `lflb_stories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1030 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table laravel_crud_test.lflb_tags: ~0 rows (approximately)
+-- Dumping data for table laravel_crud_test.lflb_tags: ~1,029 rows (approximately)
 INSERT INTO `lflb_tags` (`id`, `_oldid`, `story_id`, `storyid`, `value`, `created_at`, `updated_at`) VALUES
 	(1, '5dd60d4a9ae22e4b93ffce13', 108, '', 'Senator Farwell', '2023-01-26 21:07:44', '2023-01-26 21:07:44'),
 	(2, '5dd60d4a9ae22e4b93ffce14', 108, '', 'Charles Macdonald', '2023-01-26 21:07:44', '2023-01-26 21:07:44'),
