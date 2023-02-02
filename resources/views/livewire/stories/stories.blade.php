@@ -132,9 +132,11 @@
                         <x-table.cell class="max-w-[150px]">
                             <ol>
                                 <li>
-                                    <span class="font-medium text-cool-gray-900">{{
-                                        $story->category_title
-                                        }} </span>
+                                    <span class="font-medium text-cool-gray-900">
+                                        @foreach ($story->lflbSubCategories as $sub_category)
+                                        {{$sub_category->title}}<br>
+                                        @endforeach
+                                    </span>
                                 </li>
                             </ol>
                         </x-table.cell>
@@ -144,6 +146,9 @@
                         </x-table.cell>
 
                         <x-table.cell>
+                            <x-button.link
+                                onclick="location.href='{{ route('editor', ['story' => $story->id, 'sub_category' => $story->lflbSubCategories->first()->id]) }}'">
+                                Edit</x-button.link>
                             <x-button.link wire:click="edit({{ $story->id }})">Edit</x-button.link>
                         </x-table.cell>
                     </x-table.row>
