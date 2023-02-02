@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('_oldid', 50)->nullable();
             $table->string('title', 160);
             $table->integer('app_id')->nullable()->index('FK_lflb_stories_lflb_apps');
-            $table->string('description', 16383)->nullable();
+            $table->text('description')->nullable();
             $table->string('image', 120)->nullable();
             $table->string('imageUrl', 10)->nullable();
             $table->string('categories_old', 230)->nullable();

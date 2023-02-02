@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('_oldid', 30)->nullable();
             $table->string('name', 80);
             $table->string('orgId', 30)->nullable();
-            $table->string('description', 16383)->nullable();
+            $table->text('description')->nullable();
             $table->string('image', 80)->nullable();
-            $table->string('categories', 16383)->nullable();
-            $table->string('categories_old', 16383)->nullable();
+            $table->text('categories')->nullable();
+            $table->text('categories_old')->nullable();
             $table->string('mapCenterAddress', 60)->nullable();
             $table->string('mapCenterAddressCoords_lat', 20)->nullable();
             $table->string('mapCenterAddressCoords_lng', 20)->nullable();

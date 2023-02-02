@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('link', 130)->nullable();
             $table->string('originalImage', 80)->nullable();
             $table->string('type', 10);
-            $table->string('text', 16383)->nullable();
-            $table->string('cleanText', 16383)->nullable();
+            $table->text('text')->nullable();
+            $table->text('cleanText')->nullable();
             $table->string('name', 130)->nullable();
-            $table->string('caption', 16383)->nullable();
+            $table->text('caption')->nullable();
             $table->string('tags', 50)->nullable();
             $table->string('thumbnail', 70)->nullable();
             $table->timestamp('created_at')->useCurrent();

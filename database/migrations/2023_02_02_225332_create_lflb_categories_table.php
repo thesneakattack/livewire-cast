@@ -20,11 +20,11 @@ return new class extends Migration
             $table->string('title', 50);
             $table->string('description', 100)->nullable();
             $table->string('coverPhoto', 80)->nullable();
-            $table->string('sub_categories_old', 16383)->nullable();
-            $table->string('sub_categories', 16383)->nullable();
+            $table->text('sub_categories_old')->nullable();
+            $table->text('sub_categories')->nullable();
             $table->string('featured', 10)->default('FALSE');
-            $table->string('introText', 16383)->nullable();
-            $table->string('bodyText', 16383)->nullable();
+            $table->text('introText')->nullable();
+            $table->text('bodyText')->nullable();
             $table->string('mainImage', 80)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->useCurrent();

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('_oldid', 30)->nullable();
             $table->integer('story_id')->nullable()->index('FK_lflb_story_parts_lflb_stories');
             $table->integer('asset_id')->nullable()->index('FK_lflb_story_parts_lflb_assets');
-            $table->string('caption', 16383)->nullable();
+            $table->text('caption')->nullable();
             $table->tinyInteger('position')->nullable();
             $table->string('annotations', 80)->nullable();
             $table->timestamp('created_at')->useCurrent();
