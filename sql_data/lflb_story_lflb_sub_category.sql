@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS `lflb_story_lflb_sub_category` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
-  KEY `FK_lflb_story_lflb_sub_category_lflb_stories` (`lflb_story_id`),
   KEY `FK_lflb_story_lflb_sub_category_lflb_sub_categories` (`lflb_sub_category_id`),
+  KEY `FK_lflb_story_lflb_sub_category_lflb_stories` (`lflb_story_id`),
   CONSTRAINT `FK_lflb_story_lflb_sub_category_lflb_stories` FOREIGN KEY (`lflb_story_id`) REFERENCES `lflb_stories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `FK_lflb_story_lflb_sub_category_lflb_sub_categories` FOREIGN KEY (`lflb_sub_category_id`) REFERENCES `lflb_sub_categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=675 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

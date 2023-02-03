@@ -138,8 +138,8 @@ class Editor extends Component
         // ]);
         $query = LflbAsset::query()
             ->join(
-                'lflb_story_parts',
-                'lflb_story_parts.asset_id',
+                'lflb_asset_lflb_story',
+                'lflb_asset_lflb_story.asset_id',
                 '=',
                 'lflb_assets.id'
             )
@@ -147,7 +147,7 @@ class Editor extends Component
                 'lflb_stories',
                 'lflb_stories.id',
                 '=',
-                'lflb_story_parts.story_id'
+                'lflb_asset_lflb_story.story_id'
             )
             ->join(
                 'lflb_story_lflb_sub_category',
@@ -169,10 +169,10 @@ class Editor extends Component
             )
             ->select(
                 'lflb_assets.*',
-                'lflb_story_parts.id as story_part_id',
-                'lflb_story_parts.position as pivot_position',
-                'lflb_story_parts.story_id as pivot_story_id',
-                'lflb_story_parts.asset_id as pivot_asset_id',
+                'lflb_asset_lflb_story.id as story_part_id',
+                'lflb_asset_lflb_story.position as pivot_position',
+                'lflb_asset_lflb_story.story_id as pivot_story_id',
+                'lflb_asset_lflb_story.asset_id as pivot_asset_id',
                 'lflb_stories.id as story_id',
                 'lflb_stories.title as story_title',
                 'lflb_sub_categories.id as sub_category_id',
@@ -180,7 +180,7 @@ class Editor extends Component
                 'lflb_categories.id as category_id',
                 'lflb_categories.title as category_title',
             )
-            ->where('lflb_story_parts.story_id', $this->story->id)->distinct(['lflb_assets.id', 'lflb_categories.id'])
+            ->where('lflb_asset_lflb_story.story_id', $this->story->id)->distinct(['lflb_assets.id', 'lflb_categories.id'])
             ->where('lflb_sub_categories.id', '=', $this->sub_category);
         // ->distinct('lflb_assets.id', 'lflb_categories.id');
 

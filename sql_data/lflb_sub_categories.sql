@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `lflb_sub_categories` (
   PRIMARY KEY (`id`),
   KEY `FK_lflb_sub_categories_lflb_categories` (`category_id`),
   CONSTRAINT `FK_lflb_sub_categories_lflb_categories` FOREIGN KEY (`category_id`) REFERENCES `lflb_categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table laravel_crud_test.lflb_sub_categories: ~48 rows (approximately)
 INSERT INTO `lflb_sub_categories` (`id`, `_oldid`, `category_id`, `title`, `stories`, `stories_old`, `subTitle`, `mainImage`, `position`, `created_at`, `updated_at`) VALUES

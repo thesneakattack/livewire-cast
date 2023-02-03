@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('lflb_asset_lflb_story', function (Blueprint $table) {
-            $table->foreign(['asset_id'], 'FK_lflb_story_parts_lflb_assets')->references(['id'])->on('lflb_assets')->onUpdate('CASCADE')->onDelete('SET NULL');
-            $table->foreign(['story_id'], 'FK_lflb_story_parts_lflb_stories')->references(['id'])->on('lflb_stories')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->foreign(['story_id'], 'FK_lflb_asset_lflb_story_lflb_stories')->references(['id'])->on('lflb_stories')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['asset_id'], 'FK_lflb_asset_lflb_story_lflb_assets')->references(['id'])->on('lflb_assets')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
@@ -27,8 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('lflb_asset_lflb_story', function (Blueprint $table) {
-            $table->dropForeign('FK_lflb_story_parts_lflb_assets');
-            $table->dropForeign('FK_lflb_story_parts_lflb_stories');
+            $table->dropForeign('FK_lflb_asset_lflb_story_lflb_stories');
+            $table->dropForeign('FK_lflb_asset_lflb_story_lflb_assets');
         });
     }
 };

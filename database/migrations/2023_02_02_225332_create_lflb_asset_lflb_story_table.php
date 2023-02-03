@@ -17,8 +17,8 @@ return new class extends Migration
             $table->comment('');
             $table->integer('id', true);
             $table->string('_oldid', 30)->nullable();
-            $table->integer('story_id')->nullable()->index('FK_lflb_story_parts_lflb_stories');
-            $table->integer('asset_id')->nullable()->index('FK_lflb_story_parts_lflb_assets');
+            $table->integer('asset_id')->nullable()->index('FK_lflb_asset_lflb_story_lflb_assets');
+            $table->integer('story_id')->nullable()->index('FK_lflb_asset_lflb_story_lflb_stories');
             $table->text('caption')->nullable();
             $table->tinyInteger('position')->nullable();
             $table->string('annotations', 80)->nullable();

@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `lflb_categories` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table laravel_crud_test.lflb_categories: ~32 rows (approximately)
 INSERT INTO `lflb_categories` (`id`, `_oldid`, `title`, `description`, `coverPhoto`, `sub_categories_old`, `sub_categories`, `featured`, `introText`, `bodyText`, `mainImage`, `created_at`, `updated_at`) VALUES

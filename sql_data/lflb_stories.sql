@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `lflb_stories` (
   PRIMARY KEY (`id`),
   KEY `FK_lflb_stories_lflb_apps` (`app_id`),
   CONSTRAINT `FK_lflb_stories_lflb_apps` FOREIGN KEY (`app_id`) REFERENCES `lflb_apps` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=895 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=886 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table laravel_crud_test.lflb_stories: ~885 rows (approximately)
 INSERT INTO `lflb_stories` (`id`, `_oldid`, `title`, `app_id`, `description`, `image`, `imageUrl`, `categories_old`, `categories`, `startDay`, `startMonth`, `startYear`, `endDay`, `endMonth`, `endYear`, `locationName`, `location_lat`, `location_lng`, `metaData`, `created_at`, `updated_at`) VALUES

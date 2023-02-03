@@ -43,7 +43,7 @@ class LflbAsset extends Model
      */
     public function lflbStories()
     {
-        return $this->belongsToMany(LflbStory::class, 'lflb_story_parts', 'asset_id', 'story_id')->withPivot(['position', 'caption'])->withTimestamps();
+        return $this->belongsToMany(LflbStory::class, 'lflb_asset_lflb_story', 'asset_id', 'story_id')->withPivot(['position', 'caption'])->withTimestamps();
     }
 
     protected $guarded = [];
