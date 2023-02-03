@@ -22,7 +22,7 @@ use App\Http\Livewire\Profile;
 |
 */
 
-Route::redirect('/', 'transactions');
+Route::redirect('/', 'stories');
 
 // Route::get('/', function () {
 //     return view('welcome');
