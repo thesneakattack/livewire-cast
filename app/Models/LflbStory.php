@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Pivots\Category;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Storage;
@@ -81,6 +82,34 @@ class LflbStory extends Model
     {
         return $this->belongsToMany(LflbSubCategory::class, 'lflb_story_lflb_sub_category', 'lflb_story_id', 'lflb_sub_category_id')->withTimestamps();
     }
+
+    public function lflbCategories()
+    {
+        $collection = $this->lflbSubCategories;
+        $grouped = $collection->mapToGroups(function ($item, $key) {
+            return [$item->lflbCategory->title => $item];
+        });
+        // ->map(function ($group) {
+        //     return $group->all();
+        // })->all();
+
+        return $grouped;
+    }
+
+    // /**
+    //  * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    //  */
+    // public function zs()
+    // {
+    //     return $this->hasManyThrough(
+    //         'App\Models\LflbCategory',
+    //         'App\Models\Pivots\Category',
+    //         'lflb_story_id',
+    //         'id',
+    //         'id',
+    //         'id'
+    //     );
+    // }
 
     protected $guarded = [];
     protected $casts = ['created_at' => 'datetime'];

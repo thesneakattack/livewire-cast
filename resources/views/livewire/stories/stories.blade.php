@@ -72,7 +72,7 @@
             </div>
             @endif
         </div>
-
+        {{-- {{dd($stories)}} --}}
         <!-- Stories Table -->
         <div class="flex-col space-y-4">
             <x-table>
@@ -80,11 +80,13 @@
                     <x-table.heading class="w-8 pr-0">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('title')"
-                        :direction="$sorts['title'] ?? null">Title</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('lflb_stories.title')"
+                        :direction="$sorts['lflb_stories.title'] ?? null">Title</x-table.heading>
                     <x-table.heading>Main Image</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('lflb_categories.title')"
-                        :direction="$sorts['lflb_categories.title'] ?? null">Parent Category</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('sub_category_titles')"
+                        :direction="$sorts['sub_category_titles'] ?? null">Sub-Categories</x-table.heading>
+                    <x-table.heading sortable multi-column wire:click="sortBy('category_titles')"
+                        :direction="$sorts['category_titles'] ?? null">Parent Categories</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
                         :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
                     <x-table.heading />
@@ -108,7 +110,7 @@
                         </x-table.cell>
                     </x-table.row>
                     @endif
-
+                    {{-- {{dd($stories)}} --}}
                     @forelse ($stories as $story)
                     <x-table.row wire:loading.class.delay="opacity-50" wire:key="row-{{ $story->id }}">
                         <x-table.cell class="pr-0">
@@ -133,22 +135,45 @@
                             <ol>
                                 <li>
                                     <span class="font-medium text-cool-gray-900">
-                                        @foreach ($story->lflbSubCategories as $sub_category)
+                                        @foreach ($story->lflbSubCategories->sortBy('title') as $sub_category)
+                                        @php
+                                        @endphp
+                                        @unless ($sub_category->lflbCategory->id === 2)
                                         {{$sub_category->title}}<br>
+                                        @endunless
                                         @endforeach
+
                                     </span>
                                 </li>
                             </ol>
                         </x-table.cell>
-
+                        <x-table.cell class="max-w-[150px]">
+                            <ul>
+                                <li>
+                                    <span class="font-medium text-cool-gray-900">
+                                        @foreach ( $story->lflbCategories()->sortBy('title') as $category =>
+                                        $sub_categories)
+                                        @unless ($category === 'Timeline')
+                                        <strong>{{$category}}</strong>
+                                        <ol>
+                                            @foreach ($sub_categories as $sub_category)
+                                            <li>{{$sub_category->title}}</li>
+                                            @endforeach
+                                        </ol>
+                                        @endunless
+                                        @endforeach
+                                    </span>
+                                </li>
+                            </ul>
+                        </x-table.cell>
                         <x-table.cell>
                             {{ $story->date_for_humans }}
                         </x-table.cell>
 
                         <x-table.cell>
-                            <x-button.link
+                            {{-- <x-button.link
                                 onclick="location.href='{{ route('editor', ['story' => $story->id, 'sub_category' => $story->lflbSubCategories->first()->id]) }}'">
-                                Edit</x-button.link>
+                                Edit</x-button.link> --}}
                             <x-button.link wire:click="edit({{ $story->id }})">Edit</x-button.link>
                         </x-table.cell>
                     </x-table.row>

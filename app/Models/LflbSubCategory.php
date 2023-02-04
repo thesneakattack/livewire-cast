@@ -34,7 +34,7 @@ class LflbSubCategory extends Model
      */
     public function lflbCategory()
     {
-        return $this->belongsTo('App\Models\LflbCategory', 'category_id');
+        return $this->belongsTo(LflbCategory::class, 'category_id');
     }
 
     /**

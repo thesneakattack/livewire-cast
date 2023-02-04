@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Pivots\Category;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Storage;
@@ -36,7 +37,15 @@ class LflbCategory extends Model
      */
     public function lflbSubCategories()
     {
-        return $this->hasMany('App\Models\LflbSubCategory', 'category_id');
+        return $this->hasMany('App\Models\LflbSubCategory', 'category_id')->orderBy('title');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function lflbCategories()
+    {
+        return $this->belongsToMany(LflbStory::class)->using(Category::class);
     }
 
     // custom code David F.

@@ -171,39 +171,37 @@ class Stories extends Component
     public function getRowsQueryProperty()
     {
         $query = LflbStory::query()
+
+            // ->has('lflbSubCategories')
+            // $query = LflbStory::query()
             ->when($this->filters['title'], fn ($query, $title) => $query->where('title', 'like', '%' . $title . '%'))
-            ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'))
-            // ->first()
-            // ->join(
-            //     'lflb_sub_categories',
-            //     \DB::raw('FIND_IN_SET(`lflb_stories`.`id`, `lflb_sub_categories`.`stories`)'),
-            //     '>',
-            //     \DB::raw('0')
-            // )
-            // ->join(
-            //     'lflb_categories',
-            //     'lflb_sub_categories.category_id',
-            //     '=',
-            //     'lflb_categories.id'
-            // )
-            // ->join(
-            //     'lflb_apps',
-            //     'lflb_stories.app_id',
-            //     '=',
-            //     'lflb_apps.id'
-            // )
-            // ->select(
-            //     'lflb_stories.*',
-            //     'lflb_sub_categories.id as sub_category_id',
-            //     'lflb_sub_categories.title as sub_category_title',
-            //     'lflb_categories.title as category_title',
-            //     'lflb_categories.id as category_id',
-            //     'lflb_categories.featured as category_featured',
-            //     'lflb_apps.id as app_id',
-            //     'lflb_apps.name as app_name',
-            // )
-            ->where('app_id', 1);
-        // ->where('category_id', '!=', '2');
+            ->join(
+                'lflb_story_lflb_sub_category',
+                'lflb_story_lflb_sub_category.lflb_story_id',
+                '=',
+                'lflb_stories.id'
+            )
+            ->join(
+                'lflb_sub_categories',
+                'lflb_sub_categories.id',
+                '=',
+                'lflb_story_lflb_sub_category.lflb_sub_category_id'
+            )
+            ->join(
+                'lflb_categories',
+                'lflb_categories.id',
+                '=',
+                'lflb_sub_categories.category_id'
+            )
+            ->select('lflb_stories.*', 'lflb_sub_categories.title as sub_category_title', \DB::raw('group_concat(DISTINCT lflb_sub_categories.title ORDER BY lflb_sub_categories.title) as sub_category_titles'), \DB::raw('group_concat(DISTINCT lflb_categories.title ORDER BY lflb_categories.title) as category_titles'))
+            // ->orderBy('lflb_stories.title')
+            // ->orderBy('lflb_sub_categories.title')
+            ->groupBy('lflb_stories.title')
+            ->has('lflbSubCategories')
+            //     ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'))
+            ->where('app_id', 1)
+            ->whereNot('lflb_categories.id', 2);
+
 
         return $this->applySorting($query);
     }
