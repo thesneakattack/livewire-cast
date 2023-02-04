@@ -46,12 +46,17 @@ class LflbSubCategory extends Model
     }
 
     protected $guarded = [];
-    protected $casts = ['created_at' => 'datetime'];
+    protected $casts = ['created_at' => 'datetime', 'updated_at' => 'datetime'];
     protected $with = ['lflbCategory'];
 
-    public function getDateForHumansAttribute()
+    public function getCreatedDateForHumansAttribute()
     {
         return Carbon::parse($this->created_at)->diffForHumans();
+    }
+
+    public function getUpdatedDateForHumansAttribute()
+    {
+        return Carbon::parse($this->updated_at)->diffForHumans();
     }
     // Custom code David F.
     public function storyIds()

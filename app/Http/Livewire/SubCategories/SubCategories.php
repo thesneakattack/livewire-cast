@@ -24,7 +24,6 @@ class SubCategories extends Component
         'title' => '',
         'subTitle' => '',
         'category_id' => '',
-        'parent_category' => '',
         'featured' => '',
     ];
     public LflbSubCategory $editing;
@@ -42,6 +41,13 @@ class SubCategories extends Component
             'editing.subTitle' => 'required|min:3',
             'editing.mainImage' => 'sometimes|nullable',
             'editing.category_id' => 'required|int',
+        ];
+    }
+
+    public function validationAttributes()
+    {
+        return [
+            'category_id' => 'parent category'
         ];
     }
 
@@ -77,7 +83,7 @@ class SubCategories extends Component
 
     public function makeBlankSubCategory()
     {
-        return LflbSubCategory::make(['date' => now(), 'featured' => 'FALSE']);
+        return LflbSubCategory::make(['date' => now(), 'featured' => 'FALSE', 'category_id' => '']);
     }
 
     public function toggleShowFilters()

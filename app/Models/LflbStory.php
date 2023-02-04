@@ -96,28 +96,13 @@ class LflbStory extends Model
         return $grouped;
     }
 
-    // /**
-    //  * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    //  */
-    // public function zs()
-    // {
-    //     return $this->hasManyThrough(
-    //         'App\Models\LflbCategory',
-    //         'App\Models\Pivots\Category',
-    //         'lflb_story_id',
-    //         'id',
-    //         'id',
-    //         'id'
-    //     );
-    // }
-
     protected $guarded = [];
-    protected $casts = ['created_at' => 'datetime'];
+    protected $casts = ['created_at' => 'datetime', 'updated_at' => 'datetime'];
     // protected $with = ['lflbApp', 'lflbStoryParts'];
 
     public function getDateForHumansAttribute()
     {
-        return Carbon::parse($this->created_at)->diffForHumans();
+        return Carbon::parse($this->updated_at)->diffForHumans();
     }
 
     public function mainImageUrl()

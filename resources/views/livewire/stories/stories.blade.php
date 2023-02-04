@@ -135,14 +135,25 @@
                             <ol>
                                 <li>
                                     <span class="font-medium text-cool-gray-900">
-                                        @foreach ($story->lflbSubCategories->sortBy('title') as $sub_category)
+                                        {{-- @foreach ($story->lflbSubCategories->sortBy('title') as $sub_category)
                                         @php
                                         @endphp
                                         @unless ($sub_category->lflbCategory->id === 2)
                                         {{$sub_category->title}}<br>
                                         @endunless
-                                        @endforeach
+                                        @endforeach --}}
 
+                                        @foreach ( $story->lflbCategories()->sortBy('title') as $category =>
+                                        $sub_categories)
+                                        @unless ($category === 'Timeline')
+                                        {{-- <strong>{{$category}}</strong> --}}
+                                        <ol>
+                                            @foreach ($sub_categories as $sub_category)
+                                            <li>{{$sub_category->title}}</li>
+                                            @endforeach
+                                        </ol>
+                                        @endunless
+                                        @endforeach
                                     </span>
                                 </li>
                             </ol>
@@ -240,10 +251,16 @@
                         </span>
                     </x-input.file-upload>
                 </x-input.group>
-                {{-- <x-input.group for="app_id" label="" :error="$errors->first('editing.app_id')"> --}}
-                    <input type="hidden" wire:model="editing.app_id" id="app_id">
-                    {{--
-                </x-input.group> --}}
+                <x-input.group for="sub_category_id" label="Sub-Category"
+                    :error="$errors->first('editingSubCategory.sub_category_id')">
+                    <x-input.select wire:model="editingSubCategory.sub_category_id" id="sub_category_id">
+                        <option value="" disabled>Select Sub-Category</option>
+                        @foreach (App\Models\LflbSubCategory::all() as $sub_category)
+                        <option value="{{ $sub_category->id }}">{{ $sub_category->title }}</option>
+                        @endforeach
+                    </x-input.select>
+                </x-input.group>
+                <input type="hidden" wire:model="editing.app_id" id="app_id">
                 <x-input.group for="app_name" label="App Name" :error="$errors->first('editingApp.name')">
                     <x-input.text wire:model="editingApp.name" id="name" placeholder="App Name" />
                 </x-input.group>

@@ -93,6 +93,9 @@
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
                         :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
                     <x-table.heading />
+                    <x-table.heading sortable multi-column wire:click="sortBy('updated_at')"
+                        :direction="$sorts['updated_at'] ?? null">Date Updated</x-table.heading>
+                    <x-table.heading />
                 </x-slot>
 
                 <x-slot name="body">
@@ -165,9 +168,11 @@
                         </x-table.cell> --}}
 
                         <x-table.cell>
-                            {{ $sub_category->date_for_humans }}
+                            {{ $sub_category->created_date_for_humans }}
                         </x-table.cell>
-
+                        <x-table.cell>
+                            {{ $sub_category->updated_date_for_humans }}
+                        </x-table.cell>
                         <x-table.cell>
                             <x-button.link wire:click="edit({{ $sub_category->id }})">Edit</x-button.link>
                         </x-table.cell>
@@ -237,7 +242,7 @@
                 </x-input.group>
                 <x-input.group for="category_id" label="Parent Category" :error="$errors->first('editing.category_id')">
                     <x-input.select wire:model="editing.category_id" id="category_id">
-                        <option value=""></option>
+                        <option value="" disabled>Select Parent Category</option>
                         @foreach (App\Models\LflbCategory::all() as $parent_category)
                         <option value="{{ $parent_category->id }}">{{ $parent_category->title }}</option>
                         @endforeach
