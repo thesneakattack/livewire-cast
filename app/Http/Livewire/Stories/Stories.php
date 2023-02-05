@@ -49,8 +49,6 @@ class Stories extends Component
             'editingSubCategory.sub_category_id' => 'required',
             'editing.app_id' => 'required',
             'editingApp.name' => 'required|min:3',
-            // 'editing.featured' => 'sometimes',
-            // 'editing.imageUrl' => 'required',
         ];
     }
 
@@ -90,9 +88,7 @@ class Stories extends Component
 
     public function makeBlankStory()
     {
-        // EditPost::where('original_post_id', 4)->update(array('post_approval_rating'=>$some_value))->editor()->associate($user)->save();
         return LflbStory::make(['app_id' => 1, 'description' => 'NEW STORY DESCRIPTION', 'featured' => 'FALSE', 'app_name' => 'History Center of Lake Forest-Lake Bluff', 'imageUrl' => 'nothing']);
-        // return LflbApp::make(['app_name' => 'THE YO APP']);
     }
     public function makeBlankApp()
     {
@@ -120,26 +116,16 @@ class Stories extends Component
 
 
         $this->showEditModal = true;
-        // dd($this->editing);
     }
 
     public function edit(LflbStory $lflb_story)
     {
         $this->useCachedRows();
-        // dd($this->editing);
         if ($this->editing->isNot($lflb_story)) {
             $this->editing = $lflb_story;
             $this->editingApp = $lflb_story->lflbApp;
         }
-
-        // dd($this->editingApp);
-
-        // dd($this->editing);
-        // dd($this->editing);
-        // $this->editing->category_id = $lflb_story->lflbCategory->id;
-        // dd($lflb_story->lflbApp);
         $this->showEditModal = true;
-        // dd($lflb_story);
     }
 
     public function save()
@@ -208,7 +194,6 @@ class Stories extends Component
 
     public function getRowsProperty()
     {
-        // dd($this->rowsQuery);
         return $this->cache(function () {
             return $this->applyPagination($this->rowsQuery);
         });
