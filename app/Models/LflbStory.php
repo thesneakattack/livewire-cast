@@ -98,7 +98,7 @@ class LflbStory extends Model
 
     protected $guarded = [];
     protected $casts = ['created_at' => 'datetime', 'updated_at' => 'datetime'];
-    // protected $with = ['lflbApp', 'lflbStoryParts'];
+    protected $with = ['lflbSubCategories'];
 
     public function getDateForHumansAttribute()
     {
