@@ -182,9 +182,8 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            {{-- <x-button.link
-                                onclick="location.href='{{ route('editor', ['story' => $story->id, 'sub_category' => $story->lflbSubCategories->first()->id]) }}'">
-                                Edit</x-button.link> --}}
+                            <x-button.link onclick="location.href='{{ route('editor', ['story' => $story->id]) }}'">
+                                Edit</x-button.link>
                             <x-button.link wire:click="edit({{ $story->id }})">Edit</x-button.link>
                         </x-table.cell>
                     </x-table.row>

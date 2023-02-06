@@ -53,7 +53,6 @@ class Editor extends Component
 
         if ($this->editing->getKey()) {
             $this->editing = $this->makeBlankAsset();
-            // $this->editingApp = $this->makeBlankApp();
         }
 
         $this->showEditModal = true;
@@ -64,7 +63,6 @@ class Editor extends Component
         $this->useCachedRows();
         if ($this->editing->isNot($lflb_asset)) {
             $this->editing = $lflb_asset;
-            // $this->editingApp = $lflb_story->lflbApp;
         }
         $this->showEditModal = true;
     }
@@ -180,8 +178,11 @@ class Editor extends Component
                 'lflb_categories.id as category_id',
                 'lflb_categories.title as category_title',
             )
-            ->where('lflb_asset_lflb_story.story_id', $this->story->id)->distinct(['lflb_assets.id', 'lflb_categories.id'])
-            ->where('lflb_sub_categories.id', '=', $this->sub_category);
+            ->where('lflb_asset_lflb_story.story_id', $this->story->id)
+            ->orderBy('lflb_asset_lflb_story.position')
+            ->groupBy('lflb_assets.id');
+        // ->groupBy('')
+        // ->where('lflb_sub_categories.id', '=', $this->sub_category);
         // ->distinct('lflb_assets.id', 'lflb_categories.id');
 
         return $this->applySorting($query);

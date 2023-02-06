@@ -153,7 +153,7 @@ class Stories extends Component
             $parent_app = $this->editing->lflbApp;
             $parent_app->update(['name' => $this->editingApp->name]);
             foreach ($this->editingSubCategories as $subCategory) {
-                $this->editing->lflbSubCategories()->sync($subCategory['id'], false);
+                $this->editing->lflbSubCategories()->sync($subCategory, false);
                 # code...
             }
 
@@ -197,11 +197,8 @@ class Stories extends Component
                 'lflb_sub_categories.category_id'
             )
             ->select('lflb_stories.*', 'lflb_sub_categories.title as sub_category_title', \DB::raw('group_concat(DISTINCT lflb_sub_categories.title ORDER BY lflb_sub_categories.title) as sub_category_titles'), \DB::raw('group_concat(DISTINCT lflb_categories.title ORDER BY lflb_categories.title) as category_titles'))
-            // ->orderBy('lflb_stories.title')
-            // ->orderBy('lflb_sub_categories.title')
             ->groupBy('lflb_stories.title')
             ->has('lflbSubCategories')
-            //     ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'))
             ->where('app_id', 1)
             ->whereNot('lflb_categories.id', 2);
 

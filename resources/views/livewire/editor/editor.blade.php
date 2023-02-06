@@ -1,5 +1,6 @@
 @php
-// $assets = $story->lflbAssets->sortBy('pivot.position');
+$storyparts = $story->lflbAssets->sortBy('pivot.position');
+
 // dd($assets);
 @endphp
 <div>
@@ -7,42 +8,7 @@
 
     <div class="py-4 space-y-4">
         <!-- Top Bar -->
-        <div class="flex justify-between">
-            {{-- <div class="flex w-2/4 space-x-4">
-                <x-input.text wire:model="filters.search" placeholder="Search Stories..." />
 
-                <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...
-                </x-button.link>
-            </div> --}}
-
-            <div class="flex items-center space-x-2">
-                <x-input.group borderless paddingless for="perPage" label="Per Page">
-                    <x-input.select wire:model="perPage" id="perPage">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </x-input.select>
-                </x-input.group>
-
-                <x-dropdown label="Bulk Actions">
-                    <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
-                        <x-icon.download class="text-cool-gray-400" /> <span>Export</span>
-                    </x-dropdown.item>
-
-                    <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')"
-                        class="flex items-center space-x-2">
-                        <x-icon.trash class="text-cool-gray-400" /> <span>Delete</span>
-                    </x-dropdown.item>
-                </x-dropdown>
-
-                {{--
-                <livewire:categories.import-categories /> --}}
-
-                <x-button.primary wire:click="create">
-                    <x-icon.plus /> New
-                </x-button.primary>
-            </div>
-        </div>
         {{-- {{dd($assets)}} --}}
         <!-- Stories Table -->
         <div class="flex-col space-y-4">
@@ -206,26 +172,6 @@
                     <x-input.text wire:model="editing.caption" id="caption" placeholder="Caption" />
                 </x-input.group>
                 @endforeach
-                {{-- @foreach ( as )
-
-                @endforeach --}}
-
-                {{-- <x-input.group label="Main Image" for="image" :error="$errors->first('editing.image')">
-                    <x-input.file-upload wire:model="upload" id="image">
-                        <span class="w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
-                            @if ($upload)
-                            <img src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
-                            @else
-                            <img src="{{ $editing->mainImageUrl() }}" alt="Profile Photo">
-                            @endif
-                        </span>
-                    </x-input.file-upload>
-                </x-input.group> --}}
-                {{-- <input type="text" wire:model="editingApp.name" id="name"
-                    :error="$errors->first('editingApp.name')" /> --}}
-                {{-- <x-input.group for="app_name" label="App Name" :error="$errors->first('editingApp.name')">
-                    <x-input.text wire:model="editingApp.name" id="name" placeholder="App Name" />
-                </x-input.group> --}}
             </x-slot>
 
             <x-slot name="footer">
