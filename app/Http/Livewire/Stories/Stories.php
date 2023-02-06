@@ -49,7 +49,7 @@ class Stories extends Component
             'editing.image' => 'sometimes|nullable',
             'editing.app_id' => 'required',
             'editingApp.name' => 'required|min:3',
-            'editingSubCategories.*.id' => 'required',
+            'editingSubCategories' => 'required',
             // 'editingSubCategory.sub_category_id' => 'required',
         ];
     }
@@ -57,9 +57,7 @@ class Stories extends Component
     public function mount()
     {
         $this->editing = $this->makeBlankStory();
-        // $this->editingSubCategories[] = $this->makeBlankSubCategory();
-        $this->editingSubCategories[] = ['id' => '49'];
-        // dd($this->editingSubCategories);
+        $this->editingSubCategories = $this->makeBlankSubCategory();
         $this->editingApp = $this->makeBlankApp();
         // $this->collection = LflbSubCategory::all();
     }
@@ -93,7 +91,6 @@ class Stories extends Component
     public function makeBlankStory()
     {
         $blank_story = LflbStory::make(['app_id' => 1, 'description' => 'NEW STORY DESCRIPTION', 'featured' => 'FALSE', 'app_name' => 'History Center of Lake Forest-Lake Bluff', 'imageUrl' => 'nothing']);
-        // $blank_story = $blank_story->lflbSubCategories()->make([['lflb_sub_category_id' => 49]]);
         // dd($blank_story);
         return $blank_story;
     }
@@ -103,7 +100,8 @@ class Stories extends Component
     }
     public function makeBlankSubCategory()
     {
-        return LflbSubCategory::make(['id' => 49]);
+        // return LflbSubCategory::make(['id' => 12]);
+        return [12];
     }
     public function toggleShowFilters()
     {
@@ -118,12 +116,13 @@ class Stories extends Component
 
         if ($this->editing->getKey()) {
             $this->editing = $this->makeBlankStory();
-            $this->editingSubCategories = $this->makeBlankSubCategory();
+            // $this->editingSubCategories[] = ['id' => '12'];
+
             $this->editingApp = $this->makeBlankApp();
         }
 
-
         $this->showEditModal = true;
+        // dd($this->editingSubCategories);
     }
 
     public function edit(LflbStory $lflb_story)
@@ -131,10 +130,14 @@ class Stories extends Component
         $this->useCachedRows();
         if ($this->editing->isNot($lflb_story)) {
             $this->editing = $lflb_story;
-            $this->editingSubCategories = $lflb_story->lflbSubCategories;
+            $this->editingSubCategories = [];
+            foreach ($this->editing->lflbSubCategories as $sub_category) {
+                $this->editingSubCategories[] = $sub_category->id;
+            }
             $this->editingApp = $lflb_story->lflbApp;
         }
         $this->showEditModal = true;
+        // dd($this->editingSubCategories);
     }
 
     public function save()
@@ -150,15 +153,16 @@ class Stories extends Component
             $parent_app = $this->editing->lflbApp;
             $parent_app->update(['name' => $this->editingApp->name]);
             foreach ($this->editingSubCategories as $subCategory) {
-                $this->editing->lflbSubCategories()->attach($subCategory['id']);
+                $this->editing->lflbSubCategories()->sync($subCategory['id'], false);
                 # code...
             }
 
             $this->showEditModal = false;
+            unset($this->editingSubCategories);
 
             $this->notify('You\'ve updated a story');
         } else {
-            dd($this->editing);
+            // dd($this->editing);
         }
     }
 
@@ -173,7 +177,7 @@ class Stories extends Component
 
             // ->has('lflbSubCategories')
             // $query = LflbStory::query()
-            ->when($this->filters['title'], fn ($query, $title) => $query->where('title', 'like', '%' . $title . '%'))
+            ->when($this->filters['search'], fn ($query, $search) => $query->where('lflb_stories.title', 'like', '%' . $search . '%'))
             ->join(
                 'lflb_story_lflb_sub_category',
                 'lflb_story_lflb_sub_category.lflb_story_id',

@@ -251,12 +251,16 @@
                         </span>
                     </x-input.file-upload>
                 </x-input.group>
-                <x-input.group for="lflbSubCategories.0.id" label="Sub-Category"
-                    :error="$errors->first('editingSubCategories.0.id')">
-                    <x-input.select wire:model="editingSubCategories.0.id" id="lflbSubCategories.0.id">
+
+                <x-input.group for="Sub_Categories" label="Sub-Category"
+                    :error="$errors->first('editingSubCategories')">
+                    <x-input.select wire:model="editingSubCategories" id="Sub_Categories" multiple>
                         <option value="" disabled>Select Sub-Category</option>
                         @foreach (App\Models\LflbSubCategory::all() as $sub_category)
+                        @unless ($sub_category->LflbCategory->id === 2)
+
                         <option value="{{ $sub_category->id }}">{{ $sub_category->title }}</option>
+                        @endunless
                         @endforeach
                     </x-input.select>
                 </x-input.group>
