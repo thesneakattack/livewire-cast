@@ -8,9 +8,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Tailwind UI -->
-    {{--
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css"> --}}
 
 
     <!-- Fonts -->
@@ -19,10 +16,14 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css'])
     <!-- Alpine -->
     <!-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script> -->
 
+    <!-- Tailwind UI -->
+
+    {{--
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css"> --}}
     <!-- Styles -->
     @livewireStyles
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
@@ -45,6 +46,7 @@
     {{ $slot }}
 
     @livewireScripts
+    @vite(['resources/js/app.js'])
     <script src="https://unpkg.com/moment"></script>
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <script src="https://unpkg.com/trix@1.2.3/dist/trix.js"></script>

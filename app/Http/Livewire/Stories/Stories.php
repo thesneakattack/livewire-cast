@@ -101,7 +101,7 @@ class Stories extends Component
     public function makeBlankSubCategory()
     {
         // return LflbSubCategory::make(['id' => 12]);
-        return [12];
+        return [];
     }
     public function toggleShowFilters()
     {

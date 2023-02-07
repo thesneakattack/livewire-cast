@@ -37,8 +37,6 @@ class Editor extends Component
     public function mount()
     {
         $this->editing = $this->makeBlankAsset();
-        $this->asset = new LflbAsset;
-        // $this->allAssets = LflbAsset::all();
         $this->storyAssets = $this->story->lflbAssets;
     }
 
@@ -72,6 +70,7 @@ class Editor extends Component
         return [
             'editing.type' => 'sometimes|nullable',
             'editing.caption' => 'required|min:3',
+            'storyAssets.*.type' => 'sometimes|nullable',
             // 'editing.image' => 'sometimes|nullable',
             // 'editing.category_id' => 'sometimes|nullable',
             // 'editingApp.name' => 'required|min:3',
@@ -84,13 +83,12 @@ class Editor extends Component
     public function save()
     {
         $this->validate();
-
         if ($this->editing->save()) {
             // if ($this->editing->fill($this->editing->only($this->editing->fillable))->save()) {
-            // $this->upload && $this->editing->update([
-            //     'image' => $this->upload->store('/', 'public'),
-            // ]);
-
+            $this->upload && $this->editing->update([
+                'image' => $this->upload->store('/', 'public'),
+            ]);
+            $this->editing->lflbStories()->attach($this->story->id);
             // $parent_app = $this->editing->lflbApp;
             // $parent_app->update(['name' => $this->editingApp->name]);
 
@@ -100,6 +98,18 @@ class Editor extends Component
         } else {
             // dd($this->editing);
         }
+        $this->storyAssets->each(function ($item, $key) {
+            $item->save();
+            $item->sync([$this->story->id]);
+        });
+        // if ($this->storyAssets->each->save()) {
+        //     dd($this->storyAssets->each);
+        //     $this->notify('You\'ve updated a story');
+        //     foreach ($this->editingSubCategories as $subCategory) {
+        //         $this->editing->lflbSubCategories()->sync($subCategory, false);
+        //         # code...
+        //     }
+        // }
     }
 
     public function deleteSelected()
@@ -207,8 +217,9 @@ class Editor extends Component
         // dd($this->story->id);
         // dd($this->rows);
         // $this->story = LflbStory::find($this->id);
+        // dd($this->story->toArray());
         return view('livewire.editor.editor', [
-            'assets' => $this->rows,
+            'story' => $this->story
         ]);
     }
 }
