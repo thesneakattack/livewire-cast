@@ -21,9 +21,10 @@
                     <x-jet-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
                         {{ __('Categories') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('transactions') }}" :active="request()->routeIs('transactions')">
+                    {{-- <x-jet-nav-link href="{{ route('transactions') }}"
+                        :active="request()->routeIs('transactions')">
                         {{ __('Transactions') }}
-                    </x-jet-nav-link>
+                    </x-jet-nav-link> --}}
                 </div>
             </div>
 
@@ -167,9 +168,10 @@
             <x-jet-responsive-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
                 {{ __('Categories') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('transactions') }}" :active="request()->routeIs('transactions')">
+            {{-- <x-jet-responsive-nav-link href="{{ route('transactions') }}"
+                :active="request()->routeIs('transactions')">
                 {{ __('Transactions') }}
-            </x-jet-responsive-nav-link>
+            </x-jet-responsive-nav-link> --}}
         </div>
 
         <!-- Responsive Settings Options -->

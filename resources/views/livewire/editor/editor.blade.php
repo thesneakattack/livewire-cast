@@ -9,20 +9,21 @@
         <!-- Top Bar -->
         <div class="flex justify-between">
             <div class="flex w-2/4 space-x-4">
-                <x-input.text wire:model="filters.search" placeholder="Search Stories..." />
+                {{--
+                <x-input.text wire:model="filters.search" placeholder="Search Stories..." /> --}}
 
-                <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...
-                </x-button.link>
+                {{-- <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...
+                </x-button.link> --}}
             </div>
 
             <div class="flex items-center space-x-2">
-                <x-input.group borderless paddingless for="perPage" label="Per Page">
+                {{-- <x-input.group borderless paddingless for="perPage" label="Per Page">
                     <x-input.select wire:model="perPage" id="perPage">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
                     </x-input.select>
-                </x-input.group>
+                </x-input.group> --}}
 
                 <x-dropdown label="Bulk Actions">
                     <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')"
@@ -80,7 +81,7 @@
                             <div class="">
                                 @switch($asset->type)
                                 @case('TEXT')
-                                <div class="prose text-justify">{!!$asset->cleanText!!}</div>
+                                <div class="mx-auto prose text-justify">{!!$asset->cleanText!!}</div>
                                 @break
                                 @case('IMAGE')
                                 <div class="flex flex-wrap content-center justify-center">
@@ -93,11 +94,21 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="mx-auto prose text-center">
+                                    <p class="truncate text-cool-gray-600">
+                                        {{ $asset->caption }}
+                                    </p>
+                                </div>
                                 @break
                                 @case('VIDEO')
-                                <p class="truncate line-clamp-3 text-cool-gray-600">
-                                    {{ $asset->link }}
-                                </p>
+                                <div class="mx-auto prose text-center">
+                                    <p class="truncate text-cool-gray-600">
+                                        {{ $asset->link }}
+                                    </p>
+                                    <p class="text-xs truncate text-cool-gray-600">
+                                        {{ $asset->caption }}
+                                    </p>
+                                </div>
                                 @break
                                 @default
 
@@ -177,17 +188,17 @@
                 </x-input.group>
                 @break
                 @case('IMAGE')
-                <x-input.group label="Main Image" for="image" :error="$errors->first('editing.link')">
+                <x-input.group label="Image" for="image" :error="$errors->first('editing.link')">
                     <x-input.file-upload wire:model="upload" id="image">
                         <span class="overflow-hidden w-96 max-h-72">
                             @if ($upload)
-                            <img src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
+                            <img src="{{ $upload->temporaryUrl() }}" alt="...">
                             @else
-                            {{-- <img src="{{ asset('/storage/'.$editing->image) }}" alt="Profile Photo"> --}}
+                            {{-- <img src="{{ asset('/storage/'.$editing->image) }}" alt="..."> --}}
                             <div class="flex flex-wrap content-center justify-center">
                                 <div class="w-96 sm:w-96">
                                     @if (file_exists(storage_path('app/public/'.$editing->link)))
-                                    <img src="{{ $editing->fileUrl() }}" alt="Profile Photo">
+                                    <img src="{{ $editing->fileUrl() }}" alt="...">
                                     @else
                                     <img src="https://lflbsign.webfoundry.dev/assets/{{ $editing->link }}" alt="..."
                                         class="object-contain h-auto max-w-full align-middle border-none rounded shadow " />
@@ -202,6 +213,33 @@
                     <x-input.text wire:model="editing.caption" id="caption" placeholder="Caption" />
                 </x-input.group>
                 @break
+                @case('VIDEO')
+                <x-input.group label="Video" for="video" :error="$errors->first('editing.link')">
+                    <x-input.file-upload wire:model="upload" id="video">
+                        <span class="overflow-hidden w-96 max-h-72">
+                            @if ($upload)
+                            <img src="{{ $upload->temporaryUrl() }}" alt="...">
+                            @else
+                            {{-- <img src="{{ asset('/storage/'.$editing->image) }}" alt="..."> --}}
+
+                            <div class="flex flex-wrap content-center justify-center">
+                                <div class="w-96 sm:w-96">
+                                    @if(file_exists(storage_path('app/public/'.$editing->link)))
+                                    <a href="{{ $editing->fileUrl() }}" target="_blank">{{ $editing->link }}</a>
+                                    @else
+                                    <a href="https://lflbsign.webfoundry.dev/assets/{{ $editing->link }}"
+                                        target="_blank">{{ $editing->link }}</a>
+                                    @endif
+                                </div>
+                            </div>
+                            @endif
+                        </span>
+                    </x-input.file-upload>
+                </x-input.group>
+                <x-input.group for="caption" label="Caption" :error="$errors->first('editing.caption')">
+                    <x-input.text wire:model="editing.caption" id="caption" placeholder="Caption" />
+                </x-input.group>
+                @break;
                 @default
 
                 @endswitch
@@ -215,9 +253,9 @@
                     <x-input.file-upload wire:model="upload" id="image">
                         <span class="w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
                             @if ($upload)
-                            <img src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
+                            <img src="{{ $upload->temporaryUrl() }}" alt="...">
                             @else
-                            <img src="{{ $editing->mainImageUrl() }}" alt="Profile Photo">
+                            <img src="{{ $editing->mainImageUrl() }}" alt="...">
                             @endif
                         </span>
                     </x-input.file-upload>
