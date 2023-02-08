@@ -128,7 +128,16 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span class="font-medium text-cool-gray-900">{{ $story->image }} </span>
+                            <div class="flex flex-wrap content-center justify-center">
+                                <div class="w-96 sm:w-96">
+                                    @if (file_exists(storage_path('app/public/'.$story->image)))
+                                    <img src="{{ $story->mainImageUrl() }}" alt="...">
+                                    @else
+                                    <img src="https://lflbsign.webfoundry.dev/assets/{{ $story->image }}" alt="..."
+                                        class="object-contain h-auto max-w-full align-middle border-none rounded shadow " />
+                                    @endif
+                                </div>
+                            </div>
                         </x-table.cell>
 
                         <x-table.cell class="max-w-[150px]">
@@ -240,12 +249,21 @@
 
                 <x-input.group label="Main Image" for="image" :error="$errors->first('editing.image')">
                     <x-input.file-upload wire:model="upload" id="image">
-                        <span class="w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
+                        <span class="overflow-hidden w-96 max-h-72">
                             @if ($upload)
-                            <img src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
+                            <img src="{{ $upload->temporaryUrl() }}" alt="...">
                             @else
-                            {{-- <img src="{{ asset('/storage/'.$editing->image) }}" alt="Profile Photo"> --}}
-                            <img src="{{ $editing->mainImageUrl() }}" alt="Profile Photo">
+                            {{-- <img src="{{ asset('/storage/'.$editing->image) }}" alt="..."> --}}
+                            <div class="flex flex-wrap content-center justify-center">
+                                <div class="w-96 sm:w-96">
+                                    @if (file_exists(storage_path('app/public/'.$editing->image)))
+                                    <img src="{{ $editing->mainImageUrl() }}" alt="...">
+                                    @else
+                                    <img src="https://lflbsign.webfoundry.dev/assets/{{ $editing->image }}" alt="..."
+                                        class="object-contain h-auto max-w-full align-middle border-none rounded shadow " />
+                                    @endif
+                                </div>
+                            </div>
                             @endif
                         </span>
                     </x-input.file-upload>

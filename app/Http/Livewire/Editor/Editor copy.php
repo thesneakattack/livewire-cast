@@ -39,13 +39,13 @@ class Editor extends Component
 
     public function mount()
     {
-        $this->storyAssets = $this->story->lflbAssets;
         $this->editing = $this->makeBlankAsset();
+        $this->storyAssets = $this->story->lflbAssets;
     }
 
     public function makeBlankAsset()
     {
-        return LflbAsset::make(['type' => '']);
+        return LflbAsset::make(['type' => 'TEXT', 'cleanText' => 'TESTING', 'caption' => 'DEFAULT CAPTION']);
     }
 
     public function addAsset()
@@ -84,9 +84,7 @@ class Editor extends Component
     {
         return [
             'editing.type' => 'sometimes|nullable',
-            'editing.cleanText' => 'sometimes|nullable',
-            'editing.caption' => 'sometimes|nullable',
-            'editing.link' => 'sometimes|nullable',
+            'editing.caption' => 'required|min:3',
             'storyAssets.*.type' => 'sometimes|nullable',
             'storyAssets.*.cleanText' => 'sometimes|nullable',
             // 'storyAssets.*.link' => 'sometimes|nullable',
@@ -102,29 +100,25 @@ class Editor extends Component
     public function save()
     {
         $this->validate();
-        if ($this->editing->save()) {
-            // if ($this->editing->fill($this->editing->only($this->editing->fillable))->save()) {
-            $this->upload && $this->editing->update([
-                'link' => $this->upload->store('/', 'public'),
-            ]);
-            $position = $this->storyAssets->count(); //STARTS AT ZERO;
-            $this->editing->lflbStories()->sync([
-                $this->story->id => ['position' => $position]
-            ]);
-            //     $this->editing->lflbStories()->attach($this->story->id);
-            //     // $parent_app = $this->editing->lflbApp;
-            //     // $parent_app->update(['name' => $this->editingApp->name]);
+        // if ($this->editing->save()) {
+        //     // if ($this->editing->fill($this->editing->only($this->editing->fillable))->save()) {
+        //     $this->upload && $this->editing->update([
+        //         'image' => $this->upload->store('/', 'public'),
+        //     ]);
+        //     $this->editing->lflbStories()->attach($this->story->id);
+        //     // $parent_app = $this->editing->lflbApp;
+        //     // $parent_app->update(['name' => $this->editingApp->name]);
 
-            $this->showEditModal = false;
+        //     $this->showEditModal = false;
 
-            $this->notify('You\'ve updated a story');
-        } else {
-            // dd($this->editing);
-        }
-        // $this->storyAssets->each(function ($item, $key) {
-        //     $item->save();
-        //     $item->lflbStories()->sync([$this->story->id]);
-        // });
+        //     $this->notify('You\'ve updated a story');
+        // } else {
+        //     // dd($this->editing);
+        // }
+        $this->storyAssets->each(function ($item, $key) {
+            $item->save();
+            $item->lflbStories()->sync([$this->story->id]);
+        });
         // if ($this->storyAssets->each->save()) {
         //     dd($this->storyAssets->each);
         //     $this->notify('You\'ve updated a story');
@@ -168,10 +162,6 @@ class Editor extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
-    {
-        $this->reset('filters');
-    }
     public function getRowsQueryProperty()
     {
         // $query = $this->asset::with([
@@ -254,8 +244,7 @@ class Editor extends Component
         // $this->story = LflbStory::find($this->id);
         // dd($this->story->toArray());
         return view('livewire.editor.editor', [
-            // 'story' => $this->story
-            'assets' => $this->rows,
+            'story' => $this->story
         ]);
     }
 }

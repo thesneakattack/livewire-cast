@@ -55,10 +55,10 @@ class LflbAsset extends Model
         return Carbon::parse($this->created_at)->diffForHumans();
     }
 
-    public function mainImageUrl()
+    public function fileUrl()
     {
-        return $this->image
-            ? Storage::disk('public')->url($this->image)
-            : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
+        return $this->link
+            ? Storage::disk('public')->url($this->link)
+            : 'https://via.placeholder.com/300x150.png?text=NO%20IMAGE';
     }
 }

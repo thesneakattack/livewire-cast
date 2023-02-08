@@ -29,7 +29,16 @@ module.exports = {
                     900: "#1a202e",
                 },
             },
+            lineClamp: {
+                7: "7",
+                8: "8",
+                9: "9",
+                10: "10",
+            },
         },
+    },
+    variants: {
+        lineClamp: ["responsive", "hover"],
     },
     corePlugins: {
         aspectRatio: false,
@@ -38,6 +47,7 @@ module.exports = {
         require("@tailwindcss/forms"),
         require("@tailwindcss/typography"),
         require("@tailwindcss/aspect-ratio"),
+        require("@tailwindcss/line-clamp"),
         require("tw-elements/dist/plugin"),
     ],
 };

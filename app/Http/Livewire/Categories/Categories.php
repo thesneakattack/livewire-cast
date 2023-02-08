@@ -39,7 +39,7 @@ class Categories extends Component
     {
         return [
             'editing.title' => 'required|min:3',
-            'editing.description' => 'required|min:3',
+            'editing.description' => 'sometimes|nullable',
             'editing.introText' => 'sometimes|nullable',
             'editing.bodyText' => 'sometimes|nullable',
             // 'editing.mainImage' => 'nullable|image|max:1024',

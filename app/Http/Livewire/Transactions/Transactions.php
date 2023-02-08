@@ -67,7 +67,7 @@ class Transactions extends Component
 
         $this->notify('You\'ve deleted ' . $deleteCount . ' transactions');
         $this->selected = [];
-        $this->editing = Transaction::makeBlankTransaction();
+        $this->editing = $this->makeBlankTransaction();
     }
 
     public function makeBlankTransaction()

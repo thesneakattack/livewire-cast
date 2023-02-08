@@ -85,6 +85,6 @@ class LflbCategory extends Model
     {
         return $this->mainImage
             ? Storage::disk('public')->url($this->mainImage)
-            : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
+            : 'https://via.placeholder.com/300x150.png?text=NO%20IMAGE';
     }
 }

@@ -7,7 +7,9 @@
 --
 -- Purchase here: https://tailwindui.com/
 --}}
-
+@props(
+['trixId'=>Str::random(5)]
+)
 <div class="rounded-md shadow-sm" x-data="{
         value: @entangle($attributes->wire('model')),
         isFocused() { return document.activeElement !== this.$refs.trix },
@@ -16,8 +18,8 @@
     x-on:trix-change="value = $event.target.value" {{ $attributes->whereDoesntStartWith('wire:model') }}
     wire:ignore
     >
-    <input id="x" type="hidden">
-    <trix-editor x-ref="trix" input="x"
+    <input id="{{ $trixId }}" type="hidden">
+    <trix-editor x-ref="trix" input="{{ $trixId }}"
         class="block w-full prose transition duration-150 ease-in-out form-textarea sm:text-sm sm:leading-5">
     </trix-editor>
 </div>
