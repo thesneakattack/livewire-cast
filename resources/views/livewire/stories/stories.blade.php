@@ -21,10 +21,6 @@
                 </x-input.group>
 
                 <x-dropdown label="Bulk Actions">
-                    <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
-                        <x-icon.download class="text-cool-gray-400" /> <span>Export</span>
-                    </x-dropdown.item>
-
                     <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')"
                         class="flex items-center space-x-2">
                         <x-icon.trash class="text-cool-gray-400" /> <span>Delete</span>
@@ -45,24 +41,28 @@
             @if ($showFilters)
             <div class="relative flex p-4 rounded shadow-inner bg-cool-gray-200">
                 <div class="w-1/2 pr-2 space-y-4">
-                    <x-input.group inline for="filter-featured" label="Featured">
-                        <x-input.select wire:model="filters.featured" id="filter-featured">
-                            <option value="" disabled>Select Featured...</option>
+                    <x-input.group inline for="filter-parent-category" label="Category">
+                        <x-input.select wire:model="filters.parent_category" id="filter-parent-category">
+                            <option value="" disabled>Select Category...</option>
 
-                            @foreach (App\Models\LflbCategory::STATUSES as $value => $label)
-                            <option value="{{ $value }}">{{ $label }}</option>
+                            @foreach (App\Models\LflbCategory::all() as $parent_category)
+                            <option value="{{ $parent_category->id }}">{{ $parent_category->title }}</option>
+                            @endforeach
+                        </x-input.select>
+                    </x-input.group>
+                    <x-input.group inline for="filter-sub-category" label="Sub-Category">
+                        <x-input.select wire:model="filters.sub_category" id="filter-sub-category">
+                            <option value="" disabled>Select Sub-Category...</option>
+
+                            @foreach (App\Models\LflbSubCategory::all() as $sub_category)
+                            <option value="{{ $sub_category->id }}">{{ $sub_category->title }}</option>
                             @endforeach
                         </x-input.select>
                     </x-input.group>
 
-                    <x-input.group inline for="filter-title" label="Title">
+                    {{-- <x-input.group inline for="filter-title" label="Title">
                         <x-input.text wire:model.lazy="filters.title" id="filter-title" placeholder="Title" />
-                    </x-input.group>
-
-                    <x-input.group inline for="filter-description" label="Description">
-                        <x-input.text wire:model.lazy="filters.description" id="filter-description"
-                            placeholder="Description" />
-                    </x-input.group>
+                    </x-input.group> --}}
                 </div>
 
                 <div class="w-1/2 pl-2 space-y-4">
@@ -191,9 +191,9 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <x-button.link onclick="location.href='{{ route('editor', ['story' => $story->id]) }}'">
-                                Edit</x-button.link>
-                            <x-button.link wire:click="edit({{ $story->id }})">Edit</x-button.link>
+                            <x-button.primary onclick="location.href='{{ route('editor', ['story' => $story->id]) }}'">
+                                Edit Story</x-button.primary>
+                            <x-button.secondary wire:click="edit({{ $story->id }})">Details</x-button.secondary>
                         </x-table.cell>
                     </x-table.row>
                     @empty
@@ -282,9 +282,9 @@
                     </x-input.select>
                 </x-input.group>
                 <input type="hidden" wire:model="editing.app_id" id="app_id">
-                <x-input.group for="app_name" label="App Name" :error="$errors->first('editingApp.name')">
+                {{-- <x-input.group for="app_name" label="App Name" :error="$errors->first('editingApp.name')">
                     <x-input.text wire:model="editingApp.name" id="name" placeholder="App Name" />
-                </x-input.group>
+                </x-input.group> --}}
             </x-slot>
 
             <x-slot name="footer">

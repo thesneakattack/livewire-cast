@@ -21,9 +21,6 @@
                 </x-input.group>
 
                 <x-dropdown label="Bulk Actions">
-                    <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
-                        <x-icon.download class="text-cool-gray-400" /> <span>Export</span>
-                    </x-dropdown.item>
 
                     <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')"
                         class="flex items-center space-x-2">
@@ -45,23 +42,14 @@
             @if ($showFilters)
             <div class="relative flex p-4 rounded shadow-inner bg-cool-gray-200">
                 <div class="w-1/2 pr-2 space-y-4">
-                    <x-input.group inline for="filter-featured" label="Featured">
-                        <x-input.select wire:model="filters.featured" id="filter-featured">
-                            <option value="" disabled>Select Featured...</option>
+                    <x-input.group inline for="filter-parent-category" label="Category">
+                        <x-input.select wire:model="filters.parent_category" id="filter-parent-category">
+                            <option value="" disabled>Select Category...</option>
 
-                            @foreach (App\Models\LflbCategory::STATUSES as $value => $label)
-                            <option value="{{ $value }}">{{ $label }}</option>
+                            @foreach (App\Models\LflbCategory::all() as $parent_category)
+                            <option value="{{ $parent_category->id }}">{{ $parent_category->title }}</option>
                             @endforeach
                         </x-input.select>
-                    </x-input.group>
-
-                    <x-input.group inline for="filter-title" label="Title">
-                        <x-input.text wire:model.lazy="filters.title" id="filter-title" placeholder="Title" />
-                    </x-input.group>
-
-                    <x-input.group inline for="filter-description" label="Description">
-                        <x-input.text wire:model.lazy="filters.description" id="filter-description"
-                            placeholder="Description" />
                     </x-input.group>
                 </div>
 
@@ -88,11 +76,10 @@
                     <x-table.heading>Main Image</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('lflb_categories.title')"
                         :direction="$sorts['lflb_categories.title'] ?? null">Parent Category</x-table.heading>
-                    {{-- <x-table.heading sortable multi-column wire:click="sortBy('featured')"
-                        :direction="$sorts['featured'] ?? null">Featured</x-table.heading> --}}
+                    <x-table.heading sortable multi-column wire:click="sortBy('story_count')"
+                        :direction="$sorts['story_count'] ?? null">Story Count</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
                         :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
-                    <x-table.heading />
                     <x-table.heading sortable multi-column wire:click="sortBy('updated_at')"
                         :direction="$sorts['updated_at'] ?? null">Date Updated</x-table.heading>
                     <x-table.heading />
@@ -129,9 +116,12 @@
                                 <x-icon.cash class="text-cool-gray-400" />
 
                                 <p class="truncate text-cool-gray-600">
-                                    {{ $sub_category->title }}
+                                    <strong>{{ $sub_category->title }}</strong>
                                 </p>
                             </span>
+                            <p class="truncate text-cool-gray-600">
+                                {{ $sub_category->subTitle }}
+                            </p>
                         </x-table.cell>
 
                         {{-- <x-table.cell>
@@ -147,19 +137,37 @@
                         </x-table.cell> --}}
 
                         <x-table.cell>
-                            <span class="font-medium text-cool-gray-900">{{ $sub_category->mainImage }} </span>
+                            <div class="flex flex-wrap content-center justify-center">
+                                <div class="w-96 sm:w-96">
+                                    @if (file_exists(storage_path('app/public/'.$sub_category->mainImage)))
+                                    <img src="{{ $sub_category->mainImageUrl() }}" alt="...">
+                                    @else
+                                    <img src="https://lflbsign.webfoundry.dev/assets/{{ $sub_category->mainImage }}"
+                                        alt="..."
+                                        class="object-contain h-auto max-w-full align-middle border-none rounded shadow " />
+                                    @endif
+                                </div>
+                            </div>
                         </x-table.cell>
 
                         <x-table.cell class="max-w-[150px]">
                             <ol>
                                 <li>
                                     <span class="font-medium text-cool-gray-900">{{
-                                        $sub_category->LflbCategory->id.':'.$sub_category->LflbCategory->title
+                                        $sub_category->LflbCategory->title
                                         }} </span>
                                 </li>
                             </ol>
                         </x-table.cell>
-
+                        <x-table.cell class="max-w-[150px]">
+                            <ol>
+                                <li>
+                                    <span class="font-medium text-cool-gray-900">{{
+                                        $sub_category->story_count
+                                        }} </span>
+                                </li>
+                            </ol>
+                        </x-table.cell>
                         {{-- <x-table.cell>
                             <span
                                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-{{ $sub_category->status_color }}-100 text-{{ $sub_category->status_color }}-800 capitalize">
@@ -217,7 +225,7 @@
     <!-- Save Category Modal -->
     <form wire:submit.prevent="save">
         <x-modal.dialog wire:model.defer="showEditModal">
-            <x-slot name="title">Edit Category</x-slot>
+            <x-slot name="title">Edit Sub-Category</x-slot>
 
             <x-slot name="content">
                 <x-input.group for="title" label="Title" :error="$errors->first('editing.title')">

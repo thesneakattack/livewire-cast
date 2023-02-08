@@ -48,7 +48,7 @@ class Stories extends Component
             'editing.description' => 'sometimes',
             'editing.image' => 'sometimes|nullable',
             'editing.app_id' => 'required',
-            'editingApp.name' => 'required|min:3',
+            // 'editingApp.name' => 'required|min:3',
             'editingSubCategories' => 'required',
             // 'editingSubCategory.sub_category_id' => 'required',
         ];
@@ -150,8 +150,8 @@ class Stories extends Component
                 'image' => $this->upload->store('/', 'public'),
             ]);
 
-            $parent_app = $this->editing->lflbApp;
-            $parent_app->update(['name' => $this->editingApp->name]);
+            // $parent_app = $this->editing->lflbApp;
+            // $parent_app->update(['name' => $this->editingApp->name]);
             foreach ($this->editingSubCategories as $subCategory) {
                 $this->editing->lflbSubCategories()->sync($subCategory, false);
                 # code...
@@ -178,6 +178,8 @@ class Stories extends Component
             // ->has('lflbSubCategories')
             // $query = LflbStory::query()
             ->when($this->filters['search'], fn ($query, $search) => $query->where('lflb_stories.title', 'like', '%' . $search . '%'))
+            ->when($this->filters['sub_category'], fn ($query, $sub_category) => $query->where('lflb_sub_categories.id', '=', $sub_category))
+            ->when($this->filters['parent_category'], fn ($query, $parent_category) => $query->where('lflb_categories.id', '=', $parent_category))
             ->join(
                 'lflb_story_lflb_sub_category',
                 'lflb_story_lflb_sub_category.lflb_story_id',

@@ -2,7 +2,7 @@
 // $assets = $story->lflbAssets->sortBy('pivot.position');
 // dd($assets);
 @endphp
-<div class="max-w-4xl mx-auto">
+<div class="mx-auto max-w-7xl">
     <h1 class="text-2xl font-semibold text-gray-900">Story Editor</h1>
 
     <div class="py-4 space-y-4">
@@ -25,10 +25,6 @@
                 </x-input.group>
 
                 <x-dropdown label="Bulk Actions">
-                    <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
-                        <x-icon.download class="text-cool-gray-400" /> <span>Export</span>
-                    </x-dropdown.item>
-
                     <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')"
                         class="flex items-center space-x-2">
                         <x-icon.trash class="text-cool-gray-400" /> <span>Delete</span>
@@ -80,37 +76,37 @@
                         <x-table.cell class="pr-0">
                             <x-input.checkbox wire:model="selected" value="{{ $asset->id }}" />
                         </x-table.cell>
-                        <x-table.cell class="max-w-2xl py-3">
+                        <x-table.cell class="py-3">
                             <div class="">
-                                <span href="#" class="">
-                                    @switch($asset->type)
-                                    @case('TEXT')
-                                    {!!$asset->cleanText!!}
-                                    {{-- {!!strip_tags($asset['cleanText'], ["<p>", "<span>", "<ul>", "<li>", "<em>",
-                                                        "<strong>", "<b>", "<i>", "<br>"])!!} --}}
+                                @switch($asset->type)
+                                @case('TEXT')
+                                <div class="prose text-justify">{!!$asset->cleanText!!}</div>
+                                @break
+                                @case('IMAGE')
+                                <div class="flex flex-wrap content-center justify-center">
+                                    <div class="w-2/4 sm:w-2/4">
+                                        @if(file_exists(storage_path('app/public/'.$asset->link)))
+                                        <img src="{{ $asset->fileUrl() }}" alt="...">
+                                        @else
+                                        <img src="https://lflbsign.webfoundry.dev/assets/{{ $asset->link }}" alt="..."
+                                            class="object-contain h-auto max-w-full align-middle border-none rounded shadow " />
+                                        @endif
+                                    </div>
+                                </div>
+                                @break
+                                @case('VIDEO')
+                                <p class="truncate line-clamp-3 text-cool-gray-600">
+                                    {{ $asset->link }}
+                                </p>
+                                @break
+                                @default
 
-                                                                    @break
-                                                                    @case('IMAGE')
-                                                                    <img class="object-scale-down"
-                                                                        src="{{ $asset->fileUrl() }}" alt="Photo">
-                                                                    <img class="object-scale-down"
-                                                                        src="https://lflbsign.webfoundry.dev/assets/{{ $asset->link }}"
-                                                                        alt="Photo">
-                                                                    @break
-                                                                    @case('VIDEO')
-                                                                    <p class="truncate line-clamp-3 text-cool-gray-600">
-                                                                        {{ $asset->link }}
-                                                                    </p>
-                                                                    @break
-                                                                    @default
-
-                                                                    @endswitch
-                                        </span>
+                                @endswitch
                             </div>
                         </x-table.cell>
 
                         <x-table.cell>
-                            <x-button.link wire:click="edit({{ $asset->id }})">Edit</x-button.link>
+                            <x-button.primary wire:click="edit({{ $asset->id }})">Edit</x-button.primary>
                         </x-table.cell>
                     </x-table.row>
                     @empty

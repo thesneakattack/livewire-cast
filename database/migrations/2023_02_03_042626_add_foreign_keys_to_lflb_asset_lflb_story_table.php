@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('lflb_asset_lflb_story', function (Blueprint $table) {
             $table->foreign(['story_id'], 'FK_lflb_asset_lflb_story_lflb_stories')->references(['id'])->on('lflb_stories')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-            $table->foreign(['asset_id'], 'FK_lflb_asset_lflb_story_lflb_assets')->references(['id'])->on('lflb_assets')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['asset_id'], 'FK_lflb_asset_lflb_story_lflb_assets')->references(['id'])->on('lflb_assets')->onUpdate('NO ACTION')->onDelete('CASCADE');
         });
     }
 

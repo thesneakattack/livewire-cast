@@ -21,10 +21,6 @@
                 </x-input.group>
 
                 <x-dropdown label="Bulk Actions">
-                    <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
-                        <x-icon.download class="text-cool-gray-400" /> <span>Export</span>
-                    </x-dropdown.item>
-
                     <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')"
                         class="flex items-center space-x-2">
                         <x-icon.trash class="text-cool-gray-400" /> <span>Delete</span>
@@ -55,7 +51,7 @@
                         </x-input.select>
                     </x-input.group>
 
-                    <x-input.group inline for="filter-title" label="Title">
+                    {{-- <x-input.group inline for="filter-title" label="Title">
                         <x-input.text wire:model.lazy="filters.title" id="filter-title" placeholder="Title" />
                     </x-input.group>
 
@@ -63,7 +59,7 @@
                         <x-input.text wire:model.lazy="filters.description" id="filter-description"
                             placeholder="Description" />
                     </x-input.group>
-                </div>
+                </div> --}}
 
                 <div class="w-1/2 pl-2 space-y-4">
                     <x-button.link wire:click="resetFilters" class="absolute bottom-0 right-0 p-4">Reset Filters

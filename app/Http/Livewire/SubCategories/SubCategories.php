@@ -23,7 +23,7 @@ class SubCategories extends Component
         'search' => '',
         'title' => '',
         'subTitle' => '',
-        'category_id' => '',
+        'parent_category' => '',
         'featured' => '',
     ];
     public LflbSubCategory $editing;
@@ -136,27 +136,26 @@ class SubCategories extends Component
     public function getRowsQueryProperty()
     {
         $query = LflbSubCategory::query()
-            ->when($this->filters['title'], fn ($query, $title) => $query->where('title', 'like', '%' . $title . '%'))
-            ->when($this->filters['subTitle'], fn ($query, $subTitle) => $query->where('subTitle', 'like', '%' . $subTitle . '%'))
-            // ->when($this->filters['parent_category'], fn ($query, $parent_category) => $query->where('`lflb_categories`.`title`', 'like', '%' . $parent_category . '%'))
             ->when(
-                $this->filters['category_id'],
-                function ($query, $category_id) {
+                $this->filters['parent_category'],
+                function ($query, $parent_category) {
                     // return dd(LflbCategory::query());
-                    return $query->where('category_id', 'like', '%' . $category_id . '%');
+                    return $query->where('lflb_categories.id', '=', $parent_category);
                 }
             )
-            // ->when($this->filters['parent_category'], fn ($query, $parent_category) => $query->where('category.title', 'like', '%' . $parent_category . '%'))
-            ->when($this->filters['featured'], fn ($query, $featured) => $query->where('featured', $featured))
-            ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'))
+            // ->when($this->filters['featured'], fn ($query, $featured) => $query->where('featured', $featured))
+            ->when($this->filters['search'], fn ($query, $search) => $query->where('lflb_sub_categories.title', 'like', '%' . $search . '%'))
             // ->with('lflbCategory')->get();
             ->join('lflb_categories', 'lflb_sub_categories.category_id', '=', 'lflb_categories.id')
+            ->join('lflb_story_lflb_sub_category', 'lflb_sub_categories.id', '=', 'lflb_story_lflb_sub_category.lflb_sub_category_id')
             ->select(
                 'lflb_sub_categories.*',
                 'lflb_categories.title as category_title',
                 'lflb_categories.mainImage as category_mainImage',
-            )
-            ->distinct();
+                \DB::raw('COUNT(lflb_story_lflb_sub_category.id) as story_count')
+            )->groupBy('lflb_sub_categories.id');
+        // ->selectRaw('issues.*, COUNT(lflb_story_lflb_sub_category.id) as story_count')
+        // ->distinct();
 
         return $this->applySorting($query);
     }
