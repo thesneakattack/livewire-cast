@@ -239,6 +239,10 @@
                 <x-input.group label="Main Image" for="mainImage" :error="$errors->first('editing.mainImage')">
                     <x-input.file-upload wire:model="upload" id="mainImage">
                         <span class="overflow-hidden w-96 max-h-72">
+                            <div x-show="isUploading" class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                                <div class="bg-indigo-600 text-xs font-medium text-indigo-100 text-center p-0.5 leading-none rounded-full"
+                                    x-bind:style="`width:${progress}%`" x-text="`${progress}%`"></div>
+                            </div>
                             @if ($upload)
                             <img src="{{ $upload->temporaryUrl() }}" alt="...">
                             @else
@@ -246,10 +250,12 @@
                             <div class="flex flex-wrap content-center justify-center">
                                 <div class="w-96 sm:w-96">
                                     @if (file_exists(storage_path('app/public/'.$editing->mainImage)))
-                                    <img src="{{ $editing->mainImageUrl() }}" alt="...">
+                                    <img x-show="placeholderImage"
+                                        class="object-contain h-auto max-w-full align-middle border-none rounded shadow"
+                                        src="{{ $editing->mainImageUrl() }}" alt="...">
                                     @else
-                                    <img src="https://lflbsign.webfoundry.dev/assets/{{ $editing->mainImage }}"
-                                        alt="..."
+                                    <img x-show="placeholderImage"
+                                        src="https://lflbsign.webfoundry.dev/assets/{{ $editing->mainImage }}" alt="..."
                                         class="object-contain h-auto max-w-full align-middle border-none rounded shadow " />
                                     @endif
                                 </div>

@@ -147,13 +147,14 @@ class SubCategories extends Component
             ->when($this->filters['search'], fn ($query, $search) => $query->where('lflb_sub_categories.title', 'like', '%' . $search . '%'))
             // ->with('lflbCategory')->get();
             ->join('lflb_categories', 'lflb_sub_categories.category_id', '=', 'lflb_categories.id')
-            ->join('lflb_story_lflb_sub_category', 'lflb_sub_categories.id', '=', 'lflb_story_lflb_sub_category.lflb_sub_category_id')
+            ->leftJoin('lflb_story_lflb_sub_category', 'lflb_sub_categories.id', '=', 'lflb_story_lflb_sub_category.lflb_sub_category_id')
             ->select(
                 'lflb_sub_categories.*',
                 'lflb_categories.title as category_title',
                 'lflb_categories.mainImage as category_mainImage',
-                \DB::raw('COUNT(lflb_story_lflb_sub_category.id) as story_count')
-            )->groupBy('lflb_sub_categories.id');
+                \DB::raw('COUNT(lflb_story_lflb_sub_category.lflb_story_id) as story_count')
+            )
+            ->groupBy('lflb_sub_categories.id');
         // ->selectRaw('issues.*, COUNT(lflb_story_lflb_sub_category.id) as story_count')
         // ->distinct();
 

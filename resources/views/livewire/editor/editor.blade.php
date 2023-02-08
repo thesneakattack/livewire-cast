@@ -191,6 +191,10 @@
                 <x-input.group label="Image" for="image" :error="$errors->first('editing.link')">
                     <x-input.file-upload wire:model="upload" id="image">
                         <span class="overflow-hidden w-96 max-h-72">
+                            <div x-show="isUploading" class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                                <div class="bg-indigo-600 text-xs font-medium text-indigo-100 text-center p-0.5 leading-none rounded-full"
+                                    x-bind:style="`width:${progress}%`" x-text="`${progress}%`"></div>
+                            </div>
                             @if ($upload)
                             <img src="{{ $upload->temporaryUrl() }}" alt="...">
                             @else
@@ -217,8 +221,14 @@
                 <x-input.group label="Video" for="video" :error="$errors->first('editing.link')">
                     <x-input.file-upload wire:model="upload" id="video">
                         <span class="overflow-hidden w-96 max-h-72">
+                            <div x-show="isUploading" class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                                <div class="bg-indigo-600 text-xs font-medium text-indigo-100 text-center p-0.5 leading-none rounded-full"
+                                    x-bind:style="`width:${progress}%`" x-text="`${progress}%`"></div>
+                            </div>
                             @if ($upload)
-                            <img src="{{ $upload->temporaryUrl() }}" alt="...">
+                            <a href="{{ $upload->temporaryUrl() }}" target="_blank">{{ $upload->getClientOriginalName()
+                                }}</a>
+                            {{-- <img src="{{ $upload->temporaryUrl() }}" alt="..."> --}}
                             @else
                             {{-- <img src="{{ asset('/storage/'.$editing->image) }}" alt="..."> --}}
 
