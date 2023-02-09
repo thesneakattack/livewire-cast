@@ -143,7 +143,8 @@ class Categories extends Component
             ->when($this->filters['mainImage'], fn ($query, $mainImage) => $query->where('mainImage', 'like', '%' . $mainImage . '%'))
             ->when($this->filters['sub_categories'], fn ($query, $sub_categories) => $query->where('sub_categories', 'like', '%' . $sub_categories . '%'))
             ->when($this->filters['featured'], fn ($query, $featured) => $query->where('featured', $featured))
-            ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'));
+            ->when($this->filters['search'], fn ($query, $search) => $query->where('title', 'like', '%' . $search . '%'))
+            ->whereNot('lflb_categories.id', 2);
 
         return $this->applySorting($query);
     }

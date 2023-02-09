@@ -47,7 +47,9 @@
                             <option value="" disabled>Select Category...</option>
 
                             @foreach (App\Models\LflbCategory::all() as $parent_category)
+                            @unless ($parent_category->id === 2)
                             <option value="{{ $parent_category->id }}">{{ $parent_category->title }}</option>
+                            @endunless
                             @endforeach
                         </x-input.select>
                     </x-input.group>
@@ -182,7 +184,7 @@
                             {{ $sub_category->updated_date_for_humans }}
                         </x-table.cell>
                         <x-table.cell>
-                            <x-button.link wire:click="edit({{ $sub_category->id }})">Edit</x-button.link>
+                            <x-button.secondary wire:click="edit({{ $sub_category->id }})">Details</x-button.link>
                         </x-table.cell>
                     </x-table.row>
                     @empty

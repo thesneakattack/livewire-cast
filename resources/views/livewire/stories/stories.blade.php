@@ -46,7 +46,9 @@
                             <option value="" disabled>Select Category...</option>
 
                             @foreach (App\Models\LflbCategory::all() as $parent_category)
+                            @unless ($parent_category->id === 2)
                             <option value="{{ $parent_category->id }}">{{ $parent_category->title }}</option>
+                            @endunless
                             @endforeach
                         </x-input.select>
                     </x-input.group>
@@ -55,7 +57,9 @@
                             <option value="" disabled>Select Sub-Category...</option>
 
                             @foreach (App\Models\LflbSubCategory::all() as $sub_category)
+                            @unless ($sub_category->lflbCategory->id === 2)
                             <option value="{{ $sub_category->id }}">{{ $sub_category->title }}</option>
+                            @endunless
                             @endforeach
                         </x-input.select>
                     </x-input.group>
@@ -83,8 +87,8 @@
                     <x-table.heading sortable multi-column wire:click="sortBy('lflb_stories.title')"
                         :direction="$sorts['lflb_stories.title'] ?? null">Title</x-table.heading>
                     <x-table.heading>Main Image</x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('sub_category_titles')"
-                        :direction="$sorts['sub_category_titles'] ?? null">Sub-Categories</x-table.heading>
+                    {{-- <x-table.heading sortable multi-column wire:click="sortBy('sub_category_titles')"
+                        :direction="$sorts['sub_category_titles'] ?? null">Sub-Categories</x-table.heading> --}}
                     <x-table.heading sortable multi-column wire:click="sortBy('category_titles')"
                         :direction="$sorts['category_titles'] ?? null">Parent Categories</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
@@ -140,22 +144,16 @@
                             </div>
                         </x-table.cell>
 
-                        <x-table.cell class="max-w-[150px]">
+                        {{-- <x-table.cell class="max-w-[150px]">
                             <ol>
                                 <li>
                                     <span class="font-medium text-cool-gray-900">
-                                        {{-- @foreach ($story->lflbSubCategories->sortBy('title') as $sub_category)
-                                        @php
-                                        @endphp
-                                        @unless ($sub_category->lflbCategory->id === 2)
-                                        {{$sub_category->title}}<br>
-                                        @endunless
-                                        @endforeach --}}
+
 
                                         @foreach ( $story->lflbCategories()->sortBy('title') as $category =>
                                         $sub_categories)
                                         @unless ($category === 'Timeline')
-                                        {{-- <strong>{{$category}}</strong> --}}
+
                                         <ol>
                                             @foreach ($sub_categories as $sub_category)
                                             <li>{{$sub_category->title}}</li>
@@ -166,7 +164,7 @@
                                     </span>
                                 </li>
                             </ol>
-                        </x-table.cell>
+                        </x-table.cell> --}}
                         <x-table.cell class="max-w-[150px]">
                             <ul>
                                 <li>

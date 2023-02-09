@@ -87,6 +87,7 @@ class Editor extends Component
             'editing.cleanText' => 'sometimes|nullable',
             'editing.caption' => 'sometimes|nullable',
             'editing.link' => 'sometimes|nullable',
+            // 'editing.position' => 'sometimes|nullable',
             'storyAssets.*.type' => 'sometimes|nullable',
             'storyAssets.*.cleanText' => 'sometimes|nullable',
             // 'storyAssets.*.link' => 'sometimes|nullable',
@@ -107,10 +108,13 @@ class Editor extends Component
             $this->upload && $this->editing->update([
                 'link' => $this->upload->store('/', 'public'),
             ]);
-            $position = $this->storyAssets->count(); //STARTS AT ZERO;
-            $this->editing->lflbStories()->sync([
-                $this->story->id => ['position' => $position]
-            ]);
+            if (is_null($this->editing->lflbStories()->where('asset_id', $this->editing->id)->first())) {
+                $position = $this->storyAssets->count();
+                //STARTS AT ZERO;
+                $this->editing->lflbStories()->sync([
+                    $this->story->id => ['position' => $position]
+                ]);
+            }
             //     $this->editing->lflbStories()->attach($this->story->id);
             //     // $parent_app = $this->editing->lflbApp;
             //     // $parent_app->update(['name' => $this->editingApp->name]);

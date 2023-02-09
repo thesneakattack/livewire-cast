@@ -154,6 +154,7 @@ class SubCategories extends Component
                 'lflb_categories.mainImage as category_mainImage',
                 \DB::raw('COUNT(lflb_story_lflb_sub_category.lflb_story_id) as story_count')
             )
+            ->whereNot('lflb_categories.id', 2)
             ->groupBy('lflb_sub_categories.id');
         // ->selectRaw('issues.*, COUNT(lflb_story_lflb_sub_category.id) as story_count')
         // ->distinct();

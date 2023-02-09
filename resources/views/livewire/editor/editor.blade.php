@@ -36,8 +36,13 @@
                 <livewire:categories.import-categories /> --}}
 
                 <x-button.primary wire:click="create">
-                    <x-icon.plus /> New
+                    <x-icon.plus /> Add to Story...
                 </x-button.primary>
+                <x-button.secondary>
+                    <a href="https://staging.lflbsign.webfoundry.dev/preview" target="_blank">
+                        Preview
+                    </a>
+                </x-button.secondary>
             </div>
         </div>
         {{-- {{dd($assets)}} --}}
@@ -48,8 +53,7 @@
                     <x-table.heading class="w-8 pr-0">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
-                    <x-table.heading sortable multi-column wire:click="sortBy('pivot_story_id')"
-                        :direction="$sorts['pivot_story_id'] ?? null">Story ID</x-table.heading>
+                    <x-table.heading />
                     <x-table.heading />
                 </x-slot>
 
@@ -177,10 +181,8 @@
                     </x-input.select>
 
                 </x-input.group>
-                <x-input.group for="position" label="Position" :error="$errors->first('editing.position')">
-                    <input type="text" wire:model="editing.position" id="position" />
-                </x-input.group>
 
+                <input type="hidden" wire:model="editing.position" id="position" />
                 @switch($editing->type)
                 @case('TEXT')
                 <x-input.group for="cleanText" label="Text" :error="$errors->first('editing.cleanText')">

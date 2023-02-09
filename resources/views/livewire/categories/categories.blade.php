@@ -176,7 +176,7 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <x-button.link wire:click="edit({{ $category->id }})">Edit</x-button.link>
+                            <x-button.secondary wire:click="edit({{ $category->id }})">Details</x-button.link>
                         </x-table.cell>
                     </x-table.row>
                     @empty
