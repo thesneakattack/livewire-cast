@@ -38,11 +38,11 @@
                 <x-button.primary wire:click="create">
                     <x-icon.plus /> Add to Story...
                 </x-button.primary>
-                {{-- <x-button.secondary>
-                    <a href="https://staging.lflbsign.webfoundry.dev/preview" target="_blank">
-                        Preview
-                    </a>
-                </x-button.secondary> --}}
+                <a href="https://staging.lflbsign.webfoundry.dev/preview?url={{'stories/'.$story->id}}" target="_blank">
+                    <x-button.secondary>
+                        Preview Story
+                    </x-button.secondary>
+                </a>
             </div>
         </div>
         {{-- {{dd($assets)}} --}}

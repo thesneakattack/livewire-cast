@@ -117,6 +117,12 @@
                         </x-table.cell>
                         <x-table.cell>
                             <x-button.secondary wire:click="edit({{ $sub_category->id }})">Details</x-button.link>
+                                <a href="https://staging.lflbsign.webfoundry.dev/preview?url={{'subtopics/'.$sub_category->id}}"
+                                    target="_blank">
+                                    <x-button.secondary>
+                                        Preview
+                                    </x-button.secondary>
+                                </a>
                         </x-table.cell>
                         <x-table.cell>
                             <span href="#" class="inline-flex space-x-2 text-sm leading-5">

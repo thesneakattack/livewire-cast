@@ -127,6 +127,12 @@
                             <x-button.primary onclick="location.href='{{ route('editor', ['story' => $story->id]) }}'">
                                 Edit Story</x-button.primary>
                             <x-button.secondary wire:click="edit({{ $story->id }})">Details</x-button.secondary>
+                            <a href="https://staging.lflbsign.webfoundry.dev/preview?url={{'stories/'.$story->id}}"
+                                target="_blank">
+                                <x-button.secondary>
+                                    Preview
+                                </x-button.secondary>
+                            </a>
                         </x-table.cell>
                         <x-table.cell>
                             <span href="#" class="inline-flex space-x-2 text-sm leading-5">
