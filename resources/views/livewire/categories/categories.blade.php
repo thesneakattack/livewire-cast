@@ -71,11 +71,15 @@
 
         <!-- Categories Table -->
         <div class="flex-col space-y-4">
+            <div>
+                {{ $categories->links() }}
+            </div>
             <x-table>
                 <x-slot name="head">
                     <x-table.heading class="w-8 pr-0">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
+                    <x-table.heading />
                     <x-table.heading sortable multi-column wire:click="sortBy('title')"
                         :direction="$sorts['title'] ?? null">Title</x-table.heading>
                     {{-- <x-table.heading>Description</x-table.heading> --}}
@@ -87,7 +91,6 @@
                         :direction="$sorts['featured'] ?? null">Featured</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
                         :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
-                    <x-table.heading />
                 </x-slot>
 
                 <x-slot name="body">
@@ -114,7 +117,9 @@
                         <x-table.cell class="pr-0">
                             <x-input.checkbox wire:model="selected" value="{{ $category->id }}" />
                         </x-table.cell>
-
+                        <x-table.cell>
+                            <x-button.secondary wire:click="edit({{ $category->id }})">Details</x-button.link>
+                        </x-table.cell>
                         <x-table.cell>
                             <span href="#" class="inline-flex space-x-2 text-sm leading-5">
                                 <x-icon.cash class="text-cool-gray-400" />
@@ -175,9 +180,6 @@
                             {{ $category->date_for_humans }}
                         </x-table.cell>
 
-                        <x-table.cell>
-                            <x-button.secondary wire:click="edit({{ $category->id }})">Details</x-button.link>
-                        </x-table.cell>
                     </x-table.row>
                     @empty
                     <x-table.row>
@@ -192,9 +194,7 @@
                 </x-slot>
             </x-table>
 
-            <div>
-                {{ $categories->links() }}
-            </div>
+
         </div>
     </div>
 

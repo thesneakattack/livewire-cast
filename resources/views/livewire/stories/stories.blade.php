@@ -79,11 +79,15 @@
         {{-- {{dd($stories)}} --}}
         <!-- Stories Table -->
         <div class="flex-col space-y-4">
+            <div>
+                {{ $stories->links() }}
+            </div>
             <x-table>
                 <x-slot name="head">
                     <x-table.heading class="w-8 pr-0">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
+                    <x-table.heading />
                     <x-table.heading sortable multi-column wire:click="sortBy('lflb_stories.title')"
                         :direction="$sorts['lflb_stories.title'] ?? null">Title</x-table.heading>
                     <x-table.heading>Main Image</x-table.heading>
@@ -93,7 +97,6 @@
                         :direction="$sorts['category_titles'] ?? null">Parent Categories</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('created_at')"
                         :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
-                    <x-table.heading />
                 </x-slot>
 
                 <x-slot name="body">
@@ -120,7 +123,11 @@
                         <x-table.cell class="pr-0">
                             <x-input.checkbox wire:model="selected" value="{{ $story->id }}" />
                         </x-table.cell>
-
+                        <x-table.cell>
+                            <x-button.primary onclick="location.href='{{ route('editor', ['story' => $story->id]) }}'">
+                                Edit Story</x-button.primary>
+                            <x-button.secondary wire:click="edit({{ $story->id }})">Details</x-button.secondary>
+                        </x-table.cell>
                         <x-table.cell>
                             <span href="#" class="inline-flex space-x-2 text-sm leading-5">
                                 <x-icon.cash class="text-cool-gray-400" />
@@ -187,12 +194,6 @@
                         <x-table.cell>
                             {{ $story->date_for_humans }}
                         </x-table.cell>
-
-                        <x-table.cell>
-                            <x-button.primary onclick="location.href='{{ route('editor', ['story' => $story->id]) }}'">
-                                Edit Story</x-button.primary>
-                            <x-button.secondary wire:click="edit({{ $story->id }})">Details</x-button.secondary>
-                        </x-table.cell>
                     </x-table.row>
                     @empty
                     <x-table.row>
@@ -208,9 +209,7 @@
                 </x-slot>
             </x-table>
 
-            <div>
-                {{ $stories->links() }}
-            </div>
+
         </div>
     </div>
 

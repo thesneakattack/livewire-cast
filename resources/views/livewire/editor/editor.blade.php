@@ -38,16 +38,19 @@
                 <x-button.primary wire:click="create">
                     <x-icon.plus /> Add to Story...
                 </x-button.primary>
-                <x-button.secondary>
+                {{-- <x-button.secondary>
                     <a href="https://staging.lflbsign.webfoundry.dev/preview" target="_blank">
                         Preview
                     </a>
-                </x-button.secondary>
+                </x-button.secondary> --}}
             </div>
         </div>
         {{-- {{dd($assets)}} --}}
         <!-- Stories Table -->
         <div class="flex-col space-y-4">
+            <div>
+                {{ $assets->links() }}
+            </div>
             <x-table>
                 <x-slot name="head">
                     <x-table.heading class="w-8 pr-0">
@@ -80,6 +83,9 @@
                     <x-table.row wire:loading.class.delay="opacity-50" wire:key="row-{{ $asset->id }}">
                         <x-table.cell class="pr-0">
                             <x-input.checkbox wire:model="selected" value="{{ $asset->id }}" />
+                        </x-table.cell>
+                        <x-table.cell>
+                            <x-button.primary wire:click="edit({{ $asset->id }})">Edit</x-button.primary>
                         </x-table.cell>
                         <x-table.cell class="py-3">
                             <div class="">
@@ -119,10 +125,6 @@
                                 @endswitch
                             </div>
                         </x-table.cell>
-
-                        <x-table.cell>
-                            <x-button.primary wire:click="edit({{ $asset->id }})">Edit</x-button.primary>
-                        </x-table.cell>
                     </x-table.row>
                     @empty
                     <x-table.row>
@@ -138,9 +140,7 @@
                 </x-slot>
             </x-table>
 
-            <div>
-                {{ $assets->links() }}
-            </div>
+
         </div>
     </div>
 

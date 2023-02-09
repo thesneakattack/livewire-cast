@@ -65,11 +65,15 @@
 
         <!-- Sub-Categories Table -->
         <div class="flex-col space-y-4">
+            <div>
+                {{ $sub_categories->links() }}
+            </div>
             <x-table>
                 <x-slot name="head">
                     <x-table.heading class="w-8 pr-0">
                         <x-input.checkbox wire:model="selectPage" />
                     </x-table.heading>
+                    <x-table.heading />
                     <x-table.heading sortable multi-column wire:click="sortBy('title')"
                         :direction="$sorts['title'] ?? null">Title</x-table.heading>
                     {{-- <x-table.heading>Description</x-table.heading> --}}
@@ -84,7 +88,6 @@
                         :direction="$sorts['created_at'] ?? null">Date Created</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('updated_at')"
                         :direction="$sorts['updated_at'] ?? null">Date Updated</x-table.heading>
-                    <x-table.heading />
                 </x-slot>
 
                 <x-slot name="body">
@@ -112,7 +115,9 @@
                         <x-table.cell class="pr-0">
                             <x-input.checkbox wire:model="selected" value="{{ $sub_category->id }}" />
                         </x-table.cell>
-
+                        <x-table.cell>
+                            <x-button.secondary wire:click="edit({{ $sub_category->id }})">Details</x-button.link>
+                        </x-table.cell>
                         <x-table.cell>
                             <span href="#" class="inline-flex space-x-2 text-sm leading-5">
                                 <x-icon.cash class="text-cool-gray-400" />
@@ -183,9 +188,6 @@
                         <x-table.cell>
                             {{ $sub_category->updated_date_for_humans }}
                         </x-table.cell>
-                        <x-table.cell>
-                            <x-button.secondary wire:click="edit({{ $sub_category->id }})">Details</x-button.link>
-                        </x-table.cell>
                     </x-table.row>
                     @empty
                     <x-table.row>
@@ -201,9 +203,7 @@
                 </x-slot>
             </x-table>
 
-            <div>
-                {{ $sub_categories->links() }}
-            </div>
+
         </div>
     </div>
 
