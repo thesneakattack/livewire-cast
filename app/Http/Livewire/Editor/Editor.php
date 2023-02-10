@@ -240,6 +240,7 @@ class Editor extends Component
     {
         return $this->cache(function () {
             return $this->applyPagination($this->rowsQuery);
+            // return $this->rowsQuery;
             // return $this->rowsQuery->paginate(10);
         });
     }
