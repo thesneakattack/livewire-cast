@@ -35,6 +35,23 @@ module.exports = {
                 9: "9",
                 10: "10",
             },
+            typography: {
+                DEFAULT: {
+                    css: {
+                        h1: {
+                            // color: "#00f",
+                            fontWeight: "400",
+                        },
+                        color: "#333",
+                        // a: {
+                        //     color: "#3182ce",
+                        //     "&:hover": {
+                        //         color: "#2c5282",
+                        //     },
+                        // },
+                    },
+                },
+            },
         },
     },
     variants: {

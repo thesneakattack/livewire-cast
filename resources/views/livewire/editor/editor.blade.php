@@ -79,15 +79,16 @@
                             <x-table.row wire:loading.class.delay="opacity-50" wire:key="row-{{ $asset->id }}">
                                 <x-table.cell class="pr-0">
                                     <x-input.checkbox value="{{ $asset->id }}" wire:model="selected" />
+                                    {{ $asset->pivot_position }}
                                 </x-table.cell>
                                 <x-table.cell>
                                     <x-button.primary wire:click="edit({{ $asset->id }})">Edit</x-button.primary>
                                 </x-table.cell>
-                                <x-table.cell class="py-3">
+                                <x-table.cell class="py-3 border-l-4">
                                     <div class="">
                                         @switch($asset->type)
                                             @case('TEXT')
-                                                <div class="mx-auto prose text-justify">{!! $asset->cleanText !!}</div>
+                                                <div class="mx-auto prose max-w-none">{!! $asset->cleanText !!}</div>
                                             @break
 
                                             @case('IMAGE')
