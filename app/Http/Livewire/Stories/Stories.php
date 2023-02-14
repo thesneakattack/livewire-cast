@@ -33,6 +33,7 @@ class Stories extends Component
     public LflbStory $editing;
     public $editingSubCategories = [];
     public LflbCategory $editingCategory;
+    public LflbSubCategory $subCategories;
     public LflbApp $editingApp;
     public $collection;
     public $upload;
@@ -117,6 +118,11 @@ class Stories extends Component
         if ($this->editing->getKey()) {
             $this->editing = $this->makeBlankStory();
             // $this->editingSubCategories[] = ['id' => '12'];
+            $this->editingSubCategories =  \App\Models\LflbSubCategory::limit(6)->get()->transform(fn ($user) => [
+                'id' => $user->id,
+                'title' => $user->name,
+                'subtitle' => $user->email
+            ]);
 
             $this->editingApp = $this->makeBlankApp();
         }

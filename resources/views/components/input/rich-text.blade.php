@@ -7,19 +7,17 @@
 --
 -- Purchase here: https://tailwindui.com/
 --}}
-@props(
-['trixId'=>Str::random(5)]
-)
+@props(['trixId' => Str::random(5)])
 <div class="rounded-md shadow-sm" x-data="{
-        value: @entangle($attributes->wire('model')),
-        isFocused() { return document.activeElement !== this.$refs.trix },
-        setValue() { this.$refs.trix.editor.loadHTML(this.value) },
-    }" x-init="setValue(); $watch('value', () => isFocused() && setValue())"
-    x-on:trix-change="value = $event.target.value" {{ $attributes->whereDoesntStartWith('wire:model') }}
-    wire:ignore
-    >
+    value: @entangle($attributes->wire('model')),
+    isFocused() { return document.activeElement !== this.$refs.trix },
+    setValue() { this.$refs.trix.editor.loadHTML(this.value) },
+}" x-init="setValue();
+$watch('value', () => isFocused() && setValue())"
+    x-on:trix-change="value = $event.target.value" {{ $attributes->whereDoesntStartWith('wire:model') }} wire:ignore>
     <input id="{{ $trixId }}" type="hidden">
-    <trix-editor x-ref="trix" input="{{ $trixId }}"
-        class="block w-full prose transition duration-150 ease-in-out form-textarea sm:text-sm sm:leading-5">
+    <trix-editor
+        class="block w-full prose transition duration-150 ease-in-out max-w-none form-textarea sm:text-sm sm:leading-5"
+        x-ref="trix" input="{{ $trixId }}">
     </trix-editor>
 </div>

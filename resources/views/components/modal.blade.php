@@ -28,7 +28,7 @@ switch ($maxWidth ?? '2xl') {
         break;
     case '2xl':
     default:
-        $maxWidth = 'sm:max-w-4xl';
+        $maxWidth = 'sm:max-w-7xl';
         break;
 }
 @endphp

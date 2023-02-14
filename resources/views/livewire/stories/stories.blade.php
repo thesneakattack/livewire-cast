@@ -288,6 +288,8 @@
                             @endforeach
                         </x-input.select>
                     </x-input.group>
+                    {{-- <x-input.tom-select id="testUser" name="testUser" wire:model="editingSubCategories"
+                        :selected-items="$editingSubCategories" multiple :options="$subCategories" placeholder="Pick a sub-category" /> --}}
                     <input id="app_id" type="hidden" wire:model="editing.app_id">
                     {{-- <x-input.group for="app_name" label="App Name" :error="$errors->first('editingApp.name')">
                     <x-input.text wire:model="editingApp.name" id="name" placeholder="App Name" />

@@ -79,7 +79,7 @@
                             <x-table.row wire:loading.class.delay="opacity-50" wire:key="row-{{ $asset->id }}">
                                 <x-table.cell class="pr-0">
                                     <x-input.checkbox value="{{ $asset->id }}" wire:model="selected" />
-                                    {{ $asset->pivot_position }}
+                                    {{-- {{ $asset->pivot_position }} --}}
                                 </x-table.cell>
                                 <x-table.cell>
                                     <x-button.primary wire:click="edit({{ $asset->id }})">Edit</x-button.primary>
