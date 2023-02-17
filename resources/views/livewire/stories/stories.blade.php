@@ -278,7 +278,8 @@
                         </x-input.file-upload>
                     </x-input.group>
 
-                    <x-input.group for="Sub_Categories" label="Sub-Category" :error="$errors->first('editingSubCategories')">
+
+                    {{-- <x-input.group for="Sub_Categories" label="Sub-Category" :error="$errors->first('editingSubCategories')">
                         <x-input.select id="Sub_Categories" wire:model="editingSubCategories" multiple>
                             <option value="" disabled>Select Sub-Category</option>
                             @foreach (App\Models\LflbSubCategory::all() as $sub_category)
@@ -287,9 +288,12 @@
                                 @endunless
                             @endforeach
                         </x-input.select>
-                    </x-input.group>
-                    {{-- <x-input.tom-select id="testUser" name="testUser" wire:model="editingSubCategories"
+                    </x-input.group> --}}
+                    {{-- {{ $collection }} --}}
+                    {{-- <x-input.multi-select2 id="testUser" name="testUser" wire:model="editingSubCategories"
                         :selected-items="$editingSubCategories" multiple :options="$subCategories" placeholder="Pick a sub-category" /> --}}
+                    <x-input.tom-select id="testUser" name="testUser" wire:model.defer="editingSubCategories" multiple
+                        :options="$subCategories" placeholder="Pick a sub-category" />
                     <input id="app_id" type="hidden" wire:model="editing.app_id">
                     {{-- <x-input.group for="app_name" label="App Name" :error="$errors->first('editingApp.name')">
                     <x-input.text wire:model="editingApp.name" id="name" placeholder="App Name" />

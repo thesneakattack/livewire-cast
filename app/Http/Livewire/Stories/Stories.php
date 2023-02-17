@@ -31,9 +31,9 @@ class Stories extends Component
         'featured' => '',
     ];
     public LflbStory $editing;
-    public $editingSubCategories = [];
+    public $editingSubCategories;
     public LflbCategory $editingCategory;
-    public LflbSubCategory $subCategories;
+    public $subCategories;
     public LflbApp $editingApp;
     public $collection;
     public $upload;
@@ -41,6 +41,14 @@ class Stories extends Component
     protected $queryString = ['sorts'];
 
     protected $listeners = ['refreshStories' => '$refresh'];
+    public $selections = [];
+
+    public $webseries = [
+        'Wanda Vision',
+        'Money Heist',
+        'Lucifer',
+        'Stranger Things',
+    ];
 
     public function rules()
     {
@@ -50,7 +58,7 @@ class Stories extends Component
             'editing.image' => 'sometimes|nullable',
             'editing.app_id' => 'required',
             // 'editingApp.name' => 'required|min:3',
-            'editingSubCategories' => 'required',
+            'editingSubCategories' => 'sometimes',
             // 'editingSubCategory.sub_category_id' => 'required',
         ];
     }
@@ -60,7 +68,14 @@ class Stories extends Component
         $this->editing = $this->makeBlankStory();
         $this->editingSubCategories = $this->makeBlankSubCategory();
         $this->editingApp = $this->makeBlankApp();
-        // $this->collection = LflbSubCategory::all();
+        $this->subCategories = LflbSubCategory::where('category_id', '!=', '2')->get();
+        // $this->subCategories = LflbSubCategory::all();
+        // $this->collection = $this->subCategories;
+        // $this->subCategories =  \App\Models\LflbSubCategory::limit(6)->get()->transform(fn ($user) => [
+        //     'id' => $user->id,
+        //     'title' => $user->title,
+        //     'subtitle' => $user->subTitle
+        // ]);
     }
     public function updatedFilters()
     {
@@ -117,12 +132,13 @@ class Stories extends Component
 
         if ($this->editing->getKey()) {
             $this->editing = $this->makeBlankStory();
+            $this->editingSubCategories = $this->makeBlankSubCategory();
             // $this->editingSubCategories[] = ['id' => '12'];
-            $this->editingSubCategories =  \App\Models\LflbSubCategory::limit(6)->get()->transform(fn ($user) => [
-                'id' => $user->id,
-                'title' => $user->name,
-                'subtitle' => $user->email
-            ]);
+            // $this->editingSubCategories =  \App\Models\LflbSubCategory::limit(6)->get()->transform(fn ($user) => [
+            //     'id' => $user->id,
+            //     'title' => $user->name,
+            //     'subtitle' => $user->email
+            // ]);
 
             $this->editingApp = $this->makeBlankApp();
         }
@@ -136,13 +152,19 @@ class Stories extends Component
         $this->useCachedRows();
         if ($this->editing->isNot($lflb_story)) {
             $this->editing = $lflb_story;
-            $this->editingSubCategories = [];
+            // $this->editingSubCategories = [];
+            // dd($this->editing->lflbSubCategories);
             foreach ($this->editing->lflbSubCategories as $sub_category) {
-                $this->editingSubCategories[] = $sub_category->id;
+                if ($sub_category->lflbCategory->id !== 2) {
+                    $this->editingSubCategories[] = $sub_category->id;
+                }
             }
+            // $this->editingSubCategories = $this->editing->lflbSubCategories()->allRelatedIds();
             $this->editingApp = $lflb_story->lflbApp;
         }
         $this->showEditModal = true;
+        // dd($this->editingSubCategories);
+
         // dd($this->editingSubCategories);
     }
 
@@ -158,13 +180,31 @@ class Stories extends Component
 
             // $parent_app = $this->editing->lflbApp;
             // $parent_app->update(['name' => $this->editingApp->name]);
-            foreach ($this->editingSubCategories as $subCategory) {
-                $this->editing->lflbSubCategories()->sync($subCategory, false);
-                # code...
+            $timeline_sub_categories = [];
+            $stored_sub_categories = $this->editing->lflbSubCategories()->get();
+            foreach ($stored_sub_categories as $sub_category) {
+                if ($sub_category->lflbCategory->id === 2) {
+                    $timeline_sub_categories[] = $sub_category->id;
+                    // $this->editingSubCategories[] = $sub_category->id;
+                    //store timeline sub-categories into array for merging before sync
+                }
             }
+            // dd($this->editingSubCategories);
 
+            // dd($timeline_sub_categories);
+            // dd($this->editingSubCategories);
+            // $this->editingSubCategories = array_unique(array_merge($this->editingSubCategories, $timeline_sub_categories));
+            // $merged = array_merge($this->editingSubCategories, $timeline_sub_categories);
+            // $merged = $this->editingSubCategories->merge($timeline_sub_categories);
+            // dd($merged);
+            // dd($timeline_sub_categories);
+            // dd($stored_sub_categories[1]->lflbCategory);
+            $this->editing->lflbSubCategories()->sync($this->editingSubCategories);
+            $this->editing->lflbSubCategories()->sync($timeline_sub_categories, false);
+            // dd($this->editingSubCategories);
             $this->showEditModal = false;
-            unset($this->editingSubCategories);
+            // dd($this->editingSubCategories);
+            // unset($this->editingSubCategories);
 
             $this->notify('You\'ve updated a story');
         } else {
@@ -227,4 +267,30 @@ class Stories extends Component
             'stories' => $this->rows,
         ]);
     }
+
+    // public function search($term)
+    // {
+    //     $results = LflbSubCategory::search($term);
+
+    //     $preserve = collect($this->options)
+    //         ->filter(
+    //             fn ($option) =>
+    //             in_array(
+    //                 $option['value'],
+    //                 $this->selections
+    //             )
+    //         )
+    //         ->unique();
+
+    //     $this->options = collect($results)
+    //         ->map(fn ($item) =>
+    //         [
+    //             'label' => $item->name,
+    //             'value' => $item->id
+    //         ])
+    //         ->merge($preserve)
+    //         ->unique();
+
+    //     $this->emit('select-options-updated', $this->options);
+    // }
 }
