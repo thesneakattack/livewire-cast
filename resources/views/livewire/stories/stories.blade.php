@@ -250,7 +250,11 @@
                     <x-input.group for="description" label="Description" :error="$errors->first('editing.description')">
                         <x-input.text id="description" wire:model="editing.description" placeholder="Description" />
                     </x-input.group>
-
+                    <x-input.group for="sub-categories" label="Sub-Categories">
+                        <x-input.tom-select id="sub-categories" name="sub-categories"
+                            wire:model.defer="editingSubCategories" multiple :options="$subCategories"
+                            placeholder="Pick a sub-category" />
+                    </x-input.group>
                     <x-input.group for="image" label="Main Image" :error="$errors->first('editing.image')">
                         <x-input.file-upload id="image" wire:model="upload">
                             <span class="overflow-hidden w-96 max-h-72">
@@ -277,27 +281,8 @@
                             </span>
                         </x-input.file-upload>
                     </x-input.group>
-
-
-                    {{-- <x-input.group for="Sub_Categories" label="Sub-Category" :error="$errors->first('editingSubCategories')">
-                        <x-input.select id="Sub_Categories" wire:model="editingSubCategories" multiple>
-                            <option value="" disabled>Select Sub-Category</option>
-                            @foreach (App\Models\LflbSubCategory::all() as $sub_category)
-                                @unless($sub_category->LflbCategory->id === 2)
-                                    <option value="{{ $sub_category->id }}">{{ $sub_category->title }}</option>
-                                @endunless
-                            @endforeach
-                        </x-input.select>
-                    </x-input.group> --}}
-                    {{-- {{ $collection }} --}}
-                    {{-- <x-input.multi-select2 id="testUser" name="testUser" wire:model="editingSubCategories"
-                        :selected-items="$editingSubCategories" multiple :options="$subCategories" placeholder="Pick a sub-category" /> --}}
-                    <x-input.tom-select id="testUser" name="testUser" wire:model.defer="editingSubCategories" multiple
-                        :options="$subCategories" placeholder="Pick a sub-category" />
                     <input id="app_id" type="hidden" wire:model="editing.app_id">
-                    {{-- <x-input.group for="app_name" label="App Name" :error="$errors->first('editingApp.name')">
-                    <x-input.text wire:model="editingApp.name" id="name" placeholder="App Name" />
-                </x-input.group> --}}
+
                 </x-slot>
 
                 <x-slot name="footer">

@@ -29,9 +29,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css"> --}}
     <!-- Styles -->
     @livewireStyles
-    @stack('css')
+    @stack('styles')
     <link type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css" rel="stylesheet">
     <link type="text/css" href="https://unpkg.com/trix@1.2.3/dist/trix.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.0/dist/css/tom-select.css" rel="stylesheet">
 
 </head>
 
@@ -55,6 +56,7 @@
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <script src="https://unpkg.com/trix@1.2.3/dist/trix.js"></script>
     @stack('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0/dist/js/tom-select.complete.min.js"></script>
 </body>
 
 </html>

@@ -104,7 +104,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="mx-auto prose text-center">
-                                                    <p class="truncate text-cool-gray-600">
+                                                    <p class="font-semibold truncate">
                                                         {{ $asset->caption }}
                                                     </p>
                                                 </div>
@@ -112,10 +112,11 @@
 
                                             @case('VIDEO')
                                                 <div class="mx-auto prose text-center">
-                                                    <p class="truncate text-cool-gray-600">
-                                                        {{ $asset->link }}
-                                                    </p>
-                                                    <p class="text-xs truncate text-cool-gray-600">
+                                                    <video class="w-fit my-6 max-h-[300px] mx-12"
+                                                        src="https://lflbsign.webfoundry.dev/assets/{{ $asset->link }}"
+                                                        type="video/m4v" controls controlsList="nodownload nofullscreen">
+                                                    </video>
+                                                    <p class="text-xs font-semibold truncate">
                                                         {{ $asset->caption }}
                                                     </p>
                                                 </div>
@@ -259,23 +260,6 @@
 
                             @default
                         @endswitch
-
-                        {{-- <x-input.group label="Main Image" for="image" :error="$errors->first('editing.image')">
-                    <x-input.file-upload wire:model="upload" id="image">
-                        <span class="w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
-                            @if ($upload)
-                            <img src="{{ $upload->temporaryUrl() }}" alt="...">
-                            @else
-                            <img src="{{ $editing->mainImageUrl() }}" alt="...">
-                            @endif
-                        </span>
-                    </x-input.file-upload>
-                </x-input.group> --}}
-                        {{-- <input type="text" wire:model="editingApp.name" id="name"
-                    :error="$errors->first('editingApp.name')" /> --}}
-                        {{-- <x-input.group for="app_name" label="App Name" :error="$errors->first('editingApp.name')">
-                    <x-input.text wire:model="editingApp.name" id="name" placeholder="App Name" />
-                </x-input.group> --}}
                     </x-slot>
 
                     <x-slot name="footer">
