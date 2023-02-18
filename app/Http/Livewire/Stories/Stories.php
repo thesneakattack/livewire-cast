@@ -246,7 +246,7 @@ class Stories extends Component
             )
             ->select('lflb_stories.*', 'lflb_sub_categories.title as sub_category_title', \DB::raw('group_concat(DISTINCT lflb_sub_categories.title ORDER BY lflb_sub_categories.title) as sub_category_titles'), \DB::raw('group_concat(DISTINCT lflb_categories.title ORDER BY lflb_categories.title) as category_titles'))
             ->groupBy('lflb_stories.title')
-            ->has('lflbSubCategories')
+            // ->has('lflbSubCategories') //has assigned sub categories
             ->where('app_id', 1)
             ->whereNot('lflb_categories.id', 2);
 
