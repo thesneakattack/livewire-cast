@@ -52,7 +52,14 @@ switch ($maxWidth ?? '2xl') {
         prevFocusableIndex() { return Math.max(0, this.focusables().indexOf(document.activeElement)) -1 },
         autofocus() { let focusable = $el.querySelector('[autofocus]'); if (focusable) focusable.focus() },
     }"
-    x-init="$watch('show', value => value && setTimeout(autofocus, 50))"
+    x-init="$watch('show', value => {
+        if (value) {
+            document.body.classList.add('overflow-y-hidden');
+        } else {
+            document.body.classList.remove('overflow-y-hidden');
+        }
+        setTimeout(autofocus, 50);
+    })"
     x-on:close.stop="show = false"
     x-on:keydown.escape.window="show = false"
     x-on:keydown.tab.prevent="$event.shiftKey || nextFocusable().focus()"
