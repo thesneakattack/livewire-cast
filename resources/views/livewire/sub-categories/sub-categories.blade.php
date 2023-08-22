@@ -159,7 +159,7 @@
                                                 <img src="{{ $sub_category->mainImageUrl() }}" alt="...">
                                             @else
                                                 <img class="object-contain h-auto max-w-full align-middle border-none rounded shadow "
-                                                    src="https://lflbsign.webfoundry.dev/assets/{{ $sub_category->mainImage }}"
+                                                    src="https://exhibits-staging.lflbhistory.org/assets/{{ $sub_category->mainImage }}"
                                                     alt="..." />
                                             @endif
                                         </div>
@@ -265,7 +265,7 @@
                                                     x-show="placeholderImage">
                                             @else
                                                 <img class="object-contain h-auto max-w-full align-middle border-none rounded shadow "
-                                                    src="https://lflbsign.webfoundry.dev/assets/{{ $editing->mainImage }}"
+                                                    src="https://exhibits-staging.lflbhistory.org/assets/{{ $editing->mainImage }}"
                                                     alt="..." x-show="placeholderImage" />
                                             @endif
                                         </div>
